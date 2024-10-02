@@ -1,6 +1,7 @@
 package com.example.CarRentalSystem.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class Brand {
     private Long id;
 
     @Column
+    @NotBlank(message = "brandName may not be blank")
     private String brandName;
 
     public Brand(String brandName) {

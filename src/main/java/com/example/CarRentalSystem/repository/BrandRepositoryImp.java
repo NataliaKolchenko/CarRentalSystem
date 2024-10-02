@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class BrandRepositoryImp implements BrandRepositoryInterface {
-    private final JpaBrandRepositoryInterface jpaBrandModelRepository;
+    private final JpaBrandRepositoryInterface jpaBrandRepository;
     @Override
     public Brand createVehicleBrand(String brandName) {
-        return null;
+        return jpaBrandRepository.save(new Brand(brandName));
     }
 
     @Override
