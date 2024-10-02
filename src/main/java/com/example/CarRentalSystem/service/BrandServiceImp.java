@@ -1,13 +1,13 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.service.interfaces.BrandModelServiceInterface;
+import com.example.CarRentalSystem.service.interfaces.BrandServiceInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BrandModelServiceImp implements BrandModelServiceInterface {
+public class BrandServiceImp implements BrandServiceInterface {
 
     @Override
     public Brand createVehicleBrand(String brandName) {
