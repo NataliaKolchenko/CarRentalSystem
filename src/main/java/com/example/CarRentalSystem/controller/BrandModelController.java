@@ -1,6 +1,5 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.model.RequestResponseModel.ResponseAPI;
 import com.example.CarRentalSystem.service.interfaces.BrandModelServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

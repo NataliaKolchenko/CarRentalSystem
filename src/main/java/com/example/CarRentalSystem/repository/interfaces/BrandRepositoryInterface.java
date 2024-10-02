@@ -4,7 +4,7 @@ import com.example.CarRentalSystem.model.Brand;
 
 import java.util.List;
 
-public interface BrandModelRepositoryInterface {
+public interface BrandRepositoryInterface {
     Brand createVehicleBrand (String brandName);
     Brand updateVehicleBrand (Long brandId, String newBrandName);
     boolean deleteVehicleBrandById(Long brandId);
