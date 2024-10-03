@@ -9,5 +9,7 @@ public interface BrandServiceInterface {
     Brand updateVehicleBrand (Long brandId, String newBrandName);
     boolean deleteVehicleBrandById(Long brandId);
     Brand getVehicleVehicleBrandById(Long brandId);
+    Brand getVehicleVehicleBrandByName(String brandName);
+
     List<Brand> getAllVehicleBrand();
 }

@@ -2,6 +2,7 @@ package com.example.CarRentalSystem.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +17,7 @@ public class Brand {
     private Long id;
 
     @Column
-    @NotBlank(message = "brandName may not be blank")
+    @NotBlank(message = "brandName may not be empty")
     private String brandName;
 
     public Brand() {

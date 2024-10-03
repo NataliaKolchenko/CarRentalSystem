@@ -40,6 +40,12 @@ public class BrandServiceImp implements BrandServiceInterface {
     }
 
     @Override
+    public Brand getVehicleVehicleBrandByName(String brandName) {
+        Brand brand = brandRepository.getVehicleVehicleBrandByName(brandName);
+        return brand;
+    }
+
+    @Override
     public List<Brand> getAllVehicleBrand() {
         return null;
     }
