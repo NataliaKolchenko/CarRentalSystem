@@ -19,7 +19,10 @@ public class Brand {
     @NotBlank(message = "brandName may not be blank")
     private String brandName;
 
+    public Brand() {
+    }
     public Brand(String brandName) {
         this.brandName = brandName;
     }
+
 }

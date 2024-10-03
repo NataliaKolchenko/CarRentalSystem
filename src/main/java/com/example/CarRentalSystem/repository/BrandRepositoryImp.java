@@ -14,7 +14,8 @@ public class BrandRepositoryImp implements BrandRepositoryInterface {
     private final JpaBrandRepositoryInterface jpaBrandRepository;
     @Override
     public Brand createVehicleBrand(String brandName) {
-        return jpaBrandRepository.save(new Brand(brandName));
+        Brand brand = new Brand(brandName);
+        return jpaBrandRepository.save(brand);
     }
 
     @Override
