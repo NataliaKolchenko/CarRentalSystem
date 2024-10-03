@@ -6,10 +6,12 @@ import com.example.CarRentalSystem.repository.interfaces.JpaBrandRepositoryInter
 import com.example.CarRentalSystem.service.interfaces.BrandServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
 @Service
+@Validated
 public class BrandServiceImp implements BrandServiceInterface {
     private final BrandRepositoryInterface brandRepository;
 

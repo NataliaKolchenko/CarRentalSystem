@@ -17,7 +17,7 @@ public class Brand {
     private Long id;
 
     @Column
-    @NotBlank(message = "brandName may not be empty")
+    @NotBlank(message = "brandName may not be blank or null or has spaces")
     private String brandName;
 
     public Brand() {

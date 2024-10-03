@@ -21,7 +21,7 @@ public class BrandModelController {
     }
 
     @PostMapping("/createNewBrand")
-    public ResponseEntity<Brand> createNewBrand(@Valid @RequestBody  Brand newBrand) {
+    public ResponseEntity<Brand> createNewBrand( @RequestBody  @Valid Brand newBrand) {
         brandModelService.createVehicleBrand(newBrand.getBrandName());
         return ResponseEntity.ok(brandModelService.getVehicleVehicleBrandByName(newBrand.getBrandName()));
 
