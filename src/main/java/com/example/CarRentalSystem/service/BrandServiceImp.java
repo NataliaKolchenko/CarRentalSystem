@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem.service;
 
+import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.interfaces.BrandRepositoryInterface;
 import com.example.CarRentalSystem.repository.interfaces.JpaBrandRepositoryInterface;
@@ -22,6 +23,10 @@ public class BrandServiceImp implements BrandServiceInterface {
 
     @Override
     public Brand createVehicleBrand(String brandName) {
+        Brand checkExistBrand = brandRepository.getVehicleVehicleBrandByName(brandName);
+        if(checkExistBrand != null && checkExistBrand.getBrandName().equals(brandName)) {
+            throw new BrandAlreadyExistsException("BrandName has to be unique");
+        }
        Brand newBrand = brandRepository.createVehicleBrand(brandName);
         return newBrand;
     }
