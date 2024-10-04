@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/BrandAndModel")
+@RequestMapping("/brandAndModel")
 public class BrandModelController {
     private final BrandServiceInterface brandModelService;
 
@@ -30,6 +30,5 @@ public class BrandModelController {
         } catch (BrandAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409 Conflict
         }
-
     }
 }
