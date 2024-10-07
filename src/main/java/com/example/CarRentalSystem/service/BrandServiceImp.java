@@ -1,6 +1,7 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
+import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.interfaces.BrandRepositoryInterface;
 import com.example.CarRentalSystem.service.interfaces.BrandServiceInterface;
@@ -44,6 +45,9 @@ public class BrandServiceImp implements BrandServiceInterface {
     @Override
     public Optional<Brand> getVehicleBrandById(Long brandId) {
         Optional<Brand> brand = brandRepository.getVehicleBrandById(brandId);
+        if (brand == null || brand.isEmpty()) {
+            throw new BrandNotFoundException("BrandId was not found");
+        }
         return brand;
     }
 

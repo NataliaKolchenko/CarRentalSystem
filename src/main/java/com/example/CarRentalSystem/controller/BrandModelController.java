@@ -1,6 +1,7 @@
 package com.example.CarRentalSystem.controller;
 
 import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
+import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.service.interfaces.BrandServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,10 @@ public class BrandModelController {
 
     @GetMapping("/getBrandById/{id}")
     public ResponseEntity<?> getBrandById(@PathVariable Long id){
-        return ResponseEntity.ok(brandModelService.getVehicleBrandById(id));
+        try {
+            return ResponseEntity.ok(brandModelService.getVehicleBrandById(id));
+        } catch (BrandNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
