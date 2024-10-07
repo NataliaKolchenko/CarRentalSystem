@@ -1,6 +1,7 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
+import com.example.CarRentalSystem.exception.BrandListIsEmptyException;
 import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.interfaces.BrandRepositoryInterface;
@@ -60,6 +61,9 @@ public class BrandServiceImp implements BrandServiceInterface {
     @Override
     public List<Brand> getAllVehicleBrand() {
         List<Brand> brandList = brandRepository.getAllVehicleBrand();
+        if (brandList.isEmpty()){
+            throw new BrandListIsEmptyException("BrandList is empty");
+        }
         return brandList;
     }
 }
