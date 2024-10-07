@@ -22,20 +22,12 @@ public class BrandModelController {
 
     @PostMapping("/createNewBrand")
     public ResponseEntity<?> createNewBrand( @RequestBody  @Valid Brand newBrand) {
-        try {
             brandModelService.createVehicleBrand(newBrand.getBrandName());
             return ResponseEntity.ok(brandModelService.getVehicleBrandByName(newBrand.getBrandName()));
-        } catch (BrandAlreadyExistsException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409 Conflict
-        }
     }
 
     @GetMapping("/getBrandById/{id}")
     public ResponseEntity<?> getBrandById(@PathVariable Long id){
-        try {
             return ResponseEntity.ok(brandModelService.getVehicleBrandById(id));
-        } catch (BrandNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
     }
 }
