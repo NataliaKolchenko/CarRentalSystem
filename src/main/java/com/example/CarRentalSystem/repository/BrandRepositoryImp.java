@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -28,13 +29,17 @@ public class BrandRepositoryImp implements BrandRepositoryInterface {
         return false;
     }
 
+
+
+
+
     @Override
-    public Brand getVehicleVehicleBrandById(Long brandId) {
-        return null;
+    public Optional<Brand> getVehicleBrandById(Long brandId) {
+        return jpaBrandRepository.findById(brandId);
     }
 
     @Override
-    public Brand getVehicleVehicleBrandByName(String brandName) {
+    public Brand getVehicleBrandByName(String brandName) {
         return jpaBrandRepository.findByBrandName(brandName);
     }
 

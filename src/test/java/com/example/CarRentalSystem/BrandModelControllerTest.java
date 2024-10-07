@@ -37,7 +37,7 @@ public class BrandModelControllerTest {
     public void testCreateNewBrand_Success() throws Exception {
         // Настройка мока для успешного создания бренда
         when(brandService.createVehicleBrand(brand.getBrandName())).thenReturn(brand);
-        when(brandService.getVehicleVehicleBrandByName(brand.getBrandName())).thenReturn(brand);
+        when(brandService.getVehicleBrandByName(brand.getBrandName())).thenReturn(brand);
 
         // Выполнение POST-запроса
         mockMvc.perform(post("/brandAndModel/createNewBrand")

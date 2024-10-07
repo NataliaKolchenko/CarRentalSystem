@@ -30,7 +30,7 @@ public class BrandServiceImpTest {
     public void testCreateVehicleBrand_NewBrand_Successfully() {
         String brandName = "Test";
 
-        when(brandRepository.getVehicleVehicleBrandByName(brandName)).thenReturn(null);
+        when(brandRepository.getVehicleBrandByName(brandName)).thenReturn(null);
 
         Brand newBrand = new Brand(brandName);
         when(brandRepository.createVehicleBrand(brandName)).thenReturn(newBrand);
@@ -46,7 +46,7 @@ public class BrandServiceImpTest {
         String brandName = "ExistingBrand";
         Brand existingBrand = new Brand(brandName);
 
-        when(brandRepository.getVehicleVehicleBrandByName(brandName)).thenReturn(existingBrand);
+        when(brandRepository.getVehicleBrandByName(brandName)).thenReturn(existingBrand);
 
         BrandAlreadyExistsException exception = assertThrows(BrandAlreadyExistsException.class, () ->
                 brandService.createVehicleBrand(brandName));

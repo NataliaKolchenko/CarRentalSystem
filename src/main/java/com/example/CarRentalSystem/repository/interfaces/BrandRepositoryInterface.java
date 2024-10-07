@@ -3,13 +3,14 @@ package com.example.CarRentalSystem.repository.interfaces;
 import com.example.CarRentalSystem.model.Brand;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BrandRepositoryInterface {
     Brand createVehicleBrand (String brandName);
     Brand updateVehicleBrand (Long brandId, String newBrandName);
     boolean deleteVehicleBrandById(Long brandId);
-    Brand getVehicleVehicleBrandById(Long brandId);
-    Brand getVehicleVehicleBrandByName(String brandName);
+    Optional<Brand> getVehicleBrandById(Long brandId);
+    Brand getVehicleBrandByName(String brandName);
 
     List<Brand> getAllVehicleBrand();
 }
