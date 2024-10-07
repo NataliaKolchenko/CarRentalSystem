@@ -44,7 +44,6 @@ public class BrandRepositoryImp implements BrandRepositoryInterface {
     }
 
     @Override
-    public List<Brand> getAllVehicleBrand() {
-        return null;
+    public List<Brand> getAllVehicleBrand() {return jpaBrandRepository.findAll();
     }
 }

@@ -30,4 +30,9 @@ public class BrandModelController {
     public ResponseEntity<?> getBrandById(@PathVariable Long id){
             return ResponseEntity.ok(brandModelService.getVehicleBrandById(id));
     }
+
+    @GetMapping("/getAllBrands")
+    public ResponseEntity<?> getAllBrands(){
+        return ResponseEntity.ok(brandModelService.getAllVehicleBrand());
+    }
 }

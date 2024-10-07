@@ -59,6 +59,7 @@ public class BrandServiceImp implements BrandServiceInterface {
 
     @Override
     public List<Brand> getAllVehicleBrand() {
-        return null;
+        List<Brand> brandList = brandRepository.getAllVehicleBrand();
+        return brandList;
     }
 }
