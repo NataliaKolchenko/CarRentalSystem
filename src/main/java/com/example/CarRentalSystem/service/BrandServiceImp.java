@@ -55,6 +55,9 @@ public class BrandServiceImp implements BrandServiceInterface {
     @Override
     public Brand getVehicleBrandByName(String brandName) {
         Brand brand = brandRepository.getVehicleBrandByName(brandName);
+        if (brand == null) {
+            throw new BrandNotFoundException("BrandId was not found");
+        }
         return brand;
     }
 
