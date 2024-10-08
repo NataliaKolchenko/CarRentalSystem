@@ -5,12 +5,14 @@ import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.interfaces.BrandRepositoryInterface;
 import com.example.CarRentalSystem.service.BrandServiceImp;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.Optional;
 
@@ -55,8 +57,65 @@ public class BrandServiceImpTest {
                 brandService.createVehicleBrand(brandName));
 
         assertEquals("BrandName has to be unique", exception.getMessage());
+    }
 
+    @Test
+    public void testUpdateVehicleBrand_ExistingBrand_Successfully(){
+        Long existingId = 1L;
+        String newBrandName = "NewBrandName";
 
+        Brand existingBrand = new Brand();
+        existingBrand.setId(existingId);
+        existingBrand.setBrandName("Brand");
+
+        when(brandRepository.getVehicleBrandById(existingId)).thenReturn(Optional.of(existingBrand));
+        Brand updatedBrand = new Brand();
+        updatedBrand.setId(existingId);
+        updatedBrand.setBrandName(newBrandName);
+        when(brandRepository.updateVehicleBrand(existingBrand)).thenReturn(updatedBrand);
+        Brand result = brandService.updateVehicleBrand(existingId, newBrandName);
+
+        assertNotNull(result);
+        assertEquals(result.getBrandName(), newBrandName);
+    }
+
+    @Test
+    public void testUpdateVehicleBrand_NotUniqueBrand_ThrowsException() {
+        Long existingId = 1L;
+        String newBrandName = "ExistingBrand";
+
+        Brand existingBrand = new Brand();
+        existingBrand.setId(existingId);
+        existingBrand.setBrandName("ExistingBrand");
+
+        when(brandRepository.getVehicleBrandById(existingId)).thenReturn(Optional.of(existingBrand));
+        Brand updatedBrand = new Brand();
+        updatedBrand.setId(existingId);
+        updatedBrand.setBrandName(newBrandName);
+
+        BrandAlreadyExistsException exception = assertThrows(BrandAlreadyExistsException.class, () ->
+                brandService.updateVehicleBrand(existingId, newBrandName));
+
+        assertEquals("BrandName has to be unique", exception.getMessage());
+    }
+
+    @Test
+    public void testDeleteVehicleBrandById_ExistingBrandId_Successfully(){
+        Long existingId = 1L;
+        when(brandRepository.existsById(existingId)).thenReturn(true);
+        when(brandRepository.deleteVehicleBrandById(existingId)).thenReturn(true);
+        boolean result = brandService.deleteVehicleBrandById(existingId);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void testDeleteVehicleBrandById_BrandIdNotFound_ThrowsException(){
+        Long notExistingId = 2L;
+        when(brandRepository.existsById(notExistingId)).thenReturn(false);
+        BrandNotFoundException exception = assertThrows(BrandNotFoundException.class, () ->
+                brandService.deleteVehicleBrandById(notExistingId));
+        assertEquals("BrandId was not found", exception.getMessage());
     }
 
     @Test

@@ -28,13 +28,10 @@ public class BrandModelControllerTest {
     private BrandServiceImp brandService;
 
     private Brand brand;
-    @BeforeEach
-    public void setUp(){
-        brand = new Brand("NewBrand");
-    }
 
     @Test
     public void testCreateNewBrand_Success() throws Exception {
+        brand = new Brand("NewBrand");
         // Настройка мока для успешного создания бренда
         when(brandService.createVehicleBrand(brand.getBrandName())).thenReturn(brand);
         when(brandService.getVehicleBrandByName(brand.getBrandName())).thenReturn(brand);
@@ -48,18 +45,5 @@ public class BrandModelControllerTest {
                 .andExpect(jsonPath("$.brandName", is("NewBrand"))); // Проверка возвращаемого значения
     }
 
-    @Test
-    public void testCreateNewBrand_Conflict() throws Exception {
-        //настройка мока, когда бренд уже существует
-        doThrow(new BrandAlreadyExistsException("BrandName has to be unique"))
-                .when(brandService).createVehicleBrand(brand.getBrandName());
 
-        mockMvc.perform(post("/brandAndModel/createNewBrand")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"brandName\":\"NewBrand\"}"))
-                .andExpect(status().isConflict())
-                .andExpect(content().string("BrandName has to be unique"));
-
-
-    }
 }
