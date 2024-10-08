@@ -42,4 +42,11 @@ public class BrandModelController {
     public ResponseEntity<Boolean> deleteBrandById(@PathVariable Long id){
         return ResponseEntity.ok(brandModelService.deleteVehicleBrandById(id));
     }
+
+    @PutMapping("/updateBrand/{id}")
+    public ResponseEntity<Brand> updateBrand(@PathVariable Long id,
+                                             @RequestBody @Valid Brand newBrand){
+        return ResponseEntity.ok(brandModelService.updateVehicleBrand(id, newBrand.getBrandName()));
+
+    }
 }

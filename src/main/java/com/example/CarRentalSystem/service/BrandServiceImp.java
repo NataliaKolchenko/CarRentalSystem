@@ -1,7 +1,6 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
-import com.example.CarRentalSystem.exception.BrandListIsEmptyException;
 import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.interfaces.BrandRepositoryInterface;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,13 +35,18 @@ public class BrandServiceImp implements BrandServiceInterface {
 
     @Override
     public Brand updateVehicleBrand(Long brandId, String newBrandName) {
-        return null;
+        Brand brand = getVehicleBrandById(brandId);
+        brand.setBrandName(newBrandName);
+        Brand updatedBrand = brandRepository.updateVehicleBrand(brand);
+        return updatedBrand;
     }
 
     @Override
     public boolean deleteVehicleBrandById(Long brandId) {
-        brandRepository.deleteVehicleBrandById(brandId);
-        return true;
+        if (!brandRepository.existsById(brandId)) {
+            throw new BrandNotFoundException("BrandId was not found");
+        }
+        return brandRepository.deleteVehicleBrandById(brandId);
     }
 
     @Override
@@ -63,9 +68,6 @@ public class BrandServiceImp implements BrandServiceInterface {
     @Override
     public List<Brand> getAllVehicleBrand() {
         List<Brand> brandList = brandRepository.getAllVehicleBrand();
-        if (brandList.isEmpty()){
-            throw new BrandListIsEmptyException("BrandList is empty");
-        }
-        return brandList;
+        return (brandList.isEmpty()) ? Collections.emptyList() : brandList;
     }
 }

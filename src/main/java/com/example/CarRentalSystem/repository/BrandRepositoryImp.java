@@ -20,19 +20,15 @@ public class BrandRepositoryImp implements BrandRepositoryInterface {
     }
 
     @Override
-    public Brand updateVehicleBrand(Long brandId, String newBrandName) {
-        return null;
+    public Brand updateVehicleBrand(Brand brand) {
+        return jpaBrandRepository.save(brand);
     }
 
     @Override
     public boolean deleteVehicleBrandById(Long brandId) {
-        jpaBrandRepository.deleteById(brandId);
+         jpaBrandRepository.deleteById(brandId);
         return true;
     }
-
-
-
-
 
     @Override
     public Optional<Brand> getVehicleBrandById(Long brandId) {
@@ -46,5 +42,10 @@ public class BrandRepositoryImp implements BrandRepositoryInterface {
 
     @Override
     public List<Brand> getAllVehicleBrand() {return jpaBrandRepository.findAll();
+    }
+
+    @Override
+    public boolean existsById(Long brandId) {
+        return jpaBrandRepository.existsById(brandId);
     }
 }
