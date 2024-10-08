@@ -26,7 +26,7 @@ public class BrandServiceImp implements BrandServiceInterface {
     @Override
     public Brand createVehicleBrand(String brandName) {
         Brand checkExistBrand = brandRepository.getVehicleBrandByName(brandName);
-        if(checkExistBrand != null && checkExistBrand.getBrandName().equals(brandName)) {
+        if(checkExistBrand != null && checkBrandNameToUnique(checkExistBrand.getBrandName(), brandName)) {
             throw new BrandAlreadyExistsException("BrandName has to be unique");
         }
        Brand newBrand = brandRepository.createVehicleBrand(brandName);
@@ -36,6 +36,9 @@ public class BrandServiceImp implements BrandServiceInterface {
     @Override
     public Brand updateVehicleBrand(Long brandId, String newBrandName) {
         Brand brand = getVehicleBrandById(brandId);
+        if (checkBrandNameToUnique(brand.getBrandName(), newBrandName)) {
+            throw new BrandAlreadyExistsException("BrandName has to be unique");
+        }
         brand.setBrandName(newBrandName);
         Brand updatedBrand = brandRepository.updateVehicleBrand(brand);
         return updatedBrand;
@@ -69,5 +72,9 @@ public class BrandServiceImp implements BrandServiceInterface {
     public List<Brand> getAllVehicleBrand() {
         List<Brand> brandList = brandRepository.getAllVehicleBrand();
         return (brandList.isEmpty()) ? Collections.emptyList() : brandList;
+    }
+
+    private boolean checkBrandNameToUnique(String existBrandName, String newBrandName) {
+        return existBrandName.equals(newBrandName);
     }
 }
