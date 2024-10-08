@@ -26,7 +26,8 @@ public class BrandRepositoryImp implements BrandRepositoryInterface {
 
     @Override
     public boolean deleteVehicleBrandById(Long brandId) {
-        return false;
+        jpaBrandRepository.deleteById(brandId);
+        return true;
     }
 
 

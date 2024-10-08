@@ -40,8 +40,8 @@ public class BrandServiceImp implements BrandServiceInterface {
 
     @Override
     public boolean deleteVehicleBrandById(Long brandId) {
-//        Brand brand = Optional.of(brandRepository.getVehicleBrandById(brandId));
-        return false;
+        brandRepository.deleteVehicleBrandById(brandId);
+        return true;
     }
 
     @Override
