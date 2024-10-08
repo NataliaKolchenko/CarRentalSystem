@@ -40,15 +40,14 @@ public class BrandServiceImp implements BrandServiceInterface {
 
     @Override
     public boolean deleteVehicleBrandById(Long brandId) {
+//        Brand brand = Optional.of(brandRepository.getVehicleBrandById(brandId));
         return false;
     }
 
     @Override
-    public Optional<Brand> getVehicleBrandById(Long brandId) {
-        Optional<Brand> brand = brandRepository.getVehicleBrandById(brandId);
-        if (brand == null || brand.isEmpty()) {
-            throw new BrandNotFoundException("BrandId was not found");
-        }
+    public Brand getVehicleBrandById(Long brandId) {
+        Optional<Brand> brandOpt = brandRepository.getVehicleBrandById(brandId);
+        Brand brand = brandOpt.orElseThrow(() -> new BrandNotFoundException("BrandId was not found"));
         return brand;
     }
 
