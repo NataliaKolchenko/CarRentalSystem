@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/brandAndModel")
 public class BrandModelController {
@@ -21,7 +23,7 @@ public class BrandModelController {
     }
 
     @PostMapping("/createNewBrand")
-    public ResponseEntity<?> createNewBrand( @RequestBody  @Valid Brand newBrand) {
+    public ResponseEntity<Brand> createNewBrand( @RequestBody  @Valid Brand newBrand) {
             brandModelService.createVehicleBrand(newBrand.getBrandName());
             return ResponseEntity.ok(brandModelService.getVehicleBrandByName(newBrand.getBrandName()));
     }
@@ -32,7 +34,7 @@ public class BrandModelController {
     }
 
     @GetMapping("/getAllBrands")
-    public ResponseEntity<?> getAllBrands(){
+    public ResponseEntity<List<Brand>> getAllBrands(){
         return ResponseEntity.ok(brandModelService.getAllVehicleBrand());
     }
 }
