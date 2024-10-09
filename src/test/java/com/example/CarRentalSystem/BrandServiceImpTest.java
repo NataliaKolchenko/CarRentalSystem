@@ -14,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -121,8 +123,8 @@ public class BrandServiceImpTest {
     @Test
     public void testGetVehicleBrandById_Successfully(){
         Long brandId = 1L;
-        Optional<Brand> expectedBrand = Optional.of(new Brand("expectedBrand"));
-        when(brandRepository.getVehicleBrandById(brandId)).thenReturn((expectedBrand));
+        Brand expectedBrand = new Brand("expectedBrand");
+        when(brandRepository.getVehicleBrandById(brandId)).thenReturn(Optional.of((expectedBrand)));
 
         assertEquals(expectedBrand, brandService.getVehicleBrandById(brandId));
         assertNotNull(expectedBrand);
@@ -131,7 +133,7 @@ public class BrandServiceImpTest {
     @Test
     public void testGetVehicleBrandById_NotExistBrandId_ThrowsException(){
         Long brandId = 1L;
-        when(brandRepository.getVehicleBrandById(brandId)).thenReturn(null);
+        when(brandRepository.getVehicleBrandById(brandId)).thenReturn(Optional.empty());
 
         BrandNotFoundException exception = assertThrows(BrandNotFoundException.class, () ->
                 brandService.getVehicleBrandById(brandId));
@@ -158,5 +160,31 @@ public class BrandServiceImpTest {
                 brandService.getVehicleBrandByName(brandName));
 
         assertEquals("BrandId was not found", exception.getMessage());
+    }
+
+    @Test
+    public void testGetAllVehicleBrand_Successfully(){
+        List<Brand> brandList = new ArrayList<>();
+        Brand brand1 = new Brand("Test1");
+        Brand brand2 = new Brand("Test2");
+        brandList.add(brand1);
+        brandList.add(brand2);
+        int sizeList = brandList.size();
+        when(brandRepository.getAllVehicleBrand()).thenReturn(brandList);
+
+        assertEquals(brandList, brandService.getAllVehicleBrand());
+        assertEquals(sizeList, brandService.getAllVehicleBrand().size());
+        assertNotNull(brandService.getAllVehicleBrand());
+    }
+
+    @Test
+    public void testGetAllVehicleBrand_EmptyList(){
+        List<Brand> brandList = new ArrayList<>();
+        int sizeList = brandList.size();
+        when(brandRepository.getAllVehicleBrand()).thenReturn(brandList);
+
+        assertEquals(brandList, brandService.getAllVehicleBrand());
+        assertEquals(sizeList, brandService.getAllVehicleBrand().size());
+        assertNotNull(brandService.getAllVehicleBrand());
     }
 }
