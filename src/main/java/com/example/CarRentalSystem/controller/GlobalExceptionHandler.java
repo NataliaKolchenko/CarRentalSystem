@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new Error(stringList), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({ BrandNotFoundException.class, BrandAlreadyExistsException.class})
+    @ExceptionHandler({ })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Error> handleValidationExceptions(Exception ex) {
         return new ResponseEntity<>(new Error(List.of(ex.getMessage())), HttpStatus.BAD_REQUEST);
