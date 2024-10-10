@@ -28,15 +28,15 @@ public class ModelServiceImp  implements ModelService {
     }
 
     @Override
-    public Model createModel(String modelName, Long brandId) {
-        Model checkExistModel = modelRepository.getModelByName(modelName);
+    public Model createModel(Model model) {
+        Model checkExistModel = modelRepository.getModelByName(model.getModelName());
         if(checkExistModel != null){
             throw  new ModelAlreadyExistsException("BrandName has to be unique");
         }
-        Brand brand = brandServiceImp.getVehicleBrandById(brandId);
-        Model newModel = new Model(modelName, brand);
+//        Brand brand = brandServiceImp.getVehicleBrandById(model.getBrand().getId());
+//        Model newModel = new Model(modelName, brand);
 
-        return modelRepository.createModel(newModel);
+        return modelRepository.createModel(model);
     }
 
     @Override

@@ -55,7 +55,7 @@ public class BrandModelController {
 
     @PostMapping("/createNewModel")
     public ResponseEntity<Model> createNewModel(@RequestBody  @Valid Model newModel) {
-        modelService.createModel(newModel.getModelName(), newModel.getBrand().getId());
+        modelService.createModel(newModel);
         return ResponseEntity.ok(modelService.getModelByName(newModel.getModelName()));
     }
 }

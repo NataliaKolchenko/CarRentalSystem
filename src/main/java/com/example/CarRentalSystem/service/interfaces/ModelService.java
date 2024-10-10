@@ -5,7 +5,7 @@ import com.example.CarRentalSystem.model.Model;
 import java.util.List;
 
 public interface ModelService {
-    Model createModel (String modelName, Long brandId);
+    Model createModel (Model newModel);
     Model updateModel (Long modelId, String newModelName);
     boolean deleteModelById(Long modelId);
     Model getModelById(Long modelId);
