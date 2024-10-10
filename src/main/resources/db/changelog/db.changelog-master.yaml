@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-master.yaml
+  - changeSet:
+      id: 1
+      author: natalia_kolchenko
+      changes:
+        - createTable:
+            tableName: brand
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: brand_name
+                  type: character varying(255)
+#  - changeSet:
+#      id: 2
+#      author: natalia_kolchenko
+#      comment: "Create Brand model"
+#      changes:
+#        - insert:
+#            tableName: brand
+#            columns:
+#              - column:
+#                  name: brand_name
+#                  value: "TEST"
+#      rollback:
+#        - delete:
+#            tableName: brand
+#            where: brand_name in ('TEST')
