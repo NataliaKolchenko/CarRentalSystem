@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.repository.interfaces;
+package com.example.CarRentalSystem.repository.brand;
 
 import com.example.CarRentalSystem.model.Brand;
 
@@ -11,8 +11,6 @@ public interface BrandRepository {
     boolean deleteVehicleBrandById(Long brandId);
     Optional<Brand> getVehicleBrandById(Long brandId);
     Brand getVehicleBrandByName(String brandName);
-
     List<Brand> getAllVehicleBrand();
-
     boolean existsById(Long brandId);
 }

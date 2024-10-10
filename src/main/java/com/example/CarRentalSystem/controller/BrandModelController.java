@@ -1,7 +1,9 @@
 package com.example.CarRentalSystem.controller;
 
 import com.example.CarRentalSystem.model.Brand;
+import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
+import com.example.CarRentalSystem.service.interfaces.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,38 +14,48 @@ import java.util.List;
 @RestController
 @RequestMapping("/brandAndModel")
 public class BrandModelController {
-    private final BrandService brandModelService;
+    private final BrandService brandService;
+    private final ModelService modelService;
 
     @Autowired
-    public BrandModelController(BrandService brandModelService) {
-        this.brandModelService = brandModelService;
+    public BrandModelController(BrandService brandService, ModelService modelService) {
+        this.brandService = brandService;
+        this.modelService = modelService;
     }
 
     @PostMapping("/createNewBrand")
     public ResponseEntity<Brand> createNewBrand( @RequestBody  @Valid Brand newBrand) {
-            brandModelService.createVehicleBrand(newBrand.getBrandName());
-            return ResponseEntity.ok(brandModelService.getVehicleBrandByName(newBrand.getBrandName()));
+            brandService.createVehicleBrand(newBrand.getBrandName());
+            return ResponseEntity.ok(brandService.getVehicleBrandByName(newBrand.getBrandName()));
     }
 
     @GetMapping("/getBrandById/{id}")
     public ResponseEntity<Brand> getBrandById(@PathVariable Long id){
-            return ResponseEntity.ok(brandModelService.getVehicleBrandById(id));
+            return ResponseEntity.ok(brandService.getVehicleBrandById(id));
     }
 
     @GetMapping("/getAllBrands")
     public ResponseEntity<List<Brand>> getAllBrands(){
-        return ResponseEntity.ok(brandModelService.getAllVehicleBrand());
+        return ResponseEntity.ok(brandService.getAllVehicleBrand());
     }
 
     @DeleteMapping("/deleteBrandById/{id}")
     public ResponseEntity<Boolean> deleteBrandById(@PathVariable Long id){
-        return ResponseEntity.ok(brandModelService.deleteVehicleBrandById(id));
+        return ResponseEntity.ok(brandService.deleteVehicleBrandById(id));
     }
 
     @PutMapping("/updateBrand/{id}")
     public ResponseEntity<Brand> updateBrand(@PathVariable Long id,
                                              @RequestBody @Valid Brand newBrand){
-        return ResponseEntity.ok(brandModelService.updateVehicleBrand(id, newBrand.getBrandName()));
+        return ResponseEntity.ok(brandService.updateVehicleBrand(id, newBrand.getBrandName()));
 
+    }
+
+    // -----------------------------------------------------------------
+
+    @PostMapping("/createNewModel")
+    public ResponseEntity<Model> createNewModel(@RequestBody  @Valid Model newModel) {
+        modelService.createModel(newModel.getModelName(), newModel.getBrand().getId());
+        return ResponseEntity.ok(modelService.getModelByName(newModel.getModelName()));
     }
 }

@@ -1,8 +1,8 @@
-package com.example.CarRentalSystem.repository;
+package com.example.CarRentalSystem.repository.brand;
 
 import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.repository.interfaces.BrandRepository;
-import com.example.CarRentalSystem.repository.interfaces.JpaBrandRepository;
+import com.example.CarRentalSystem.repository.brand.BrandRepository;
+import com.example.CarRentalSystem.repository.brand.JpaBrandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

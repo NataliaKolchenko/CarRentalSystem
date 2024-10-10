@@ -3,7 +3,7 @@ package com.example.CarRentalSystem.service;
 import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
 import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.repository.interfaces.BrandRepository;
+import com.example.CarRentalSystem.repository.brand.BrandRepository;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,7 +74,4 @@ public class BrandServiceImp implements BrandService {
         return brandList.isEmpty() ? Collections.emptyList() : brandList;
     }
 
-//    private boolean checkBrandNameToUnique(String existBrandName, String newBrandName) {
-//        return existBrandName.equals(newBrandName);
-//    }
 }

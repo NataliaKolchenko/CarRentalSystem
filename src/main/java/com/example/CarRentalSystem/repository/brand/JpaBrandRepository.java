@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.repository.interfaces;
+package com.example.CarRentalSystem.repository.brand;
 
 import com.example.CarRentalSystem.model.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;

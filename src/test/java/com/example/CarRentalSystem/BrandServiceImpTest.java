@@ -3,7 +3,7 @@ package com.example.CarRentalSystem;
 import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
 import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.repository.interfaces.BrandRepository;
+import com.example.CarRentalSystem.repository.brand.BrandRepository;
 import com.example.CarRentalSystem.service.BrandServiceImp;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
