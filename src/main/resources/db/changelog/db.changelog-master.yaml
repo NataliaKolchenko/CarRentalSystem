@@ -1,3 +1,4 @@
+---
 databaseChangeLog:
   - logicalFilePath: db/changelog/db.changelog-master.yaml
   - changeSet:
@@ -18,18 +19,45 @@ databaseChangeLog:
               - column:
                   name: brand_name
                   type: character varying(255)
+  - changeSet:
+      id: 2
+      author: natalia_kolchenko
+      changes:
+        - createTable:
+            tableName: model
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: model_name
+                  type: character varying(255)
+              - column:
+                  name: brand_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: model
+            baseColumnNames: brand_id
+            constraintName: fk_model_brand
+            referencedTableName: brand
+            referencedColumnNames: id
 #  - changeSet:
-#      id: 2
+#      id: 3
 #      author: natalia_kolchenko
-#      comment: "Create Brand model"
 #      changes:
 #        - insert:
-#            tableName: brand
+#            tableName: model
 #            columns:
 #              - column:
-#                  name: brand_name
-#                  value: "TEST"
-#      rollback:
-#        - delete:
-#            tableName: brand
-#            where: brand_name in ('TEST')
+#                  name: model_name
+#                  value: "TEST1"
+#              - column:
+#                  name: brand_id
+#                  value: 19
