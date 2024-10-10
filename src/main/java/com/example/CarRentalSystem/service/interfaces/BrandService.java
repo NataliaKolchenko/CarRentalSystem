@@ -3,9 +3,8 @@ package com.example.CarRentalSystem.service.interfaces;
 import com.example.CarRentalSystem.model.Brand;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface BrandServiceInterface {
+public interface BrandService {
     Brand createVehicleBrand (String brandName);
     Brand updateVehicleBrand (Long brandId, String newBrandName);
     boolean deleteVehicleBrandById(Long brandId);

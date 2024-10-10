@@ -3,8 +3,8 @@ package com.example.CarRentalSystem.service;
 import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
 import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.repository.interfaces.BrandRepositoryInterface;
-import com.example.CarRentalSystem.service.interfaces.BrandServiceInterface;
+import com.example.CarRentalSystem.repository.interfaces.BrandRepository;
+import com.example.CarRentalSystem.service.interfaces.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -15,11 +15,11 @@ import java.util.Optional;
 
 @Service
 @Validated
-public class BrandServiceImp implements BrandServiceInterface {
-    private final BrandRepositoryInterface brandRepository;
+public class BrandServiceImp implements BrandService {
+    private final BrandRepository brandRepository;
 
     @Autowired
-    public BrandServiceImp(BrandRepositoryInterface brandRepository) {
+    public BrandServiceImp(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
     }
 

@@ -1,8 +1,8 @@
 package com.example.CarRentalSystem.repository;
 
 import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.repository.interfaces.BrandRepositoryInterface;
-import com.example.CarRentalSystem.repository.interfaces.JpaBrandRepositoryInterface;
+import com.example.CarRentalSystem.repository.interfaces.BrandRepository;
+import com.example.CarRentalSystem.repository.interfaces.JpaBrandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class BrandRepositoryImp implements BrandRepositoryInterface {
-    private final JpaBrandRepositoryInterface jpaBrandRepository;
+public class BrandRepositoryImp implements BrandRepository {
+    private final JpaBrandRepository jpaBrandRepository;
     @Override
     public Brand createVehicleBrand(String brandName) {
         Brand brand = new Brand(brandName);

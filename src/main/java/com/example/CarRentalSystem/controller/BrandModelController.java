@@ -1,11 +1,8 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
-import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.service.interfaces.BrandServiceInterface;
+import com.example.CarRentalSystem.service.interfaces.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -15,10 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/brandAndModel")
 public class BrandModelController {
-    private final BrandServiceInterface brandModelService;
+    private final BrandService brandModelService;
 
     @Autowired
-    public BrandModelController(BrandServiceInterface brandModelService) {
+    public BrandModelController(BrandService brandModelService) {
         this.brandModelService = brandModelService;
     }
 
