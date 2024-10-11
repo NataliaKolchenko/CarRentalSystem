@@ -1,19 +1,17 @@
 package com.example.CarRentalSystem.service;
 
-import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
+import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.exception.ModelAlreadyExistsException;
+import com.example.CarRentalSystem.exception.ModelNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.model.Model;
-import com.example.CarRentalSystem.repository.brand.BrandRepository;
 import com.example.CarRentalSystem.repository.model.ModelRepository;
 import com.example.CarRentalSystem.service.interfaces.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Validated
@@ -33,10 +31,10 @@ public class ModelServiceImp  implements ModelService {
         if(checkExistModel != null){
             throw  new ModelAlreadyExistsException("BrandName has to be unique");
         }
-//        Brand brand = brandServiceImp.getVehicleBrandById(model.getBrand().getId());
-//        Model newModel = new Model(modelName, brand);
+        Brand brand = brandServiceImp.getVehicleBrandById(model.getBrand().getId());
+        Model newModel = new Model(model.getModelName(), brand);
 
-        return modelRepository.createModel(model);
+        return modelRepository.createModel(newModel);
     }
 
     @Override
@@ -56,7 +54,11 @@ public class ModelServiceImp  implements ModelService {
 
     @Override
     public Model getModelByName(String modelName) {
-        return modelRepository.getModelByName(modelName);
+        Model model = modelRepository.getModelByName(modelName);
+        if (model == null){
+            throw new ModelNotFoundException("ModelName was not found");
+        }
+        return model;
     }
 
     @Override

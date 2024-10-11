@@ -63,7 +63,7 @@ public class BrandServiceImp implements BrandService {
     public Brand getVehicleBrandByName(String brandName) {
         Brand brand = brandRepository.getVehicleBrandByName(brandName);
         if (brand == null) {
-            throw new BrandNotFoundException("BrandId was not found");
+            throw new BrandNotFoundException("BrandName was not found");
         }
         return brand;
     }
