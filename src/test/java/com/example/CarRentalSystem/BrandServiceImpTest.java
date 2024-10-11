@@ -45,7 +45,6 @@ public class BrandServiceImpTest {
                 () -> verify(brandRepository).getVehicleBrandByName(brandName),
                 () -> verify(brandRepository).createVehicleBrand(brandName)
         );
-
     }
 
     @Test
@@ -62,7 +61,6 @@ public class BrandServiceImpTest {
                 () -> verify(brandRepository).getVehicleBrandByName(brandName),
                 () -> verifyNoMoreInteractions(brandRepository)
         );
-
     }
 
     @Test
@@ -90,10 +88,7 @@ public class BrandServiceImpTest {
 
                 () -> verify(brandRepository).getVehicleBrandByName(newBrandName),
                 () -> verify(brandRepository).updateVehicleBrand(existingBrand)
-
         );
-
-
     }
 
     @Test
