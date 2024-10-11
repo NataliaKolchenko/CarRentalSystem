@@ -1,7 +1,5 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
-import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Error;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

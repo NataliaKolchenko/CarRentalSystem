@@ -1,6 +1,5 @@
 package com.example.CarRentalSystem.repository.model;
 
-import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.model.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

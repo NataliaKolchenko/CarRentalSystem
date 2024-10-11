@@ -10,6 +10,5 @@ public interface BrandService {
     boolean deleteVehicleBrandById(Long brandId);
     Brand getVehicleBrandById(Long brandId);
     Brand getVehicleBrandByName(String brandName);
-
     List<Brand> getAllVehicleBrand();
 }
