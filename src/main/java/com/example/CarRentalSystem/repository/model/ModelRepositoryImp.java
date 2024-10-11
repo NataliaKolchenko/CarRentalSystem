@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -29,8 +30,9 @@ public class ModelRepositoryImp implements ModelRepository{
     }
 
     @Override
-    public Model getModelById(Long modelId) {
-        return null;
+    public Optional<Model> getModelById(Long modelId) {
+
+        return jpaModelRepository.findById(modelId);
     }
 
     @Override

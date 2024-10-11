@@ -58,4 +58,9 @@ public class BrandModelController {
         modelService.createModel(newModel);
         return ResponseEntity.ok(modelService.getModelByName(newModel.getModelName()));
     }
+
+    @GetMapping("/getModelById/{id}")
+    public ResponseEntity<Model> getModelById(@PathVariable Long id){
+        return ResponseEntity.ok(modelService.getModelById(id));
+    }
 }

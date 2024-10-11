@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Validated
@@ -49,7 +50,9 @@ public class ModelServiceImp  implements ModelService {
 
     @Override
     public Model getModelById(Long modelId) {
-        return null;
+        Optional<Model> modelOpt = modelRepository.getModelById(modelId);
+        Model model = modelOpt.orElseThrow(() -> new ModelNotFoundException("ModelId was not found"));
+        return model;
     }
 
     @Override

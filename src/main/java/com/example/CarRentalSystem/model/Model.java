@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +20,7 @@ public class Model {
     @NotBlank(message = "modelName may not be blank or null or has spaces")
     private String modelName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     @NotNull(message = "Brand may not be null")
     private Brand brand;
