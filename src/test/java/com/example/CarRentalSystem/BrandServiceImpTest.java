@@ -58,6 +58,7 @@ public class BrandServiceImpTest {
                 brandService.createVehicleBrand(brandName));
         assertAll(
                 () -> assertEquals("BrandName has to be unique", exception.getMessage()),
+
                 () -> verify(brandRepository).getVehicleBrandByName(brandName),
                 () -> verifyNoMoreInteractions(brandRepository)
         );
@@ -111,9 +112,10 @@ public class BrandServiceImpTest {
                 brandService.updateVehicleBrand(existingId, newBrandName));
         assertAll(
                 () -> assertEquals("BrandName has to be unique", exception.getMessage()),
-                () -> verify(brandRepository, times(0)).updateVehicleBrand(existingBrand)
-        );
 
+                () -> verify(brandRepository).getVehicleBrandByName(newBrandName),
+                () -> verifyNoMoreInteractions(brandRepository)
+        );
     }
 
     @Test
@@ -125,7 +127,9 @@ public class BrandServiceImpTest {
 
         assertAll(
                 () -> assertTrue(result),
-                () -> verify(brandRepository, times(1)).deleteVehicleBrandById(existingId)
+
+                () -> verify(brandRepository).existsById(existingId),
+                () -> verify(brandRepository).deleteVehicleBrandById(existingId)
         );
 
 
@@ -140,7 +144,9 @@ public class BrandServiceImpTest {
 
         assertAll(
                 () -> assertEquals("BrandId was not found", exception.getMessage()),
-                () -> verify(brandRepository, times(0)).deleteVehicleBrandById(notExistingId)
+
+                () -> verify(brandRepository).existsById(notExistingId),
+                () -> verifyNoMoreInteractions(brandRepository)
         );
 
     }
@@ -156,7 +162,8 @@ public class BrandServiceImpTest {
         assertAll(
                 () -> assertNotNull(vehicleBrandById),
                 () -> assertEquals(expectedBrand, vehicleBrandById),
-                () -> verify(brandRepository, times(1)).getVehicleBrandById(brandId)
+
+                () -> verify(brandRepository).getVehicleBrandById(brandId)
         );
 
 
@@ -172,7 +179,8 @@ public class BrandServiceImpTest {
 
         assertAll(
                 () -> assertEquals("BrandId was not found", exception.getMessage()),
-                () -> verify(brandRepository, times(1)).getVehicleBrandById(brandId)
+
+                () -> verifyNoMoreInteractions(brandRepository)
         );
 
     }
@@ -188,7 +196,8 @@ public class BrandServiceImpTest {
         assertAll(
                 () -> assertNotNull(vehicleBrandByName),
                 () -> assertEquals(expectedBrand, vehicleBrandByName),
-                () -> verify(brandRepository, times(1)).getVehicleBrandByName(brandName)
+
+                () -> verify(brandRepository).getVehicleBrandByName(brandName)
         );
 
 
@@ -203,8 +212,9 @@ public class BrandServiceImpTest {
                 () -> brandService.getVehicleBrandByName(brandName));
 
         assertAll(
-                () -> assertEquals("BrandId was not found", exception.getMessage()),
-                () -> verify(brandRepository, times(1)).getVehicleBrandByName(brandName)
+                () -> assertEquals("BrandName was not found", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(brandRepository)
         );
     }
 
@@ -223,7 +233,8 @@ public class BrandServiceImpTest {
                 () -> assertFalse(actualBrandList.isEmpty()),
                 () -> assertEquals(brandList, actualBrandList),
                 () -> assertEquals(brandList.size(), actualBrandList.size()),
-                () -> verify(brandRepository, times(1)).getAllVehicleBrand()
+
+                () -> verify(brandRepository).getAllVehicleBrand()
         );
 
 
@@ -238,7 +249,8 @@ public class BrandServiceImpTest {
         assertAll(
                 () -> assertEquals(Collections.emptyList(), brandList),
                 () -> assertTrue(brandList.isEmpty()),
-                () -> verify(brandRepository, times(1)).getAllVehicleBrand()
+
+                () -> verifyNoMoreInteractions(brandRepository)
         );
     }
 }
