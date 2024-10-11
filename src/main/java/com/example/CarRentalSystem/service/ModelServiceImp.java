@@ -1,6 +1,5 @@
 package com.example.CarRentalSystem.service;
 
-import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.exception.ModelAlreadyExistsException;
 import com.example.CarRentalSystem.exception.ModelNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +65,8 @@ public class ModelServiceImp  implements ModelService {
     }
 
     @Override
-    public List<Model> getAllModel() {
-        return null;
+    public List<Model> getAllModels() {
+        List<Model> modelList = modelRepository.getAllModels();
+        return modelList.isEmpty() ? Collections.emptyList() : modelList;
     }
 }

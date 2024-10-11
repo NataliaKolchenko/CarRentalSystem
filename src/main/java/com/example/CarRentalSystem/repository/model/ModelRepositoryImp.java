@@ -41,7 +41,7 @@ public class ModelRepositoryImp implements ModelRepository{
     }
 
     @Override
-    public List<Model> getAllModel() {
-        return null;
+    public List<Model> getAllModels() {
+        return jpaModelRepository.findAll();
     }
 }

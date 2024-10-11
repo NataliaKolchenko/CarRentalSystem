@@ -63,4 +63,9 @@ public class BrandModelController {
     public ResponseEntity<Model> getModelById(@PathVariable Long id){
         return ResponseEntity.ok(modelService.getModelById(id));
     }
+
+    @GetMapping("/getAllModels")
+    public ResponseEntity<List<Model>> getAllModels(){
+        return ResponseEntity.ok(modelService.getAllModels());
+    }
 }

@@ -10,5 +10,5 @@ public interface ModelService {
     boolean deleteModelById(Long modelId);
     Model getModelById(Long modelId);
     Model getModelByName(String modelName);
-    List<Model> getAllModel();
+    List<Model> getAllModels();
 }

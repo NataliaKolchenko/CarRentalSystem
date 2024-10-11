@@ -12,5 +12,5 @@ public interface ModelRepository {
     boolean deleteModelById(Long modelId);
     Optional<Model> getModelById(Long modelId);
     Model getModelByName(String modelName);
-    List<Model> getAllModel();
+    List<Model> getAllModels();
 }
