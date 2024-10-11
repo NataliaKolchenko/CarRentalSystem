@@ -20,8 +20,8 @@ public class ModelRepositoryImp implements ModelRepository{
     }
 
     @Override
-    public Brand updateModel(Model updatedModel) {
-        return null;
+    public Model updateModel(Model updatedModel) {
+        return jpaModelRepository.save(updatedModel);
     }
 
     @Override
@@ -32,7 +32,6 @@ public class ModelRepositoryImp implements ModelRepository{
 
     @Override
     public Optional<Model> getModelById(Long modelId) {
-
         return jpaModelRepository.findById(modelId);
     }
 

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ModelRepository {
     Model createModel (Model newModel);
-    Brand updateModel (Model updatedModel);
+    Model updateModel (Model updatedModel);
     boolean deleteModelById(Long modelId);
     Optional<Model> getModelById(Long modelId);
     Model getModelByName(String modelName);

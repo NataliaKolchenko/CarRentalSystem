@@ -40,7 +40,13 @@ public class ModelServiceImp  implements ModelService {
 
     @Override
     public Model updateModel(Long modelId, String newModelName) {
-        return null;
+        Model model = getModelById(modelId);
+        if(modelRepository.getModelByName(newModelName) != null){
+            throw new ModelAlreadyExistsException("BrandName has to be unique");
+        }
+        model.setModelName(newModelName);
+        Model updatedModel = modelRepository.updateModel(model);
+        return updatedModel;
     }
 
     @Override

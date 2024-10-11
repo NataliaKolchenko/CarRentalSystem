@@ -48,7 +48,6 @@ public class BrandModelController {
     public ResponseEntity<Brand> updateBrand(@PathVariable Long id,
                                              @RequestBody @Valid Brand newBrand){
         return ResponseEntity.ok(brandService.updateVehicleBrand(id, newBrand.getBrandName()));
-
     }
 
     // -----------------------------------------------------------------
@@ -72,5 +71,10 @@ public class BrandModelController {
     @DeleteMapping("/deleteModelById/{id}")
     public ResponseEntity<Boolean> deleteModelById(@PathVariable Long id){
         return ResponseEntity.ok(modelService.deleteModelById(id));
+    }
+    @PutMapping("/updateModel/{id}")
+    public ResponseEntity<Model> updateModel(@PathVariable Long id,
+                                             @RequestBody @Valid Model newModel){
+        return ResponseEntity.ok(modelService.updateModel(id, newModel.getModelName()));
     }
 }
