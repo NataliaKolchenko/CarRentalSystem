@@ -41,7 +41,9 @@ public class BrandServiceImpTest {
         assertAll(
                 () -> assertNotNull(result),
                 () -> assertEquals(brandName, result.getBrandName()),
-                () -> verify(brandRepository, times(1)).createVehicleBrand(brandName)
+
+                () -> verify(brandRepository).getVehicleBrandByName(brandName),
+                () -> verify(brandRepository).createVehicleBrand(brandName)
         );
 
     }
@@ -57,7 +59,7 @@ public class BrandServiceImpTest {
                 brandService.createVehicleBrand(brandName));
         assertAll(
                 () -> assertEquals("BrandName has to be unique", exception.getMessage()),
-                () -> verify(brandRepository, times(1)).getVehicleBrandByName(brandName),
+                () -> verify(brandRepository).getVehicleBrandByName(brandName),
                 () -> verifyNoMoreInteractions(brandRepository)
         );
 
@@ -85,7 +87,10 @@ public class BrandServiceImpTest {
         assertAll(
                 () -> assertEquals(result, updatedBrand),
                 () -> assertEquals(result.getBrandName(), newBrandName),
-                () -> verify(brandRepository, times(1)).updateVehicleBrand(existingBrand)
+
+                () -> verify(brandRepository).getVehicleBrandByName(newBrandName),
+                () -> verify(brandRepository).updateVehicleBrand(existingBrand)
+
         );
 
 
