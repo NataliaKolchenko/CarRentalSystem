@@ -13,4 +13,5 @@ public interface ModelRepository {
     Optional<Model> getModelById(Long modelId);
     Model getModelByName(String modelName);
     List<Model> getAllModels();
+    boolean existsById(Long modelId);
 }

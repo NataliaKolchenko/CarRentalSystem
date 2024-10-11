@@ -26,7 +26,8 @@ public class ModelRepositoryImp implements ModelRepository{
 
     @Override
     public boolean deleteModelById(Long modelId) {
-        return false;
+        jpaModelRepository.deleteById(modelId);
+        return true;
     }
 
     @Override
@@ -43,5 +44,10 @@ public class ModelRepositoryImp implements ModelRepository{
     @Override
     public List<Model> getAllModels() {
         return jpaModelRepository.findAll();
+    }
+
+    @Override
+    public boolean existsById(Long modelId) {
+        return jpaModelRepository.existsById(modelId);
     }
 }

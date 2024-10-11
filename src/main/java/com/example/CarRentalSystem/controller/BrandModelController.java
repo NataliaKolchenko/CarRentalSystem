@@ -68,4 +68,9 @@ public class BrandModelController {
     public ResponseEntity<List<Model>> getAllModels(){
         return ResponseEntity.ok(modelService.getAllModels());
     }
+
+    @DeleteMapping("/deleteModelById/{id}")
+    public ResponseEntity<Boolean> deleteModelById(@PathVariable Long id){
+        return ResponseEntity.ok(modelService.deleteModelById(id));
+    }
 }

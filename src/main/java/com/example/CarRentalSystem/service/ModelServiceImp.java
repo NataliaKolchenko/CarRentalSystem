@@ -45,7 +45,10 @@ public class ModelServiceImp  implements ModelService {
 
     @Override
     public boolean deleteModelById(Long modelId) {
-        return false;
+        if(!modelRepository.existsById(modelId)){
+            throw new ModelNotFoundException("BrandId was not found");
+        }
+        return modelRepository.deleteModelById(modelId);
     }
 
     @Override
