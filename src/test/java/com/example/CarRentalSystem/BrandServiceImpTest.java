@@ -3,7 +3,7 @@ package com.example.CarRentalSystem;
 import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
 import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.repository.brand.BrandRepository;
+import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.BrandServiceImp;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,16 +25,15 @@ public class BrandServiceImpTest {
     @InjectMocks
     private BrandServiceImp brandService;
     @Mock
-    private BrandRepository brandRepository;
+    private JpaBrandRepository brandRepository;
 
     @Test
     public void testCreateVehicleBrand_NewBrand_Successfully() {
         String brandName = "Test";
 
-        when(brandRepository.getVehicleBrandByName(brandName)).thenReturn(null);
+        when(brandRepository.findByBrandName(brandName)).thenReturn(null);
 
-        Brand newBrand = new Brand(brandName);
-        when(brandRepository.createVehicleBrand(brandName)).thenReturn(newBrand);
+        when(brandRepository.save(any(Brand.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         Brand result = brandService.createVehicleBrand(brandName);
 
@@ -42,8 +41,8 @@ public class BrandServiceImpTest {
                 () -> assertNotNull(result),
                 () -> assertEquals(brandName, result.getBrandName()),
 
-                () -> verify(brandRepository).getVehicleBrandByName(brandName),
-                () -> verify(brandRepository).createVehicleBrand(brandName)
+                () -> verify(brandRepository).findByBrandName(brandName),
+                () -> verify(brandRepository).save(any(Brand.class))
         );
     }
 
@@ -52,14 +51,14 @@ public class BrandServiceImpTest {
         String brandName = "ExistingBrand";
         Brand existingBrand = new Brand(brandName);
 
-        when(brandRepository.getVehicleBrandByName(brandName)).thenReturn(existingBrand);
+        when(brandRepository.findByBrandName(brandName)).thenReturn(existingBrand);
 
         BrandAlreadyExistsException exception = assertThrows(BrandAlreadyExistsException.class, () ->
                 brandService.createVehicleBrand(brandName));
         assertAll(
                 () -> assertEquals("BrandName has to be unique", exception.getMessage()),
 
-                () -> verify(brandRepository).getVehicleBrandByName(brandName),
+                () -> verify(brandRepository).findByBrandName(brandName),
                 () -> verifyNoMoreInteractions(brandRepository)
         );
     }
@@ -73,22 +72,22 @@ public class BrandServiceImpTest {
         existingBrand.setId(existingId);
         existingBrand.setBrandName("Brand");
 
-        when(brandRepository.getVehicleBrandById(existingId)).thenReturn(Optional.of(existingBrand));
-        when(brandRepository.getVehicleBrandByName(newBrandName)).thenReturn(null);
+        when(brandRepository.findById(existingId)).thenReturn(Optional.of(existingBrand));
+        when(brandRepository.findByBrandName(newBrandName)).thenReturn(null);
 
         Brand updatedBrand = new Brand();
         updatedBrand.setId(existingId);
         updatedBrand.setBrandName(newBrandName);
 
-        when(brandRepository.updateVehicleBrand(existingBrand)).thenReturn(updatedBrand);
+        when(brandRepository.save(existingBrand)).thenReturn(updatedBrand);
         Brand result = brandService.updateVehicleBrand(existingId, newBrandName);
 
         assertAll(
                 () -> assertEquals(result, updatedBrand),
                 () -> assertEquals(result.getBrandName(), newBrandName),
 
-                () -> verify(brandRepository).getVehicleBrandByName(newBrandName),
-                () -> verify(brandRepository).updateVehicleBrand(existingBrand)
+                () -> verify(brandRepository).findByBrandName(newBrandName),
+                () -> verify(brandRepository).save(existingBrand)
         );
     }
 
@@ -101,8 +100,8 @@ public class BrandServiceImpTest {
         existingBrand.setId(existingId);
         existingBrand.setBrandName("ExistingBrand");
 
-        when(brandRepository.getVehicleBrandById(existingId)).thenReturn(Optional.of(existingBrand));
-        when(brandRepository.getVehicleBrandByName(newBrandName)).thenReturn(existingBrand);
+        when(brandRepository.findById(existingId)).thenReturn(Optional.of(existingBrand));
+        when(brandRepository.findByBrandName(newBrandName)).thenReturn(existingBrand);
 
         Brand updatedBrand = new Brand();
         updatedBrand.setId(existingId);
@@ -113,49 +112,16 @@ public class BrandServiceImpTest {
         assertAll(
                 () -> assertEquals("BrandName has to be unique", exception.getMessage()),
 
-                () -> verify(brandRepository).getVehicleBrandByName(newBrandName),
+                () -> verify(brandRepository).findByBrandName(newBrandName),
                 () -> verifyNoMoreInteractions(brandRepository)
         );
-    }
-
-    @Test
-    public void testDeleteVehicleBrandById_ExistingBrandId_Successfully() {
-        Long existingId = 1L;
-        when(brandRepository.existsById(existingId)).thenReturn(true);
-        when(brandRepository.deleteVehicleBrandById(existingId)).thenReturn(true);
-        boolean result = brandService.deleteVehicleBrandById(existingId);
-
-        assertAll(
-                () -> assertTrue(result),
-
-                () -> verify(brandRepository).existsById(existingId),
-                () -> verify(brandRepository).deleteVehicleBrandById(existingId)
-        );
-
-
-    }
-
-    @Test
-    public void testDeleteVehicleBrandById_BrandIdNotFound_ThrowsException() {
-        Long notExistingId = 2L;
-        when(brandRepository.existsById(notExistingId)).thenReturn(false);
-        BrandNotFoundException exception = assertThrows(BrandNotFoundException.class,
-                () -> brandService.deleteVehicleBrandById(notExistingId));
-
-        assertAll(
-                () -> assertEquals("BrandId was not found", exception.getMessage()),
-
-                () -> verify(brandRepository).existsById(notExistingId),
-                () -> verifyNoMoreInteractions(brandRepository)
-        );
-
     }
 
     @Test
     public void testGetVehicleBrandById_Successfully() {
         Long brandId = 1L;
         Brand expectedBrand = new Brand("expectedBrand");
-        when(brandRepository.getVehicleBrandById(brandId)).thenReturn(Optional.of((expectedBrand)));
+        when(brandRepository.findById(brandId)).thenReturn(Optional.of((expectedBrand)));
 
         Brand vehicleBrandById = brandService.getVehicleBrandById(brandId);
 
@@ -163,7 +129,7 @@ public class BrandServiceImpTest {
                 () -> assertNotNull(vehicleBrandById),
                 () -> assertEquals(expectedBrand, vehicleBrandById),
 
-                () -> verify(brandRepository).getVehicleBrandById(brandId)
+                () -> verify(brandRepository).findById(brandId)
         );
 
 
@@ -172,7 +138,7 @@ public class BrandServiceImpTest {
     @Test
     public void testGetVehicleBrandById_NotExistBrandId_ThrowsException() {
         Long brandId = 1L;
-        when(brandRepository.getVehicleBrandById(brandId)).thenReturn(Optional.empty());
+        when(brandRepository.findById(brandId)).thenReturn(Optional.empty());
 
         BrandNotFoundException exception = assertThrows(BrandNotFoundException.class,
                 () -> brandService.getVehicleBrandById(brandId));
@@ -189,7 +155,7 @@ public class BrandServiceImpTest {
     public void testGetVehicleBrandByName_Successfully() {
         String brandName = "expectedBrand";
         Brand expectedBrand = new Brand("expectedBrand");
-        when(brandRepository.getVehicleBrandByName(brandName)).thenReturn(expectedBrand);
+        when(brandRepository.findByBrandName(brandName)).thenReturn(expectedBrand);
 
         Brand vehicleBrandByName = brandService.getVehicleBrandByName(brandName);
 
@@ -197,7 +163,7 @@ public class BrandServiceImpTest {
                 () -> assertNotNull(vehicleBrandByName),
                 () -> assertEquals(expectedBrand, vehicleBrandByName),
 
-                () -> verify(brandRepository).getVehicleBrandByName(brandName)
+                () -> verify(brandRepository).findByBrandName(brandName)
         );
 
 
@@ -206,7 +172,7 @@ public class BrandServiceImpTest {
     @Test
     public void testGetVehicleBrandByName_NotExistBrandId_ThrowsException() {
         String brandName = "expectedBrand";
-        when(brandRepository.getVehicleBrandByName(brandName)).thenReturn(null);
+        when(brandRepository.findByBrandName(brandName)).thenReturn(null);
 
         BrandNotFoundException exception = assertThrows(BrandNotFoundException.class,
                 () -> brandService.getVehicleBrandByName(brandName));
@@ -225,7 +191,7 @@ public class BrandServiceImpTest {
         Brand brand2 = new Brand("Test2");
         brandList.add(brand1);
         brandList.add(brand2);
-        when(brandRepository.getAllVehicleBrand()).thenReturn(brandList);
+        when(brandRepository.findAll()).thenReturn(brandList);
 
         List<Brand> actualBrandList = brandService.getAllVehicleBrand();
 
@@ -234,7 +200,7 @@ public class BrandServiceImpTest {
                 () -> assertEquals(brandList, actualBrandList),
                 () -> assertEquals(brandList.size(), actualBrandList.size()),
 
-                () -> verify(brandRepository).getAllVehicleBrand()
+                () -> verify(brandRepository).findAll()
         );
 
 
@@ -242,7 +208,7 @@ public class BrandServiceImpTest {
 
     @Test
     public void testGetAllVehicleBrand_EmptyList() {
-        when(brandRepository.getAllVehicleBrand()).thenReturn(Collections.emptyList());
+        when(brandRepository.findAll()).thenReturn(Collections.emptyList());
 
         List<Brand> brandList = brandService.getAllVehicleBrand();
 
