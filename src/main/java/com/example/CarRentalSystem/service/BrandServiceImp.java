@@ -3,7 +3,7 @@ package com.example.CarRentalSystem.service;
 import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
 import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.repository.brand.JpaBrandRepository;
+import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

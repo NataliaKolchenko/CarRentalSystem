@@ -71,7 +71,8 @@ public class BrandModelController {
 
     @DeleteMapping("/deleteModelById/{id}")
     public ResponseEntity<Boolean> deleteModelById(@PathVariable Long id){
-        return ResponseEntity.ok(modelService.deleteModelById(id));
+        modelService.deleteModelById(id);
+        return ResponseEntity.ok(true);
     }
     @PutMapping("/updateModel/{id}")
     public ResponseEntity<Model> updateModel(@PathVariable Long id,
