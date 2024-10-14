@@ -3,7 +3,7 @@ package com.example.CarRentalSystem.service;
 import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
 import com.example.CarRentalSystem.exception.BrandNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.repository.brand.BrandRepository;
+import com.example.CarRentalSystem.repository.brand.JpaBrandRepository;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,52 +16,53 @@ import java.util.Optional;
 @Service
 @Validated
 public class BrandServiceImp implements BrandService {
-    private final BrandRepository brandRepository;
+    private final JpaBrandRepository brandRepository;
 
     @Autowired
-    public BrandServiceImp(BrandRepository brandRepository) {
+    public BrandServiceImp(JpaBrandRepository brandRepository) {
         this.brandRepository = brandRepository;
     }
 
     @Override
     public Brand createVehicleBrand(String brandName) {
-        Brand checkExistBrand = brandRepository.getVehicleBrandByName(brandName);
+        Brand checkExistBrand = brandRepository.findByBrandName(brandName);
         if(checkExistBrand != null) {
             throw new BrandAlreadyExistsException("BrandName has to be unique");
         }
-       Brand newBrand = brandRepository.createVehicleBrand(brandName);
+       Brand newBrand = new Brand(brandName);
+        brandRepository.save(newBrand);
         return newBrand;
     }
 
     @Override
     public Brand updateVehicleBrand(Long brandId, String newBrandName) {
         Brand brand = getVehicleBrandById(brandId);
-       if (brandRepository.getVehicleBrandByName(newBrandName) != null){
+       if (brandRepository.findByBrandName(newBrandName) != null){
            throw new BrandAlreadyExistsException("BrandName has to be unique");
        }
         brand.setBrandName(newBrandName);
-        Brand updatedBrand = brandRepository.updateVehicleBrand(brand);
+        Brand updatedBrand = brandRepository.save(brand);
         return updatedBrand;
     }
 
     @Override
-    public boolean deleteVehicleBrandById(Long brandId) {
+    public void deleteVehicleBrandById(Long brandId) {
         if (!brandRepository.existsById(brandId)) {
             throw new BrandNotFoundException("BrandId was not found");
         }
-        return brandRepository.deleteVehicleBrandById(brandId);
+        brandRepository.deleteById(brandId);
     }
 
     @Override
     public Brand getVehicleBrandById(Long brandId) {
-        Optional<Brand> brandOpt = brandRepository.getVehicleBrandById(brandId);
+        Optional<Brand> brandOpt = brandRepository.findById(brandId);
         Brand brand = brandOpt.orElseThrow(() -> new BrandNotFoundException("BrandId was not found"));
         return brand;
     }
 
     @Override
     public Brand getVehicleBrandByName(String brandName) {
-        Brand brand = brandRepository.getVehicleBrandByName(brandName);
+        Brand brand = brandRepository.findByBrandName(brandName);
         if (brand == null) {
             throw new BrandNotFoundException("BrandName was not found");
         }
@@ -70,7 +71,7 @@ public class BrandServiceImp implements BrandService {
 
     @Override
     public List<Brand> getAllVehicleBrand() {
-        List<Brand> brandList = brandRepository.getAllVehicleBrand();
+        List<Brand> brandList = brandRepository.findAll();
         return brandList.isEmpty() ? Collections.emptyList() : brandList;
     }
 
