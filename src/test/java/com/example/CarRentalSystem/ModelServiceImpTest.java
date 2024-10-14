@@ -1,5 +1,7 @@
 package com.example.CarRentalSystem;
 
+import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
+import com.example.CarRentalSystem.exception.ModelAlreadyExistsException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.repository.brand.BrandRepository;
@@ -54,5 +56,29 @@ public class ModelServiceImpTest {
                 () -> verify(modelRepository).createModel(any(Model.class))
         );
 
+    }
+
+    @Test
+    public void testCreateModel_ModelNameNotUnique_ThrowsException(){
+        Long existBrandId = 1L;
+        String existModelName = "existModelName";
+
+        Brand existBrand = new Brand();
+        existBrand.setId(existBrandId);
+        existBrand.setBrandName("BrandName");
+
+        Model model = new Model(existModelName, existBrand);
+
+        when(modelRepository.getModelByName(existModelName)).thenReturn(model);
+
+        ModelAlreadyExistsException exception = assertThrows(ModelAlreadyExistsException.class, () ->
+                modelService.createModel(model));
+
+        assertAll(
+                () -> assertEquals("ModelName has to be unique", exception.getMessage()),
+
+                () -> verify(modelRepository).getModelByName(existModelName),
+                () -> verifyNoMoreInteractions(modelRepository)
+        );
     }
 }

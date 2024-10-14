@@ -30,7 +30,7 @@ public class ModelServiceImp  implements ModelService {
     public Model createModel(Model model) {
         Model checkExistModel = modelRepository.getModelByName(model.getModelName());
         if(checkExistModel != null){
-            throw  new ModelAlreadyExistsException("BrandName has to be unique");
+            throw  new ModelAlreadyExistsException("ModelName has to be unique");
         }
         Brand brand = brandServiceImp.getVehicleBrandById(model.getBrand().getId());
         Model newModel = new Model(model.getModelName(), brand);
@@ -42,7 +42,7 @@ public class ModelServiceImp  implements ModelService {
     public Model updateModel(Long modelId, String newModelName) {
         Model model = getModelById(modelId);
         if(modelRepository.getModelByName(newModelName) != null){
-            throw new ModelAlreadyExistsException("BrandName has to be unique");
+            throw new ModelAlreadyExistsException("ModelName has to be unique");
         }
         model.setModelName(newModelName);
         Model updatedModel = modelRepository.updateModel(model);
@@ -52,7 +52,7 @@ public class ModelServiceImp  implements ModelService {
     @Override
     public boolean deleteModelById(Long modelId) {
         if(!modelRepository.existsById(modelId)){
-            throw new ModelNotFoundException("BrandId was not found");
+            throw new ModelNotFoundException("ModelId was not found");
         }
         return modelRepository.deleteModelById(modelId);
     }
