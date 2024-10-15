@@ -2,6 +2,7 @@ package com.example.CarRentalSystem;
 
 import com.example.CarRentalSystem.controller.BrandModelController;
 import com.example.CarRentalSystem.model.Brand;
+import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.service.BrandServiceImp;
 import com.example.CarRentalSystem.service.interfaces.ModelService;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,7 @@ public class BrandModelControllerTest {
     @MockBean
     private ModelService modelService;
     private Brand brand;
+    private Model model;
 
     @Test
     public void testCreateNewBrand_Success() throws Exception {
@@ -45,7 +47,7 @@ public class BrandModelControllerTest {
                         .content("{\"brandName\":\"NewBrand\"}")) // Тело запроса
                 .andExpect(status().isOk()) // Ожидаемый статус 200
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id",is(brandId.intValue())))
+                .andExpect(jsonPath("$.id", is(brandId.intValue())))
                 .andExpect(jsonPath("$.brandName", is("NewBrand"))); // Проверка возвращаемого значения
     }
 
@@ -69,8 +71,8 @@ public class BrandModelControllerTest {
         mockMvc.perform(get("/brandAndModel/getBrandById/{id}", brandId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id",is(brandId.intValue())))
-                .andExpect(jsonPath("$.brandName",is("Brand")));
+                .andExpect(jsonPath("$.id", is(brandId.intValue())))
+                .andExpect(jsonPath("$.brandName", is("Brand")));
     }
 
     @Test
@@ -119,9 +121,150 @@ public class BrandModelControllerTest {
                         .content("{\"brandName\":\"NewBrandName\"}")) // Тело запроса
                 .andExpect(status().isOk()) // Ожидаемый статус 200
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id",is(brandId.intValue())))
+                .andExpect(jsonPath("$.id", is(brandId.intValue())))
                 .andExpect(jsonPath("$.brandName", is("NewBrandName"))); // Проверка возвращаемого значения
 
+
+    }
+
+    // -----------------------------------------------------------------
+
+    @Test
+    public void testCreateNewModel_Success() throws Exception {
+        Long brandId = 2L;
+        String brandName = "BrandName";
+        brand = new Brand();
+        brand.setId(brandId);
+        brand.setBrandName(brandName);
+
+        Long modelId = 1l;
+        String modelName = "ModelName";
+        model = new Model(modelName, brand);
+        model.setId(modelId);
+
+        when(modelService.createModel(model)).thenReturn(model);
+        when(modelService.getModelByName(model.getModelName())).thenReturn(model);
+
+        mockMvc.perform(post("/brandAndModel/createNewModel")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "    \"modelName\": \"ModelName\",\n" +
+                                "    \"brand\": {\n" +
+                                "        \"id\": 2,\n" +
+                                "        \"brandName\": \"BrandName\"\n" +
+                                "    }\n" +
+                                "}")) // Тело запроса
+                .andExpect(status().isOk()) // Ожидаемый статус 200
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id", is(modelId.intValue()))) // Проверка возвращаемого значения
+                .andExpect(jsonPath("$.modelName", is(modelName)))
+                .andExpect(jsonPath("$.brand.id", is(brandId.intValue())))
+                .andExpect(jsonPath("$.brand.brandName", is(brandName)));
+    }
+
+    @Test
+    public void testCreateNewModel_InvalidInput() throws Exception {
+        mockMvc.perform(post("/brandAndModel/createNewModel")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "    \"modelName\": \" \",\n" +
+                                "    \"brand\": {\n" +
+                                "        \"id\": 2,\n" +
+                                "        \"brandName\": \"BrandName\"\n" +
+                                "    }\n" +
+                                "}")) // Тело запроса
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testGetModelById_Success() throws Exception {
+        Long brandId = 1L;
+        String brandName = "BrandName";
+        brand = new Brand(brandName);
+        brand.setId(brandId);
+
+        Long modelId = 2L;
+        String modelName = "ModelName";
+        model = new Model(modelName, brand);
+        model.setId(modelId);
+
+        when(modelService.getModelById(modelId)).thenReturn(model);
+
+        mockMvc.perform(get("/brandAndModel/getModelById/{id}", modelId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id", is(modelId.intValue())))
+                .andExpect(jsonPath("$.modelName", is(modelName)))
+                .andExpect(jsonPath("$.brand.id", is(brandId.intValue())))
+                .andExpect(jsonPath("$.brand.brandName", is(brandName)));
+    }
+
+    @Test
+    public void testGetAllModels() throws Exception {
+        Long brandId = 1L;
+        String brandName = "BrandName";
+        brand = new Brand(brandName);
+        brand.setId(brandId);
+
+        model = new Model("Model1", brand);
+        Model model2 = new Model("Model2", brand);
+
+        List<Model> modelList = List.of(model, model2);
+
+        when(modelService.getAllModels()).thenReturn(modelList);
+
+        mockMvc.perform(get("/brandAndModel/getAllModels"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(2));
+    }
+
+    @Test
+    public void testDeleteModelById() throws Exception {
+        Long modelId = 1L;
+
+        doNothing().when(modelService).deleteModelById(modelId);
+
+        mockMvc.perform(delete("/brandAndModel/deleteModelById/{id}", modelId))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void testUpdateModel() throws Exception {
+        Long brandId = 1L;
+        brand = new Brand();
+        brand.setId(brandId);
+        brand.setBrandName("Brand");
+
+        Long modelId = 2L;
+        model = new Model("ExistingModel", brand);
+        model.setId(modelId);
+
+        String newModelName = "NewModelName";
+
+        Model updatedModel = new Model();
+        updatedModel.setId(modelId);
+        updatedModel.setModelName(newModelName);
+        updatedModel.setBrand(brand);
+
+        when(modelService.updateModel(modelId, newModelName)).thenReturn(updatedModel);
+
+        mockMvc.perform(put("/brandAndModel/updateModel/{id}", modelId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "    \"modelName\": \"NewModelName\",\n" +
+                                "    \"brand\": {\n" +
+                                "        \"id\": 1,\n" +
+                                "        \"brandName\": \"Brand\"\n" +
+                                "    }\n" +
+                                "}")) // Тело запроса
+                .andExpect(status().isOk()) // Ожидаемый статус 200
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id", is(modelId.intValue())))
+                .andExpect(jsonPath("$.modelName", is(newModelName)))
+                .andExpect(jsonPath("$.brand.id", is(brandId.intValue())))
+                .andExpect(jsonPath("$.brand.brandName", is(brand.getBrandName())));
 
     }
 
