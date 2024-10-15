@@ -5,7 +5,7 @@ import com.example.CarRentalSystem.model.VehicleType;
 import java.util.List;
 
 public interface VehicleTypeService {
-    VehicleType create (String vehicleType);
+    VehicleType create (String vehicleTypeName);
     VehicleType update (Long vehicleTypeId, String newVehicleTypeName);
     void deleteById(Long vehicleTypeId);
     VehicleType getById(Long vehicleTypeId);
