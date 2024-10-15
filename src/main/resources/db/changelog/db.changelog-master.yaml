@@ -61,3 +61,31 @@ databaseChangeLog:
 #              - column:
 #                  name: brand_id
 #                  value: 19
+  - changeSet:
+      id: 4
+      author: natalia_kolchenko
+      changes:
+        - createTable:
+            tableName: vehicle_type
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: vehicle_type_name
+                  type: character varying(255)
+#  - changeSet:
+#      id: 5
+#      author: natalia_kolchenko
+#      changes:
+#         - insert:
+#            tableName: vehicle_type
+#            columns:
+#              - column:
+#                  name: vehicle_type_name
+#                  value: "TEST1"
