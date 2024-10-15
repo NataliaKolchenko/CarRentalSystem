@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.controller;
+package com.example.CarRentalSystem.controller.handler;
 
 import com.example.CarRentalSystem.model.Error;
 import org.springframework.http.HttpStatus;
