@@ -1,6 +1,7 @@
 package com.example.CarRentalSystem;
 
 import com.example.CarRentalSystem.exception.ModelAlreadyExistsException;
+import com.example.CarRentalSystem.exception.ModelNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.repository.JpaModelRepository;
@@ -11,6 +12,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -74,6 +80,166 @@ public class ModelServiceImpTest {
                 () -> assertEquals("ModelName has to be unique", exception.getMessage()),
 
                 () -> verify(modelRepository).findByModelName(existModelName),
+                () -> verifyNoMoreInteractions(modelRepository)
+        );
+    }
+
+    @Test
+    public void testUpdateModel_ExistingModel_Successfully(){
+        Long existModelId = 1L;
+        Brand existBrand = new Brand("existBrandName");
+
+        Model existingModel = new Model();
+        existingModel.setId(existModelId);
+        existingModel.setModelName("ExistingModelName");
+        existingModel.setBrand(existBrand);
+
+        String newModelName = "NewModelName";
+        existingModel.setModelName(newModelName);
+
+        when(modelRepository.findByModelName(existingModel.getModelName())).thenReturn(null);
+        when(modelRepository.findById(existModelId)).thenReturn(Optional.of(existingModel));
+        when(modelRepository.save(any(Model.class))).thenReturn(existingModel);
+
+        Model resultModel = modelService.updateModel(existModelId, newModelName);
+
+        assertAll(
+                () -> assertEquals(resultModel, existingModel),
+                () -> assertEquals(resultModel.getModelName(), newModelName),
+
+                () -> verify(modelRepository).findByModelName(newModelName),
+                () -> verify(modelRepository).save(existingModel)
+        );
+
+    }
+
+    @Test
+    public void testUpdateModel_NotUniqueModel_ThrowsException(){
+        Long existModelId = 1L;
+        Brand existBrand = new Brand("existBrandName");
+
+        Model existingModel = new Model();
+        existingModel.setId(existModelId);
+        existingModel.setModelName("ExistingModelName");
+        existingModel.setBrand(existBrand);
+
+        String newModelName = "ExistingModelName";
+        existingModel.setModelName(newModelName);
+
+        when(modelRepository.findByModelName(existingModel.getModelName())).thenReturn(existingModel);
+        when(modelRepository.findById(existModelId)).thenReturn(Optional.of(existingModel));
+
+        ModelAlreadyExistsException exception = assertThrows(ModelAlreadyExistsException.class, () ->
+                modelService.updateModel(existModelId, newModelName));
+        assertAll(
+                () -> assertEquals("ModelName has to be unique", exception.getMessage()),
+
+                () -> verify(modelRepository).findByModelName(newModelName),
+                () -> verifyNoMoreInteractions(modelRepository)
+        );
+    }
+
+    @Test
+    public void testGetModelById_Successfully(){
+        Long modelId = 1L;
+        Model expectedModel = new Model();
+        expectedModel.setId(modelId);
+        expectedModel.setModelName("ModelName");
+        expectedModel.setBrand(new Brand("BrandName"));
+
+        when(modelRepository.findById(modelId)).thenReturn(Optional.of(expectedModel));
+
+        Model modelById = modelService.getModelById(modelId);
+
+        assertAll(
+                () -> assertNotNull(modelById),
+                () -> assertEquals(expectedModel, modelById),
+
+                () -> verify(modelRepository).findById(modelId)
+        );
+    }
+
+    @Test
+    public void testGeModelById_NotExistModelId_ThrowsException() {
+        Long modelId = 1L;
+
+        when(modelRepository.findById(modelId)).thenReturn(Optional.empty());
+
+        ModelNotFoundException exception = assertThrows(ModelNotFoundException.class,
+                () -> modelService.getModelById(modelId));
+
+        assertAll(
+                () -> assertEquals("ModelId was not found", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(modelRepository)
+        );
+
+    }
+
+    @Test
+    public void testGeModelByName_Successfully() {
+        String modelName = "expectedModel";
+        Model expectedModel = new Model(modelName, new Brand("Brand"));
+
+        when(modelRepository.findByModelName(modelName)).thenReturn(expectedModel);
+
+        Model modelByName = modelService.getModelByName(modelName);
+
+        assertAll(
+                () -> assertNotNull(modelByName),
+                () -> assertEquals(expectedModel, modelByName),
+
+                () -> verify(modelRepository).findByModelName(modelName)
+        );
+    }
+
+    @Test
+    public void testGetModelByName_NotExistModelId_ThrowsException() {
+        String modelName = "expectedModel";
+        when(modelRepository.findByModelName(modelName)).thenReturn(null);
+
+        ModelNotFoundException exception = assertThrows(ModelNotFoundException.class,
+                () -> modelService.getModelByName(modelName));
+
+        assertAll(
+                () -> assertEquals("ModelName was not found", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(modelRepository)
+        );
+    }
+
+    @Test
+    public void testGetAllModels_Successfully() {
+        List<Model> modelList = new ArrayList<>();
+        Brand brand1 = new Brand("Test1");
+        Model model1 = new Model("Model1", brand1);
+        Model model2 = new Model("Model2", brand1);
+
+        modelList.add(model1);
+        modelList.add(model2);
+
+        when(modelRepository.findAll()).thenReturn(modelList);
+
+        List<Model> actualModelList = modelService.getAllModels();
+
+        assertAll(
+                () -> assertFalse(actualModelList.isEmpty()),
+                () -> assertEquals(modelList, actualModelList),
+                () -> assertEquals(modelList.size(), actualModelList.size()),
+
+                () -> verify(modelRepository).findAll()
+        );
+    }
+
+    @Test
+    public void testGetAllModels_EmptyList() {
+        when(modelRepository.findAll()).thenReturn(Collections.emptyList());
+        List<Model> modelList = modelService.getAllModels();
+
+        assertAll(
+                () -> assertEquals(Collections.emptyList(), modelList),
+                () -> assertTrue(modelList.isEmpty()),
+
                 () -> verifyNoMoreInteractions(modelRepository)
         );
     }
