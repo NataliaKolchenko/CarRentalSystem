@@ -16,12 +16,12 @@ public class VehicleType {
 
     @Column
     @NotBlank(message = "vehicleType may not be blank or null or has spaces")
-    private String vehicleType;
+    private String vehicleTypeName;
 
     public VehicleType() {
     }
 
-    public VehicleType(String vehicleType) {
-        this.vehicleType = vehicleType;
+    public VehicleType(String vehicleTypeName) {
+        this.vehicleTypeName = vehicleTypeName;
     }
 }
