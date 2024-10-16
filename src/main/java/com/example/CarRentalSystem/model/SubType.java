@@ -16,19 +16,19 @@ public class SubType {
     private Long id;
 
     @Column
-    @NotBlank(message = "modelName may not be blank or null or has spaces")
-    private String vehicleSubTypeName;
+    @NotBlank(message = "subTypeName may not be blank or null or has spaces")
+    private String subTypeName;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "brand_id")
-    @NotNull(message = "Brand may not be null")
-    private VehicleType vehicleType;
+    @JoinColumn(name = "vehicle_type_id")
+    @NotNull(message = "VehicleType may not be null")
+    private VehicleType type;
 
     public SubType() {
     }
 
-    public SubType(String vehicleSubTypeName, VehicleType vehicleType) {
-        this.vehicleSubTypeName = vehicleSubTypeName;
-        this.vehicleType = vehicleType;
+    public SubType(String subTypeName, VehicleType type) {
+        this.subTypeName = subTypeName;
+        this.type = type;
     }
 }

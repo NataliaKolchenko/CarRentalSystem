@@ -30,12 +30,12 @@ public class SubTypeServiceImp implements SubTypeService {
 
     @Override
     public SubType create(SubType subTypeName) {
-        SubType checkExistSubType = subTypeRepository.findBySubTypeName(subTypeName.getVehicleSubTypeName());
+        SubType checkExistSubType = subTypeRepository.findBySubTypeName(subTypeName.getSubTypeName());
         if(checkExistSubType != null){
             throw  new SubjectAlreadyExistsException("SubTypeName has to be unique");
         }
-        VehicleType type = typeService.getById(subTypeName.getId());
-        SubType newSubType = new SubType(subTypeName.getVehicleSubTypeName(), type);
+        VehicleType type = typeService.getById(subTypeName.getType().getId());
+        SubType newSubType = new SubType(subTypeName.getSubTypeName(), type);
 
         return subTypeRepository.save(newSubType);
     }
@@ -46,7 +46,7 @@ public class SubTypeServiceImp implements SubTypeService {
         if(subTypeRepository.findBySubTypeName(newSubTypeName) != null){
             throw new SubjectAlreadyExistsException("SubTypeName has to be unique");
         }
-        subType.setVehicleSubTypeName(newSubTypeName);
+        subType.setSubTypeName(newSubTypeName);
         SubType updatedSubType = subTypeRepository.save(subType);
         return updatedSubType;
     }

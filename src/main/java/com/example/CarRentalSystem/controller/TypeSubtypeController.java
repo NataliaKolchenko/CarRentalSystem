@@ -1,8 +1,11 @@
 package com.example.CarRentalSystem.controller;
 
+import com.example.CarRentalSystem.model.SubType;
 import com.example.CarRentalSystem.model.VehicleType;
+import com.example.CarRentalSystem.service.interfaces.SubTypeService;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +15,12 @@ import java.util.List;
 @RequestMapping("/typeAndSubtype")
 public class TypeSubtypeController {
     private final VehicleTypeService typeService;
+    private final SubTypeService subTypeService;
 
-    public TypeSubtypeController(VehicleTypeService typeService) {
+    @Autowired
+    public TypeSubtypeController(VehicleTypeService typeService, SubTypeService subTypeService) {
         this.typeService = typeService;
+        this.subTypeService = subTypeService;
     }
 
     @PostMapping("/createNewType")
@@ -43,5 +49,35 @@ public class TypeSubtypeController {
     public ResponseEntity<VehicleType> updateType(@PathVariable Long id,
                                                   @RequestBody @Valid VehicleType newType){
         return ResponseEntity.ok(typeService.update(id, newType.getVehicleTypeName()));
+    }
+
+    // -----------------------------------------------------------------
+
+    @PostMapping("/createNewSubType")
+    public ResponseEntity<SubType> createNewSubType (@RequestBody @Valid SubType newSubType){
+        subTypeService.create(newSubType);
+        return ResponseEntity.ok(subTypeService.getByName(newSubType.getSubTypeName()));
+    }
+
+    @GetMapping("/getSubTypeById/{id}")
+    public ResponseEntity<SubType> getSubTypeById(@PathVariable Long id){
+        return ResponseEntity.ok(subTypeService.getById(id));
+    }
+
+    @GetMapping("/getAllSubTypes")
+    public ResponseEntity<List<SubType>> getAllSubTypes(){
+        return ResponseEntity.ok(subTypeService.getAllSubTypes());
+    }
+
+    @DeleteMapping("/deleteSubTypeById/{id}")
+    public ResponseEntity<Boolean> deleteSubTypeById(@PathVariable Long id){
+        subTypeService.deleteById(id);
+        return ResponseEntity.ok(true);
+    }
+
+    @PutMapping("/updateSubType/{id}")
+    public ResponseEntity<SubType> updateSubType (@PathVariable Long id,
+                                                  @RequestBody @Valid SubType newSubType){
+        return ResponseEntity.ok(subTypeService.update(id, newSubType.getSubTypeName()));
     }
 }

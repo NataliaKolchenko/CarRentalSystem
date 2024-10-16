@@ -89,3 +89,45 @@ databaseChangeLog:
 #              - column:
 #                  name: vehicle_type_name
 #                  value: "TEST1"
+  - changeSet:
+      id: 6
+      author: natalia_kolchenko
+      changes:
+        - createTable:
+            tableName: sub_type
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: sub_type_name
+                  type: character varying(255)
+              - column:
+                  name: vehicle_type_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: sub_type
+            baseColumnNames: vehicle_type_id
+            constraintName: fk_subtype_vehicletype
+            referencedTableName: vehicle_type
+            referencedColumnNames: id
+  - changeSet:
+      id: 7
+      author: natalia_kolchenko
+      changes:
+        - insert:
+            tableName: sub_type
+            columns:
+              - column:
+                  name: sub_type_name
+                  value: "TEST1"
+              - column:
+                  name: vehicle_type_id
+                  value: 3
