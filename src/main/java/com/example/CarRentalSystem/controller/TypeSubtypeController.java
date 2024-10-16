@@ -40,7 +40,7 @@ public class TypeSubtypeController {
         return ResponseEntity.ok(true);
     }
 
-    @PutMapping("/updateType")
+    @PutMapping("/updateType/{id}")
     public ResponseEntity<VehicleType> updateType(@PathVariable Long id,
                                                   @RequestBody @Valid VehicleType newType){
         return ResponseEntity.ok(typeService.update(id, newType.getVehicleTypeName()));
