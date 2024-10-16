@@ -1,6 +1,5 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
 import jakarta.validation.Valid;

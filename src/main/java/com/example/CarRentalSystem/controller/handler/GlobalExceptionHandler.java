@@ -1,6 +1,6 @@
 package com.example.CarRentalSystem.controller.handler;
 
-import com.example.CarRentalSystem.model.Error;
+import com.example.CarRentalSystem.model.error.Error;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
