@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.service;
 
-import com.example.CarRentalSystem.exception.VehicleTypeAlreadyExistsException;
-import com.example.CarRentalSystem.exception.VehicleTypeNotFoundException;
+import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.repository.JpaVehicleTypeRepository;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
@@ -27,7 +27,7 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
     public VehicleType create(String vehicleTypeName) {
         VehicleType checkExistType = vtRepository.findByVehicleTypeName(vehicleTypeName);
         if(checkExistType != null){
-            throw new VehicleTypeAlreadyExistsException("vehicleTypeName has to be unique");
+            throw new SubjectAlreadyExistsException("vehicleTypeName has to be unique");
         }
         VehicleType newVT = new VehicleType(vehicleTypeName);
         vtRepository.save(newVT);
@@ -38,7 +38,7 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
     public VehicleType update(Long vehicleTypeId, String newVehicleTypeName) {
         VehicleType vt = getById(vehicleTypeId);
         if (vtRepository.findByVehicleTypeName(newVehicleTypeName) != null){
-            throw new VehicleTypeAlreadyExistsException("vehicleTypeName has to be unique");
+            throw new SubjectAlreadyExistsException("vehicleTypeName has to be unique");
         }
         vt.setVehicleTypeName(newVehicleTypeName);
         VehicleType updatedVT = vtRepository.save(vt);
@@ -48,7 +48,7 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
     @Override
     public void deleteById(Long vehicleTypeId) {
         if (!vtRepository.existsById(vehicleTypeId)) {
-            throw new VehicleTypeNotFoundException("vehicleTypeId was not found");
+            throw new SubjectNotFoundException("vehicleTypeId was not found");
         }
         vtRepository.deleteById(vehicleTypeId);
 
@@ -57,7 +57,7 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
     @Override
     public VehicleType getById(Long vehicleTypeId) {
         Optional<VehicleType> typeOpt = vtRepository.findById(vehicleTypeId);
-        VehicleType type = typeOpt.orElseThrow(() -> new VehicleTypeNotFoundException("vehicleTypeId was not found"));
+        VehicleType type = typeOpt.orElseThrow(() -> new SubjectNotFoundException("vehicleTypeId was not found"));
         return type;
     }
 
@@ -65,7 +65,7 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
     public VehicleType getByName(String vehicleTypeName) {
         VehicleType type = vtRepository.findByVehicleTypeName(vehicleTypeName);
         if (type == null) {
-            throw new VehicleTypeNotFoundException("vehicleTypeName was not found");
+            throw new SubjectNotFoundException("vehicleTypeName was not found");
         }
         return type;
     }

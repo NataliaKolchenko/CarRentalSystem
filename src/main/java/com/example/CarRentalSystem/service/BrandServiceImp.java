@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.service;
 
-import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
-import com.example.CarRentalSystem.exception.BrandNotFoundException;
+import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
@@ -27,7 +27,7 @@ public class BrandServiceImp implements BrandService {
     public Brand createVehicleBrand(String brandName) {
         Brand checkExistBrand = brandRepository.findByBrandName(brandName);
         if(checkExistBrand != null) {
-            throw new BrandAlreadyExistsException("BrandName has to be unique");
+            throw new SubjectAlreadyExistsException("BrandName has to be unique");
         }
        Brand newBrand = new Brand(brandName);
         brandRepository.save(newBrand);
@@ -38,7 +38,7 @@ public class BrandServiceImp implements BrandService {
     public Brand updateVehicleBrand(Long brandId, String newBrandName) {
         Brand brand = getVehicleBrandById(brandId);
        if (brandRepository.findByBrandName(newBrandName) != null){
-           throw new BrandAlreadyExistsException("BrandName has to be unique");
+           throw new SubjectAlreadyExistsException("BrandName has to be unique");
        }
         brand.setBrandName(newBrandName);
         Brand updatedBrand = brandRepository.save(brand);
@@ -48,7 +48,7 @@ public class BrandServiceImp implements BrandService {
     @Override
     public void deleteVehicleBrandById(Long brandId) {
         if (!brandRepository.existsById(brandId)) {
-            throw new BrandNotFoundException("BrandId was not found");
+            throw new SubjectNotFoundException("BrandId was not found");
         }
         brandRepository.deleteById(brandId);
     }
@@ -56,7 +56,7 @@ public class BrandServiceImp implements BrandService {
     @Override
     public Brand getVehicleBrandById(Long brandId) {
         Optional<Brand> brandOpt = brandRepository.findById(brandId);
-        Brand brand = brandOpt.orElseThrow(() -> new BrandNotFoundException("BrandId was not found"));
+        Brand brand = brandOpt.orElseThrow(() -> new SubjectNotFoundException("BrandId was not found"));
         return brand;
     }
 
@@ -64,7 +64,7 @@ public class BrandServiceImp implements BrandService {
     public Brand getVehicleBrandByName(String brandName) {
         Brand brand = brandRepository.findByBrandName(brandName);
         if (brand == null) {
-            throw new BrandNotFoundException("BrandName was not found");
+            throw new SubjectNotFoundException("BrandName was not found");
         }
         return brand;
     }

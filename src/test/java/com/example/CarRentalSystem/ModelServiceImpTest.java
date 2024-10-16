@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem;
 
-import com.example.CarRentalSystem.exception.ModelAlreadyExistsException;
-import com.example.CarRentalSystem.exception.ModelNotFoundException;
+import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.repository.JpaModelRepository;
@@ -73,7 +73,7 @@ public class ModelServiceImpTest {
 
         when(modelRepository.findByModelName(existModelName)).thenReturn(model);
 
-        ModelAlreadyExistsException exception = assertThrows(ModelAlreadyExistsException.class, () ->
+        SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class, () ->
                 modelService.createModel(model));
 
         assertAll(
@@ -129,7 +129,7 @@ public class ModelServiceImpTest {
         when(modelRepository.findByModelName(existingModel.getModelName())).thenReturn(existingModel);
         when(modelRepository.findById(existModelId)).thenReturn(Optional.of(existingModel));
 
-        ModelAlreadyExistsException exception = assertThrows(ModelAlreadyExistsException.class, () ->
+        SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class, () ->
                 modelService.updateModel(existModelId, newModelName));
         assertAll(
                 () -> assertEquals("ModelName has to be unique", exception.getMessage()),
@@ -165,7 +165,7 @@ public class ModelServiceImpTest {
 
         when(modelRepository.findById(modelId)).thenReturn(Optional.empty());
 
-        ModelNotFoundException exception = assertThrows(ModelNotFoundException.class,
+        SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
                 () -> modelService.getModelById(modelId));
 
         assertAll(
@@ -198,7 +198,7 @@ public class ModelServiceImpTest {
         String modelName = "expectedModel";
         when(modelRepository.findByModelName(modelName)).thenReturn(null);
 
-        ModelNotFoundException exception = assertThrows(ModelNotFoundException.class,
+        SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
                 () -> modelService.getModelByName(modelName));
 
         assertAll(

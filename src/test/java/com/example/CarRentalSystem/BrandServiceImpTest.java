@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem;
 
-import com.example.CarRentalSystem.exception.BrandAlreadyExistsException;
-import com.example.CarRentalSystem.exception.BrandNotFoundException;
+import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.BrandServiceImp;
@@ -53,7 +53,7 @@ public class BrandServiceImpTest {
 
         when(brandRepository.findByBrandName(brandName)).thenReturn(existingBrand);
 
-        BrandAlreadyExistsException exception = assertThrows(BrandAlreadyExistsException.class, () ->
+        SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class, () ->
                 brandService.createVehicleBrand(brandName));
         assertAll(
                 () -> assertEquals("BrandName has to be unique", exception.getMessage()),
@@ -107,7 +107,7 @@ public class BrandServiceImpTest {
         updatedBrand.setId(existingId);
         updatedBrand.setBrandName(newBrandName);
 
-        BrandAlreadyExistsException exception = assertThrows(BrandAlreadyExistsException.class, () ->
+        SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class, () ->
                 brandService.updateVehicleBrand(existingId, newBrandName));
         assertAll(
                 () -> assertEquals("BrandName has to be unique", exception.getMessage()),
@@ -140,7 +140,7 @@ public class BrandServiceImpTest {
         Long brandId = 1L;
         when(brandRepository.findById(brandId)).thenReturn(Optional.empty());
 
-        BrandNotFoundException exception = assertThrows(BrandNotFoundException.class,
+        SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
                 () -> brandService.getVehicleBrandById(brandId));
 
         assertAll(
@@ -174,7 +174,7 @@ public class BrandServiceImpTest {
         String brandName = "expectedBrand";
         when(brandRepository.findByBrandName(brandName)).thenReturn(null);
 
-        BrandNotFoundException exception = assertThrows(BrandNotFoundException.class,
+        SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
                 () -> brandService.getVehicleBrandByName(brandName));
 
         assertAll(
