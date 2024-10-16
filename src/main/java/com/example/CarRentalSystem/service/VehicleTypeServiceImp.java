@@ -58,7 +58,7 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
     public VehicleType getById(Long vehicleTypeId) {
         Optional<VehicleType> typeOpt = vtRepository.findById(vehicleTypeId);
         VehicleType type = typeOpt.orElseThrow(() -> new VehicleTypeNotFoundException("vehicleTypeId was not found"));
-        return null;
+        return type;
     }
 
     @Override
