@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem;
+package com.example.CarRentalSystem.controller;
 
 import com.example.CarRentalSystem.controller.BrandModelController;
 import com.example.CarRentalSystem.model.Brand;
