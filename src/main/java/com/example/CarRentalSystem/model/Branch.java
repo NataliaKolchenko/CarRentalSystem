@@ -21,7 +21,7 @@ public class Branch {
     @NotBlank(message = "BranchName may not be blank")
     private String branchName;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     @NotNull(message = "Address may not be null")
     private Address address;

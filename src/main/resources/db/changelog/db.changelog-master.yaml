@@ -48,19 +48,19 @@ databaseChangeLog:
             constraintName: fk_model_brand
             referencedTableName: brand
             referencedColumnNames: id
-#  - changeSet:
-#      id: 3
-#      author: natalia_kolchenko
-#      changes:
-#        - insert:
-#            tableName: model
-#            columns:
-#              - column:
-#                  name: model_name
-#                  value: "TEST1"
-#              - column:
-#                  name: brand_id
-#                  value: 19
+  #  - changeSet:
+  #      id: 3
+  #      author: natalia_kolchenko
+  #      changes:
+  #        - insert:
+  #            tableName: model
+  #            columns:
+  #              - column:
+  #                  name: model_name
+  #                  value: "TEST1"
+  #              - column:
+  #                  name: brand_id
+  #                  value: 19
   - changeSet:
       id: 4
       author: natalia_kolchenko
@@ -79,16 +79,16 @@ databaseChangeLog:
               - column:
                   name: vehicle_type_name
                   type: character varying(255)
-#  - changeSet:
-#      id: 5
-#      author: natalia_kolchenko
-#      changes:
-#         - insert:
-#            tableName: vehicle_type
-#            columns:
-#              - column:
-#                  name: vehicle_type_name
-#                  value: "TEST1"
+  #  - changeSet:
+  #      id: 5
+  #      author: natalia_kolchenko
+  #      changes:
+  #         - insert:
+  #            tableName: vehicle_type
+  #            columns:
+  #              - column:
+  #                  name: vehicle_type_name
+  #                  value: "TEST1"
   - changeSet:
       id: 6
       author: natalia_kolchenko
@@ -119,15 +119,63 @@ databaseChangeLog:
             referencedTableName: vehicle_type
             referencedColumnNames: id
   - changeSet:
-      id: 7
+        id: 7
+        author: natalia_kolchenko
+        changes:
+          - insert:
+              tableName: sub_type
+              columns:
+                - column:
+                    name: sub_type_name
+                    value: "TEST1"
+                - column:
+                    name: vehicle_type_id
+                    value: 3
+  - changeSet:
+      id: 8
       author: natalia_kolchenko
       changes:
-        - insert:
-            tableName: sub_type
+        - createTable:
+            tableName: branch
+            ifNotExists: true
             columns:
               - column:
-                  name: sub_type_name
-                  value: "TEST1"
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
               - column:
-                  name: vehicle_type_id
-                  value: 3
+                  name: branch_name
+                  type: character varying(255)
+              - column:
+                  name: address_id
+                  type: BIGINT
+              - column:
+                  name: working_time
+                  type: character varying(255)
+              - column:
+                  name: phone
+                  type: character varying(50)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: branch
+            baseColumnNames: address_id
+            constraintName: fk_branch_address
+            referencedTableName: address
+            referencedColumnNames: id
+#  - changeSet:
+#      id: 9
+#      author: natalia_kolchenko
+#      changes:
+#        - insert:
+#            tableName: branch
+#            columns:
+#              - column:
+#                  name: sub_type_name
+#                  value: "TEST1"
+#              - column:
+#                  name: vehicle_type_id
+#                  value: 3
