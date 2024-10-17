@@ -8,7 +8,7 @@ import java.util.List;
 public interface BranchService {
     Branch create (Branch branch);
     Branch getById(Long branchId);
-    Branch getByName(Long branchName);
+    Branch getByName(String branchName);
     List<Branch> getAllBranches();
 
 

@@ -3,11 +3,13 @@ package com.example.CarRentalSystem.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @Entity
 public class Branch {
     @Id
@@ -40,9 +42,5 @@ public class Branch {
         this.address = address;
         this.phone = phone;
         this.workingTime = workingTime;
-    }
-
-    public Branch(String branchName) {
-        this.branchName = branchName;
     }
 }
