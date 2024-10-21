@@ -37,7 +37,8 @@ public class Branch {
     public Branch() {
     }
 
-    public Branch(String branchName, Address address, String phone, String workingTime) {
+    public Branch(String id, String branchName, Address address, String phone, String workingTime) {
+        this.id = id;
         this.branchName = branchName;
         this.address = address;
         this.phone = phone;

@@ -1,8 +1,10 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.model.Address;
 import com.example.CarRentalSystem.model.Branch;
 import com.example.CarRentalSystem.model.Brand;
+import com.example.CarRentalSystem.repository.JpaAddressRepository;
 import com.example.CarRentalSystem.repository.JpaBranchRepository;
 import com.example.CarRentalSystem.service.interfaces.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,12 @@ import java.util.List;
 @Validated
 public class BranchServiceImp implements BranchService {
     private final JpaBranchRepository branchRepository;
+    private final AddressServiceImp addressService;
 
     @Autowired
-    public BranchServiceImp(JpaBranchRepository branchRepository) {
+    public BranchServiceImp(JpaBranchRepository branchRepository, AddressServiceImp addressService) {
         this.branchRepository = branchRepository;
+        this.addressService = addressService;
     }
 
     @Override
@@ -27,9 +31,10 @@ public class BranchServiceImp implements BranchService {
         if (checkExistBranch != null) {
             throw new SubjectAlreadyExistsException("BranchName has to be unique");
         }
+        Address address = addressService.create(branch.getAddress());
         Branch newBranch = Branch.builder()
                 .branchName(branch.getBranchName())
-                .address(branch.getAddress())
+                .address(address)
                 .phone(branch.getPhone())
                 .workingTime(branch.getWorkingTime())
                 .build();
