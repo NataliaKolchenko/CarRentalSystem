@@ -58,7 +58,7 @@ public class VehicleTypeServiceImpTest {
                 typeService.create(existingTypeName));
 
         assertAll(
-                () -> assertEquals("vehicleTypeName has to be unique", exception.getMessage()),
+                () -> assertEquals("VehicleTypeName has to be unique", exception.getMessage()),
 
                 () -> verify(typeRepository).findByVehicleTypeName(existingTypeName),
                 () -> verifyNoMoreInteractions(typeRepository)
@@ -112,7 +112,7 @@ public class VehicleTypeServiceImpTest {
         SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class, () ->
                 typeService.update(existingId, newTypeName));
         assertAll(
-                () -> assertEquals("vehicleTypeName has to be unique", exception.getMessage()),
+                () -> assertEquals("VehicleTypeName has to be unique", exception.getMessage()),
 
                 () -> verify(typeRepository).findByVehicleTypeName(newTypeName),
                 () -> verifyNoMoreInteractions(typeRepository)
@@ -146,7 +146,7 @@ public class VehicleTypeServiceImpTest {
                 () -> typeService.getById(typeId));
 
         assertAll(
-                () -> assertEquals("vehicleTypeId was not found", exception.getMessage()),
+                () -> assertEquals("VehicleTypeId was not found", exception.getMessage()),
 
                 () -> verifyNoMoreInteractions(typeRepository)
         );
@@ -181,7 +181,7 @@ public class VehicleTypeServiceImpTest {
                 () -> typeService.getByName(typeName));
 
         assertAll(
-                () -> assertEquals("vehicleTypeName was not found", exception.getMessage()),
+                () -> assertEquals("VehicleTypeName was not found", exception.getMessage()),
 
                 () -> verifyNoMoreInteractions(typeRepository)
         );

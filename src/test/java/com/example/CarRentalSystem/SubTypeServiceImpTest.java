@@ -171,7 +171,7 @@ public class SubTypeServiceImpTest {
                 () -> subTypeService.getById(subTypeId));
 
         assertAll(
-                () -> assertEquals("subTypeId was not found", exception.getMessage()),
+                () -> assertEquals("SubTypeId was not found", exception.getMessage()),
 
                 () -> verifyNoMoreInteractions(subTypeRepository)
         );
@@ -204,7 +204,7 @@ public class SubTypeServiceImpTest {
                 () -> subTypeService.getByName(subTypeName));
 
         assertAll(
-                () -> assertEquals("subTypeName was not found", exception.getMessage()),
+                () -> assertEquals("SubTypeName was not found", exception.getMessage()),
 
                 () -> verifyNoMoreInteractions(subTypeRepository)
         );
