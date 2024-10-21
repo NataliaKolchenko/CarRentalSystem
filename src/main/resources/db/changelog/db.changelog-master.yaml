@@ -233,7 +233,7 @@ databaseChangeLog:
                   value: "K"
               - column:
                   name: create_date
-                  type: '2024-10-24T06:09:08'
+                  value: "2024-10-24T06:09:08"
   - changeSet:
       id: 11
       author: natalia_kolchenko
