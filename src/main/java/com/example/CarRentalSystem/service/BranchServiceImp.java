@@ -1,6 +1,7 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Address;
 import com.example.CarRentalSystem.model.Branch;
 import com.example.CarRentalSystem.model.Brand;
@@ -29,7 +30,7 @@ public class BranchServiceImp implements BranchService {
     public Branch create(Branch branch) {
         Branch checkExistBranch = branchRepository.findByBranchName(branch.getBranchName());
         if (checkExistBranch != null) {
-            throw new SubjectAlreadyExistsException("BranchName has to be unique");
+            throw new SubjectAlreadyExistsException(ErrorMessage.BRANCH_NAME_IS_ALREADY_EXIST);
         }
         Address address = addressService.create(branch.getAddress());
         Branch newBranch = Branch.builder()
