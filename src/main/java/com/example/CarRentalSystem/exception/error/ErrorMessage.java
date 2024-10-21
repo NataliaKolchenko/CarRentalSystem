@@ -1,7 +1,5 @@
 package com.example.CarRentalSystem.exception.error;
 
-import jakarta.servlet.http.PushBuilder;
-
 public class ErrorMessage {
     public static final String BRAND_NAME_IS_ALREADY_EXIST = "BrandName has to be unique";
     public static final String BRAND_ID_WAS_NOT_FOUND = "BrandId was not found";
@@ -18,5 +16,5 @@ public class ErrorMessage {
     public static final String ADDRESS_IS_ALREADY_EXIST = "Address has to be unique";
     public static final String ADDRESS_IS_NOT_FULL = "Address isn't full. Please add HouseNumber or ApartmentNumber";
     public static final String BRANCH_NAME_IS_ALREADY_EXIST = "BranchName has to be unique";
-
+    public static final String ADDRESS_ID_WAS_NOT_FOUND = "AddressId was not found";
 }
