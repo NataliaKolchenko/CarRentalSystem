@@ -2,6 +2,7 @@ package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
+import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.SubType;
 import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.repository.JpaSubTypeRepository;
@@ -32,7 +33,7 @@ public class SubTypeServiceImp implements SubTypeService {
     public SubType create(SubType subTypeName) {
         SubType checkExistSubType = subTypeRepository.findBySubTypeName(subTypeName.getSubTypeName());
         if(checkExistSubType != null){
-            throw  new SubjectAlreadyExistsException("SubTypeName has to be unique");
+            throw  new SubjectAlreadyExistsException(ErrorMessage.SUB_TYPE_NAME_IS_ALREADY_EXIST);
         }
         VehicleType type = typeService.getById(subTypeName.getType().getId());
         SubType newSubType = new SubType(subTypeName.getSubTypeName(), type);
@@ -44,7 +45,7 @@ public class SubTypeServiceImp implements SubTypeService {
     public SubType update(Long subTypeId, String newSubTypeName) {
         SubType subType = getById(subTypeId);
         if(subTypeRepository.findBySubTypeName(newSubTypeName) != null){
-            throw new SubjectAlreadyExistsException("SubTypeName has to be unique");
+            throw new SubjectAlreadyExistsException(ErrorMessage.SUB_TYPE_NAME_IS_ALREADY_EXIST);
         }
         subType.setSubTypeName(newSubTypeName);
         SubType updatedSubType = subTypeRepository.save(subType);
@@ -54,7 +55,7 @@ public class SubTypeServiceImp implements SubTypeService {
     @Override
     public void deleteById(Long subTypeId) {
         if(!subTypeRepository.existsById(subTypeId)){
-            throw new SubjectNotFoundException("subTypeId was not found");
+            throw new SubjectNotFoundException(ErrorMessage.SUB_TYPE_ID_WAS_NOT_FOUND);
         }
         subTypeRepository.deleteById(subTypeId);
     }
@@ -62,7 +63,7 @@ public class SubTypeServiceImp implements SubTypeService {
     @Override
     public SubType getById(Long subTypeId) {
         Optional<SubType> subTypeOpt = subTypeRepository.findById(subTypeId);
-        SubType subType = subTypeOpt.orElseThrow(() -> new SubjectNotFoundException("subTypeId was not found"));
+        SubType subType = subTypeOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.SUB_TYPE_ID_WAS_NOT_FOUND));
         return subType;
     }
 
@@ -70,7 +71,7 @@ public class SubTypeServiceImp implements SubTypeService {
     public SubType getByName(String subTypeName) {
         SubType subType = subTypeRepository.findBySubTypeName(subTypeName);
         if (subType == null){
-            throw new SubjectNotFoundException("subTypeName was not found");
+            throw new SubjectNotFoundException(ErrorMessage.SUB_TYPE_NAME_WAS_NOT_FOUND);
         }
         return subType;
     }

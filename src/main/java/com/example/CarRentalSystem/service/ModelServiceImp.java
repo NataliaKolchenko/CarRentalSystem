@@ -2,6 +2,7 @@ package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
+import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.repository.JpaModelRepository;
@@ -30,7 +31,7 @@ public class ModelServiceImp  implements ModelService {
     public Model createModel(Model model) {
         Model checkExistModel = modelRepository.findByModelName(model.getModelName());
         if(checkExistModel != null){
-            throw  new SubjectAlreadyExistsException("ModelName has to be unique");
+            throw  new SubjectAlreadyExistsException(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST);
         }
         Brand brand = brandServiceImp.getVehicleBrandById(model.getBrand().getId());
         Model newModel = new Model(model.getModelName(), brand);
@@ -42,7 +43,7 @@ public class ModelServiceImp  implements ModelService {
     public Model updateModel(Long modelId, String newModelName) {
         Model model = getModelById(modelId);
         if(modelRepository.findByModelName(newModelName) != null){
-            throw new SubjectAlreadyExistsException("ModelName has to be unique");
+            throw new SubjectAlreadyExistsException(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST);
         }
         model.setModelName(newModelName);
         Model updatedModel = modelRepository.save(model);
@@ -52,7 +53,7 @@ public class ModelServiceImp  implements ModelService {
     @Override
     public void deleteModelById(Long modelId) {
         if(!modelRepository.existsById(modelId)){
-            throw new SubjectNotFoundException("ModelId was not found");
+            throw new SubjectNotFoundException(ErrorMessage.MODEL_ID_WAS_NOT_FOUND);
         }
         modelRepository.deleteById(modelId);
     }
@@ -60,7 +61,7 @@ public class ModelServiceImp  implements ModelService {
     @Override
     public Model getModelById(Long modelId) {
         Optional<Model> modelOpt = modelRepository.findById(modelId);
-        Model model = modelOpt.orElseThrow(() -> new SubjectNotFoundException("ModelId was not found"));
+        Model model = modelOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.MODEL_ID_WAS_NOT_FOUND));
         return model;
     }
 
@@ -68,7 +69,7 @@ public class ModelServiceImp  implements ModelService {
     public Model getModelByName(String modelName) {
         Model model = modelRepository.findByModelName(modelName);
         if (model == null){
-            throw new SubjectNotFoundException("ModelName was not found");
+            throw new SubjectNotFoundException(ErrorMessage.MODEL_NAME_WAS_NOT_FOUND);
         }
         return model;
     }

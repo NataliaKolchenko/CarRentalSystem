@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.model.error;
+package com.example.CarRentalSystem.exception.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

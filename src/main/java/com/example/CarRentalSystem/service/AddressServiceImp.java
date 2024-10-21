@@ -2,6 +2,7 @@ package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.AddressIsNotFull;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Address;
 import com.example.CarRentalSystem.repository.JpaAddressRepository;
 import com.example.CarRentalSystem.service.interfaces.AddressService;
@@ -24,10 +25,10 @@ public class AddressServiceImp  implements AddressService {
         Address checkExistAddress = addressRepository.findByCountryAndCityAndStreet(address.getCountry(),
                 address.getCity(), address.getStreet());
         if(checkExistAddress != null){
-            throw new SubjectAlreadyExistsException("Address is already exist");
+            throw new SubjectAlreadyExistsException(ErrorMessage.ADDRESS_IS_ALREADY_EXIST);
         }
         if (address.getHouse() == 0 && address.getApartment().isEmpty())  {
-            throw new AddressIsNotFull("Address isn't full. Please add HouseNumber or ApartmentNumber");
+            throw new AddressIsNotFull(ErrorMessage.ADDRESS_IS_NOT_FULL);
         }
 //  !!!добавить проброс UserId
         Address newAddress = Address.builder()
