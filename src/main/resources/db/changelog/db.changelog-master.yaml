@@ -269,3 +269,22 @@ databaseChangeLog:
             constraintName: fk_branch_address
             referencedTableName: address
             referencedColumnNames: id
+  - changeSet:
+      id: 12
+      author: natalia_kolchenko
+      changes:
+        - insert:
+            tableName: branch
+            columns:
+              - column:
+                  name: branch_name
+                  value: "Berlin branch"
+              - column:
+                  name: address_id
+                  value: 5
+              - column:
+                  name: phone
+                  value: "+491763458800"
+              - column:
+                  name: working_time
+                  value: "9:00 - 18:00"
