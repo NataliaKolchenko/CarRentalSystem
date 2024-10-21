@@ -163,7 +163,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: zipCode
+                  name: zip_code
                   type: character varying(10)
               - column:
                   name: country
@@ -187,19 +187,19 @@ databaseChangeLog:
                   name: apartment
                   type: character varying(50)
               - column:
-                  name: additionalInfo
+                  name: additional_info
                   type: character varying(255)
               - column:
-                  name: createDate
+                  name: create_date
                   type: timestamp
               - column:
-                  name: updateDate
+                  name: update_date
                   type: timestamp
               - column:
-                  name: changeUserId
+                  name: change_user_id
                   type: BIGINT
                   constraints:
-                    nullable: false
+                    nullable: true
   - changeSet:
       id: 10
       author: natalia_kolchenko
@@ -208,7 +208,7 @@ databaseChangeLog:
             tableName: address
             columns:
               - column:
-                  name: zipCode
+                  name: zip_code
                   value: "14059"
               - column:
                   name: country
@@ -232,7 +232,7 @@ databaseChangeLog:
                   name: apartment
                   value: "K"
               - column:
-                  name: createDate
+                  name: create_date
                   type: "2024.10.24 06:09:08"
   - changeSet:
       id: 11
