@@ -2,6 +2,7 @@ package com.example.CarRentalSystem.controller.handler;
 
 import com.example.CarRentalSystem.exception.BusinessException;
 import com.example.CarRentalSystem.exception.error.Error;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,9 +32,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new Error(stringList), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({BusinessException.class, ConstraintViolationException.class})
+    @ExceptionHandler({BusinessException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Error> handleValidationExceptions(Exception ex) {
         return new ResponseEntity<>(new Error(List.of(ex.getMessage())), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({ConstraintViolationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Error> handleValidationExceptions(ConstraintViolationException ex) {
+        return new ResponseEntity<>(new Error(ex.getConstraintViolations()
+                .stream()
+                .map(ConstraintViolation::getMessage)
+                .toList()),
+                HttpStatus.BAD_REQUEST);
     }
 }
