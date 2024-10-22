@@ -3,6 +3,7 @@ package com.example.CarRentalSystem.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -43,7 +44,7 @@ public class Address {
     String street;
 
     @Column
-    @NotNull(message = "HouseNumber may not be blank")
+    @Positive(message = "HouseNumber may not be blank")
     int house;
 
     @Column

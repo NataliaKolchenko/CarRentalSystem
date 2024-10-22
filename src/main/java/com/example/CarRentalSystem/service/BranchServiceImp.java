@@ -40,9 +40,7 @@ public class BranchServiceImp implements BranchService {
                 .phone(branch.getPhone())
                 .workingTime(branch.getWorkingTime())
                 .build();
-
-        branchRepository.save(newBranch);
-        return newBranch;
+        return branchRepository.save(newBranch);
     }
 
     @Override
