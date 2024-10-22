@@ -2,6 +2,7 @@ package com.example.CarRentalSystem.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,7 +43,7 @@ public class Address {
     String street;
 
     @Column
-    @NotBlank(message = "HouseNumber may not be blank")
+    @NotNull(message = "HouseNumber may not be blank")
     int house;
 
     @Column
@@ -59,7 +60,7 @@ public class Address {
     LocalDateTime updateDate;
 
     @Column
-    Long editorUserId;
+    Long changeUserId;
 
     public Address() {
         this.createDate = LocalDateTime.now();
@@ -67,7 +68,7 @@ public class Address {
 
     public Address(Long id, String zipCode, String country, String region, String city, String district,
                    String street, int house, String apartment, String additionalInfo, LocalDateTime createDate,
-                   LocalDateTime updateDate, Long editorUserId) {
+                   LocalDateTime updateDate, Long changeUserId) {
         this.id = id;
         this.zipCode = zipCode;
         this.country = country;
@@ -78,8 +79,8 @@ public class Address {
         this.house = house;
         this.apartment = apartment;
         this.additionalInfo = additionalInfo;
-        this.createDate = createDate;
+        this.createDate = LocalDateTime.now();
         this.updateDate = updateDate;
-        this.editorUserId = editorUserId;
+        this.changeUserId = changeUserId;
     }
 }

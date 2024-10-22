@@ -5,10 +5,9 @@ import com.example.CarRentalSystem.service.interfaces.BranchService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/branch")
@@ -24,5 +23,15 @@ public class BranchController {
     public ResponseEntity<Branch> createNewBranch(@RequestBody @Valid Branch branch){
         branchService.create(branch);
         return ResponseEntity.ok(branchService.getByName(branch.getBranchName()));
+    }
+
+    @GetMapping("/getBranchById/{id}")
+    public ResponseEntity<Branch> getBranchById(@PathVariable Long id){
+        return ResponseEntity.ok(branchService.getById(id));
+    }
+
+    @GetMapping("/getAllBranches")
+    public ResponseEntity<List<Branch>> gelAllBranches(){
+        return ResponseEntity.ok(branchService.getAllBranches());
     }
 }

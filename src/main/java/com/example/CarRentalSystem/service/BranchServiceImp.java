@@ -1,18 +1,19 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Address;
 import com.example.CarRentalSystem.model.Branch;
-import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.repository.JpaAddressRepository;
 import com.example.CarRentalSystem.repository.JpaBranchRepository;
 import com.example.CarRentalSystem.service.interfaces.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Validated
@@ -46,16 +47,23 @@ public class BranchServiceImp implements BranchService {
 
     @Override
     public Branch getById(Long branchId) {
-        return null;
+        Optional<Branch> branchOpt = branchRepository.findById(branchId);
+        Branch branch = branchOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.BRANCH_ID_WAS_NOT_FOUND));
+        return branch;
     }
 
     @Override
     public Branch getByName(String branchName) {
-        return null;
+       Branch branch = branchRepository.findByBranchName(branchName);
+        if (branch == null) {
+            throw new SubjectNotFoundException(ErrorMessage.BRANCH_NAME_WAS_NOT_FOUND);
+        }
+        return branch;
     }
 
     @Override
     public List<Branch> getAllBranches() {
-        return null;
+        List<Branch> branchList = branchRepository.findAll();
+        return branchList.isEmpty() ? Collections.emptyList() : branchList;
     }
 }

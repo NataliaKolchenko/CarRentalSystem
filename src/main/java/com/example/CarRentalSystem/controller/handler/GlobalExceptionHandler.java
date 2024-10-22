@@ -1,6 +1,8 @@
 package com.example.CarRentalSystem.controller.handler;
 
+import com.example.CarRentalSystem.exception.BusinessException;
 import com.example.CarRentalSystem.exception.error.Error;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
@@ -16,7 +18,7 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     // Обработчик ошибок валидации
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Error> handleValidationExceptions(MethodArgumentNotValidException ex) {
 
@@ -28,7 +30,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new Error(stringList), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({ })
+    @ExceptionHandler({BusinessException.class, ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Error> handleValidationExceptions(Exception ex) {
         return new ResponseEntity<>(new Error(List.of(ex.getMessage())), HttpStatus.BAD_REQUEST);

@@ -42,7 +42,7 @@ public class AddressServiceImp  implements AddressService {
                 .apartment(address.getApartment())
                 .additionalInfo(address.getAdditionalInfo())
                 .updateDate(address.getUpdateDate())
-                .editorUserId(address.getEditorUserId())
+                .changeUserId(address.getChangeUserId())
                 .build();
         addressRepository.save(newAddress);
         return newAddress;
@@ -63,7 +63,7 @@ public class AddressServiceImp  implements AddressService {
                 .apartment(newAddress.getApartment())
                 .additionalInfo(newAddress.getAdditionalInfo())
                 .updateDate(newAddress.getUpdateDate())
-                .editorUserId(newAddress.getEditorUserId())
+                .changeUserId(newAddress.getChangeUserId())
                 .build();
         addressRepository.save(newAddress);
         return updatedAddress;

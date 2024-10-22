@@ -16,4 +16,6 @@ public class ErrorMessage {
     public static final String ADDRESS_IS_ALREADY_EXIST = "Address is already exist";
     public static final String BRANCH_NAME_IS_ALREADY_EXIST = "BranchName has to be unique";
     public static final String ADDRESS_ID_WAS_NOT_FOUND = "AddressId was not found";
+    public static final String BRANCH_NAME_WAS_NOT_FOUND = "BranchName was not found";
+    public static final String BRANCH_ID_WAS_NOT_FOUND = "BranchId was not found";
 }

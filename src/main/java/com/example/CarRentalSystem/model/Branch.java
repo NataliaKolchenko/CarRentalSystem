@@ -15,7 +15,7 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private String id;
+    private Long id;
 
     @Column
     @NotBlank(message = "BranchName may not be blank")
@@ -37,7 +37,7 @@ public class Branch {
     public Branch() {
     }
 
-    public Branch(String id, String branchName, Address address, String phone, String workingTime) {
+    public Branch(Long id, String branchName, Address address, String phone, String workingTime) {
         this.id = id;
         this.branchName = branchName;
         this.address = address;
