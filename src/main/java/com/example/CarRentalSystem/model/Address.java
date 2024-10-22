@@ -3,6 +3,7 @@ package com.example.CarRentalSystem.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @Entity
+@EqualsAndHashCode
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,9 +42,11 @@ public class Address {
     String street;
 
     @Column
+    @NotBlank(message = "HouseNumber may not be blank")
     int house;
 
     @Column
+    @NotBlank(message = "ApartmentNumber may not be blank")
     String apartment;
 
     @Column

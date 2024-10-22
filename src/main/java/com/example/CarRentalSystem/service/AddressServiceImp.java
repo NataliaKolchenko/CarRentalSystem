@@ -1,6 +1,5 @@
 package com.example.CarRentalSystem.service;
 
-import com.example.CarRentalSystem.exception.AddressIsNotFull;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
@@ -25,14 +24,12 @@ public class AddressServiceImp  implements AddressService {
 
     @Override
     public Address create(Address address) {
-        Address checkExistAddress = addressRepository.findByCountryAndCityAndStreet(address.getCountry(),
-                address.getCity(), address.getStreet());
+        Address checkExistAddress = addressRepository.findByCountryAndCityAndStreetAndHouseAndApartment(address.getCountry(),
+                address.getCity(), address.getStreet(), address.getHouse(), address.getApartment());
         if(checkExistAddress != null){
             throw new SubjectAlreadyExistsException(ErrorMessage.ADDRESS_IS_ALREADY_EXIST);
         }
-        if (address.getHouse() == 0 && address.getApartment().isEmpty())  {
-            throw new AddressIsNotFull(ErrorMessage.ADDRESS_IS_NOT_FULL);
-        }
+
 //  !!!добавить проброс UserId
         Address newAddress = Address.builder()
                 .zipCode(address.getZipCode())

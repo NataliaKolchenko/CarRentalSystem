@@ -13,8 +13,7 @@ public class ErrorMessage {
     public static final String TYPE_NAME_IS_ALREADY_EXIST = "VehicleTypeName has to be unique";
     public static final String TYPE_ID_WAS_NOT_FOUND = "VehicleTypeId was not found";
     public static final String TYPE_NAME_WAS_NOT_FOUND = "VehicleTypeName was not found";
-    public static final String ADDRESS_IS_ALREADY_EXIST = "Address has to be unique";
-    public static final String ADDRESS_IS_NOT_FULL = "Address isn't full. Please add HouseNumber or ApartmentNumber";
+    public static final String ADDRESS_IS_ALREADY_EXIST = "Address is already exist";
     public static final String BRANCH_NAME_IS_ALREADY_EXIST = "BranchName has to be unique";
     public static final String ADDRESS_ID_WAS_NOT_FOUND = "AddressId was not found";
 }
