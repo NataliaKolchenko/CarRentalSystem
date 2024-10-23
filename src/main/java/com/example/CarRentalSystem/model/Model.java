@@ -12,10 +12,8 @@ import lombok.Setter;
 public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
 
-    @Column
     @NotBlank(message = "modelName may not be blank or null or has spaces")
     private String modelName;
 

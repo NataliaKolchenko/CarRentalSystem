@@ -11,10 +11,8 @@ import lombok.Setter;
 public class VehicleType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
 
-    @Column
     @NotBlank(message = "vehicleType may not be blank or null or has spaces")
     private String vehicleTypeName;
 

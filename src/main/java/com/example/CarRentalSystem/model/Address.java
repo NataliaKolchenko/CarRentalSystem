@@ -19,48 +19,35 @@ import java.time.LocalDateTime;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     Long id;
 
-    @Column
     String zipCode;
 
-    @Column
     @NotBlank(message = "Country may not be blank")
     String country;
 
-    @Column
     String region;
 
-    @Column
     @NotBlank(message = "City may not be blank")
     String city;
 
-    @Column
     String district;
 
-    @Column
     @NotBlank(message = "Street may not be blank")
     String street;
 
-    @Column
     @Positive(message = "HouseNumber may not be blank")
     int house;
 
-    @Column
     @NotBlank(message = "ApartmentNumber may not be blank")
     String apartment;
 
-    @Column
     String additionalInfo;
 
-    @Column
     LocalDateTime createDate;
 
-    @Column
     LocalDateTime updateDate;
 
-    @Column
     Long changeUserId;
 
     public Address() {

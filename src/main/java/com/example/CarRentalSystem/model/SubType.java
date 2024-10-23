@@ -12,10 +12,8 @@ import lombok.Setter;
 public class SubType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
 
-    @Column
     @NotBlank(message = "subTypeName may not be blank or null or has spaces")
     private String subTypeName;
 

@@ -16,10 +16,8 @@ import lombok.Setter;
 public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
 
-    @Column
     @NotBlank(message = "BranchName may not be blank")
     private String branchName;
 
@@ -28,11 +26,9 @@ public class Branch {
     @NotNull(message = "Address may not be null")
     private Address address;
 
-    @Column
     @NotBlank(message = "Phone may not be blank")
     private String phone;
 
-    @Column
     @NotBlank(message = "WorkingTime may not be blank")
     private String workingTime;
 
