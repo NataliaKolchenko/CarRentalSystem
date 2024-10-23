@@ -63,7 +63,7 @@ public class AddressServiceImp  implements AddressService {
                 .changeUserId(newAddress.getChangeUserId())
                 .build();
 
-        return addressRepository.save(newAddress);
+        return updatedAddress;
     }
 
     @Override
