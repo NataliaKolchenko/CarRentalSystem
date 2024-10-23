@@ -6,7 +6,6 @@ import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -18,8 +17,6 @@ import java.util.Optional;
 @Validated
 public class BrandServiceImp implements BrandService {
     private final JpaBrandRepository brandRepository;
-
-    @Autowired
     public BrandServiceImp(JpaBrandRepository brandRepository) {
         this.brandRepository = brandRepository;
     }
@@ -31,8 +28,8 @@ public class BrandServiceImp implements BrandService {
             throw new SubjectAlreadyExistsException(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST);
         }
        Brand newBrand = new Brand(brandName);
-        brandRepository.save(newBrand);
-        return newBrand;
+
+        return brandRepository.save(newBrand);
     }
 
     @Override
@@ -42,8 +39,7 @@ public class BrandServiceImp implements BrandService {
            throw new SubjectAlreadyExistsException(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST);
        }
         brand.setBrandName(newBrandName);
-        Brand updatedBrand = brandRepository.save(brand);
-        return updatedBrand;
+        return brandRepository.save(brand);
     }
 
     @Override

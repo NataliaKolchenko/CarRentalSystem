@@ -6,7 +6,6 @@ import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Address;
 import com.example.CarRentalSystem.repository.JpaAddressRepository;
 import com.example.CarRentalSystem.service.interfaces.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -16,8 +15,6 @@ import java.util.Optional;
 @Validated
 public class AddressServiceImp  implements AddressService {
     private final JpaAddressRepository addressRepository;
-
-    @Autowired
     public AddressServiceImp(JpaAddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }
@@ -44,8 +41,8 @@ public class AddressServiceImp  implements AddressService {
                 .updateDate(address.getUpdateDate())
                 .changeUserId(address.getChangeUserId())
                 .build();
-        addressRepository.save(newAddress);
-        return newAddress;
+
+        return addressRepository.save(newAddress);
     }
 
     @Override
@@ -65,8 +62,8 @@ public class AddressServiceImp  implements AddressService {
                 .updateDate(newAddress.getUpdateDate())
                 .changeUserId(newAddress.getChangeUserId())
                 .build();
-        addressRepository.save(newAddress);
-        return updatedAddress;
+
+        return addressRepository.save(newAddress);
     }
 
     @Override

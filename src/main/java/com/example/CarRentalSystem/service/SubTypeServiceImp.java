@@ -8,7 +8,6 @@ import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.repository.JpaSubTypeRepository;
 import com.example.CarRentalSystem.service.interfaces.SubTypeService;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -21,8 +20,6 @@ import java.util.Optional;
 public class SubTypeServiceImp implements SubTypeService {
     private final JpaSubTypeRepository subTypeRepository;
     private final VehicleTypeService typeService;
-
-    @Autowired
     public SubTypeServiceImp(JpaSubTypeRepository subTypeRepository, VehicleTypeService typeService) {
         this.subTypeRepository = subTypeRepository;
         this.typeService = typeService;
@@ -48,8 +45,7 @@ public class SubTypeServiceImp implements SubTypeService {
             throw new SubjectAlreadyExistsException(ErrorMessage.SUB_TYPE_NAME_IS_ALREADY_EXIST);
         }
         subType.setSubTypeName(newSubTypeName);
-        SubType updatedSubType = subTypeRepository.save(subType);
-        return updatedSubType;
+        return subTypeRepository.save(subType);
     }
 
     @Override

@@ -7,7 +7,6 @@ import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.repository.JpaModelRepository;
 import com.example.CarRentalSystem.service.interfaces.ModelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -20,8 +19,6 @@ import java.util.Optional;
 public class ModelServiceImp  implements ModelService {
     private final JpaModelRepository modelRepository;
     private final BrandServiceImp brandServiceImp;
-
-    @Autowired
     public ModelServiceImp(JpaModelRepository modelRepository, BrandServiceImp brandServiceImp) {
         this.modelRepository = modelRepository;
         this.brandServiceImp = brandServiceImp;
@@ -46,8 +43,7 @@ public class ModelServiceImp  implements ModelService {
             throw new SubjectAlreadyExistsException(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST);
         }
         model.setModelName(newModelName);
-        Model updatedModel = modelRepository.save(model);
-        return updatedModel;
+        return modelRepository.save(model);
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.repository.JpaVehicleTypeRepository;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -18,8 +17,6 @@ import java.util.Optional;
 @Validated
 public class VehicleTypeServiceImp implements VehicleTypeService {
     private final JpaVehicleTypeRepository vtRepository;
-
-    @Autowired
     public VehicleTypeServiceImp(JpaVehicleTypeRepository vtRepository) {
         this.vtRepository = vtRepository;
     }
@@ -31,8 +28,7 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
             throw new SubjectAlreadyExistsException(ErrorMessage.TYPE_NAME_IS_ALREADY_EXIST);
         }
         VehicleType newVT = new VehicleType(vehicleTypeName);
-        vtRepository.save(newVT);
-        return newVT;
+        return vtRepository.save(newVT);
     }
 
     @Override
@@ -42,8 +38,7 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
             throw new SubjectAlreadyExistsException(ErrorMessage.TYPE_NAME_IS_ALREADY_EXIST);
         }
         vt.setVehicleTypeName(newVehicleTypeName);
-        VehicleType updatedVT = vtRepository.save(vt);
-        return updatedVT;
+        return vtRepository.save(vt);
     }
 
     @Override
