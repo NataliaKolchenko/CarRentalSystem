@@ -41,7 +41,11 @@ public class TypeSubtypeControllerTest {
 
         mockMvc.perform(post("/typeAndSubtype/createNewType")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"vehicleTypeName\":\"NewType\"}")) // Тело запроса
+                        .content("""
+                                {
+                                    "vehicleTypeName": "NewType"
+                                }
+                                """))
                 .andExpect(status().isOk()) // Ожидаемый статус 200
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(typeId.intValue())))
@@ -52,7 +56,11 @@ public class TypeSubtypeControllerTest {
     public void testCreateNewType_InvalidInput() throws Exception {
         mockMvc.perform(post("/typeAndSubtype/createNewType")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"vehicleTypeName\":\" \"}"))
+                        .content("""
+                                {
+                                    "vehicleTypeName": ""
+                                }
+                                """))
                 .andExpect(status().isBadRequest());
     }
 
@@ -114,7 +122,11 @@ public class TypeSubtypeControllerTest {
 
         mockMvc.perform(put("/typeAndSubtype/updateType/{id}", typeId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"vehicleTypeName\":\"NewTypeName\"}")) // Тело запроса
+                        .content("""
+                                {
+                                    "vehicleTypeName": "NewTypeName"
+                                }
+                                """))
                 .andExpect(status().isOk()) // Ожидаемый статус 200
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(typeId.intValue())))
@@ -140,13 +152,15 @@ public class TypeSubtypeControllerTest {
 
         mockMvc.perform(post("/typeAndSubtype/createNewSubType")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"subTypeName\": \"SubTypeName\",\n" +
-                                "    \"type\": {\n" +
-                                "        \"id\": 1,\n" +
-                                "        \"vehicleTypeName\": \"TypeName\"\n" +
-                                "    }\n" +
-                                "}")) // Тело запроса
+                        .content("""
+                                {
+                                    "subTypeName": "SubTypeName",
+                                    "type": {
+                                        "id": 1,
+                                        "vehicleTypeName": "TypeName"
+                                    }
+                                }
+                                """))
                 .andExpect(status().isOk()) // Ожидаемый статус 200
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(subTypeId.intValue()))) // Проверка возвращаемого значения
@@ -159,13 +173,15 @@ public class TypeSubtypeControllerTest {
     public void testCreateNewSubType_InvalidInput() throws Exception {
         mockMvc.perform(post("/typeAndSubtype/createNewSubType")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"subTypeName\": \" \",\n" +
-                                "    \"type\": {\n" +
-                                "        \"id\": 1,\n" +
-                                "        \"vehicleTypeName\": \"TypeName\"\n" +
-                                "    }\n" +
-                                "}")) // Тело запроса
+                        .content("""
+                                {
+                                    "subTypeName": "",
+                                    "type": {
+                                        "id": 1,
+                                        "vehicleTypeName": "TypeName"
+                                    }
+                                }
+                                """))
                 .andExpect(status().isBadRequest());
     }
 
@@ -243,13 +259,15 @@ public class TypeSubtypeControllerTest {
 
         mockMvc.perform(put("/typeAndSubtype/updateSubType/{id}", subTypeId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"subTypeName\": \"NewSubTypeName\",\n" +
-                                "    \"type\": {\n" +
-                                "        \"id\": 1,\n" +
-                                "        \"vehicleTypeName\": \"Type\"\n" +
-                                "    }\n" +
-                                "}")) // Тело запроса
+                        .content("""
+                                {
+                                    "subTypeName": "NewSubTypeName",
+                                    "type": {
+                                        "id": 1,
+                                        "vehicleTypeName": "Type"
+                                    }
+                                }
+                                """))
                 .andExpect(status().isOk()) // Ожидаемый статус 200
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(subTypeId.intValue())))

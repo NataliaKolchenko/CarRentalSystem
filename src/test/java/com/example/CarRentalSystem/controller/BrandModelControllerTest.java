@@ -1,6 +1,5 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.controller.BrandModelController;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.service.BrandServiceImp;
@@ -44,7 +43,11 @@ public class BrandModelControllerTest {
 
         mockMvc.perform(post("/brandAndModel/createNewBrand")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"brandName\":\"NewBrand\"}")) // Тело запроса
+                        .content("""
+                                {
+                                    "brandName": "NewBrand"
+                                }
+                                """)) // Тело запроса
                 .andExpect(status().isOk()) // Ожидаемый статус 200
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(brandId.intValue())))
@@ -55,7 +58,11 @@ public class BrandModelControllerTest {
     public void testCreateNewBrand_InvalidInput() throws Exception {
         mockMvc.perform(post("/brandAndModel/createNewBrand")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"brandName\":\" \"}"))
+                        .content("""
+                                {
+                                    "brandName": ""
+                                }
+                                """))
                 .andExpect(status().isBadRequest());
     }
 
@@ -118,7 +125,12 @@ public class BrandModelControllerTest {
 
         mockMvc.perform(put("/brandAndModel/updateBrand/{id}", brandId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"brandName\":\"NewBrandName\"}")) // Тело запроса
+                        .content("""
+                                {
+                                    "brandName": "NewBrandName"
+                                }
+                                """)) // Тело запроса
+
                 .andExpect(status().isOk()) // Ожидаемый статус 200
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(brandId.intValue())))
@@ -147,13 +159,15 @@ public class BrandModelControllerTest {
 
         mockMvc.perform(post("/brandAndModel/createNewModel")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"modelName\": \"ModelName\",\n" +
-                                "    \"brand\": {\n" +
-                                "        \"id\": 2,\n" +
-                                "        \"brandName\": \"BrandName\"\n" +
-                                "    }\n" +
-                                "}")) // Тело запроса
+                        .content("""
+                        {
+                            "modelName": "ModelName",
+                            "brand": {
+                                "id": 2,
+                                "brandName": "BrandName"
+                            }
+                        }
+                        """))
                 .andExpect(status().isOk()) // Ожидаемый статус 200
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(modelId.intValue()))) // Проверка возвращаемого значения
@@ -166,13 +180,15 @@ public class BrandModelControllerTest {
     public void testCreateNewModel_InvalidInput() throws Exception {
         mockMvc.perform(post("/brandAndModel/createNewModel")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"modelName\": \" \",\n" +
-                                "    \"brand\": {\n" +
-                                "        \"id\": 2,\n" +
-                                "        \"brandName\": \"BrandName\"\n" +
-                                "    }\n" +
-                                "}")) // Тело запроса
+                        .content("""
+                        {
+                            "modelName": "",
+                            "brand": {
+                                "id": 2,
+                                "brandName": "BrandName"
+                            }
+                        }
+                        """))
                 .andExpect(status().isBadRequest());
     }
 
@@ -252,13 +268,15 @@ public class BrandModelControllerTest {
 
         mockMvc.perform(put("/brandAndModel/updateModel/{id}", modelId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"modelName\": \"NewModelName\",\n" +
-                                "    \"brand\": {\n" +
-                                "        \"id\": 1,\n" +
-                                "        \"brandName\": \"Brand\"\n" +
-                                "    }\n" +
-                                "}")) // Тело запроса
+                        .content("""
+                        {
+                            "modelName": "NewModelName",
+                            "brand": {
+                                "id": 1,
+                                "brandName": "Brand"
+                            }
+                        }
+                        """))
                 .andExpect(status().isOk()) // Ожидаемый статус 200
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(modelId.intValue())))

@@ -4,7 +4,6 @@ import com.example.CarRentalSystem.model.Address;
 import com.example.CarRentalSystem.model.Branch;
 import com.example.CarRentalSystem.service.BranchServiceImp;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -70,7 +69,7 @@ public class BranchControllerTest {
                                 """))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", is(branchId.intValue()))) // Проверка возвращаемого значения
+                .andExpect(jsonPath("$.id", is(branchId.intValue())))
                 .andExpect(jsonPath("$.branchName", is(branch.getBranchName())))
                 .andExpect(jsonPath("$.address.id", is(addressId.intValue())))
                 .andExpect(jsonPath("$.address.zipCode", is(branch.getAddress().getZipCode())))
@@ -175,7 +174,7 @@ public class BranchControllerTest {
         mockMvc.perform(get("/branch/getBranchById/{id}", branchId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", is(branchId.intValue()))) // Проверка возвращаемого значения
+                .andExpect(jsonPath("$.id", is(branchId.intValue())))
                 .andExpect(jsonPath("$.branchName", is(branch.getBranchName())))
                 .andExpect(jsonPath("$.address.id", is(addressId.intValue())))
                 .andExpect(jsonPath("$.address.zipCode", is(branch.getAddress().getZipCode())))
