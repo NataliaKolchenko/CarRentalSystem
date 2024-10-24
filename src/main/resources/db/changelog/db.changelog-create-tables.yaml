@@ -192,3 +192,36 @@ databaseChangeLog:
             constraintName: fk_branch_address
             referencedTableName: address
             referencedColumnNames: id
+  - changeSet:
+      id: 13
+      author: natalia_kolchenko
+      changes:
+        - createTable:
+            tableName: doc
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: doc_type
+                  type: character varying(100)
+              - column:
+                  name: link
+                  type: character varying(500)
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: vehicle_id
+                  type: BIGINT
+              - column:
+                  name: create_date
+                  type: timestamp
+              - column:
+                  name: update_date
+                  type: timestamp

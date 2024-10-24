@@ -14,11 +14,10 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.SocketHandler;
 
 @Service
 @Validated
-public class DocsServiceImp implements DocsService {
+public class DocsServiceImp implements DocsService{
     public final JpaDocsRepository docsRepository;
 
     public DocsServiceImp(JpaDocsRepository docsRepository) {
