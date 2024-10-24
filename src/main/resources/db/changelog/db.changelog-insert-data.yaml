@@ -1,0 +1,102 @@
+---
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-master.yaml
+  - changeSet:
+      id: 2
+      author: natalia_kolchenko
+      changes:
+        - insert:
+            tableName: brand
+            columns:
+              - column:
+                  name: brand_name
+                  value: "Brilliance"
+  - changeSet:
+      id: 4
+      author: natalia_kolchenko
+      changes:
+        - insert:
+            tableName: model
+            columns:
+              - column:
+                  name: model_name
+                  value: " V5"
+              - column:
+                  name: brand_id
+                  value: 3
+  - changeSet:
+      id: 6
+      author: natalia_kolchenko
+      changes:
+        - insert:
+            tableName: vehicle_type
+            columns:
+              - column:
+                  name: vehicle_type_name
+                  value: "Микроавтобус"
+  - changeSet:
+      id: 8
+      author: natalia_kolchenko
+      changes:
+        - insert:
+            tableName: sub_type
+            columns:
+              - column:
+                  name: sub_type_name
+                  value: "Грузовой"
+              - column:
+                  name: vehicle_type_id
+                  value: 1
+  - changeSet:
+      id: 10
+      author: natalia_kolchenko
+      changes:
+        - insert:
+            tableName: address
+            columns:
+              - column:
+                  name: zip_code
+                  value: "14059"
+              - column:
+                  name: country
+                  value: "Germany"
+              - column:
+                  name: region
+                  value: "Berlin"
+              - column:
+                  name: city
+                  value: "Berlin"
+              - column:
+                  name: district
+                  value: "Charlottenburg"
+              - column:
+                  name: street
+                  value: "Pulsstraße"
+              - column:
+                  name: house
+                  value: 2
+              - column:
+                  name: apartment
+                  value: "K"
+              - column:
+                  name: create_date
+                  value: "2024-10-24T06:09:08"
+  - changeSet:
+      id: 12
+      author: natalia_kolchenko
+      changes:
+        - insert:
+            tableName: branch
+            columns:
+              - column:
+                  name: branch_name
+                  value: "Berlin branch"
+              - column:
+                  name: address_id
+                  value: 1
+              - column:
+                  name: phone
+                  value: "+491763458800"
+              - column:
+                  name: working_time
+                  value: "9:00 - 18:00"
