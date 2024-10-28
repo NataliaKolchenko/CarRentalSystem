@@ -1,6 +1,6 @@
 package com.example.CarRentalSystem.model;
 
-import com.example.CarRentalSystem.enums.DocType;
+import com.example.CarRentalSystem.enums.UserDocType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,37 +11,36 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Builder
 @Entity
-public class Doc {
+public class UserDoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "docType may not be blank or null or has spaces")
-    private DocType docType;
+//сделать проброс userID
+    @NotBlank(message = "userDocType may not be blank or null or has spaces")
+    private UserDocType userDocType;
+
     @URL
     @NotBlank
     private String link;
+
+    @NotBlank(message = "userId may not be blank or null or has spaces")
     private Long userId;
-    private Long vehicleId;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    public Doc() {
+    public UserDoc() {
     }
 
-    public Doc(Long id, DocType docType, String link, Long userId, Long vehicleId, LocalDateTime createDate, LocalDateTime updateDate) {
-        this.id = id;
-        this.docType = docType;
+    public UserDoc(UserDocType userDocType, String link, Long userId, LocalDateTime updateDate) {
+        this.userDocType = userDocType;
         this.link = link;
         this.userId = userId;
-        this.vehicleId = vehicleId;
         this.createDate = LocalDateTime.now();
         this.updateDate = updateDate;
     }
