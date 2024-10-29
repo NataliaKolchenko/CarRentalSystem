@@ -3,6 +3,7 @@ package com.example.CarRentalSystem.model;
 import com.example.CarRentalSystem.enums.VehicleDocType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
@@ -18,7 +19,7 @@ public class VehicleDoc {
     private Long id;
 
 
-    @NotBlank(message = "vehicleDocType may not be blank or null or has spaces")
+    @NotNull(message = "vehicleDocType may not be null")
     private VehicleDocType vehicleDocType;
 
     @URL
@@ -27,7 +28,7 @@ public class VehicleDoc {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vehicle_id")
-    @NotBlank(message = "vehicleId may not be blank or null or has spaces")
+//    @NotNull(message = "vehicleId may not be null")
     private Vehicle vehicle;
 
     private LocalDateTime createDate;
@@ -42,6 +43,12 @@ public class VehicleDoc {
         this.vehicleDocType = vehicleDocType;
         this.link = link;
         this.vehicle = vehicle;
+        this.createDate = LocalDateTime.now();
+    }
+
+    public VehicleDoc(VehicleDocType vehicleDocType, String link) {
+        this.vehicleDocType = vehicleDocType;
+        this.link = link;
         this.createDate = LocalDateTime.now();
     }
 }

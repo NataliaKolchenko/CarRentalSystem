@@ -29,4 +29,8 @@ public class SubType {
         this.subTypeName = subTypeName;
         this.type = type;
     }
+
+    public SubType(Long id) {
+        this.id = id;
+    }
 }

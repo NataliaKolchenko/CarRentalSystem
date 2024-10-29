@@ -100,20 +100,4 @@ databaseChangeLog:
               - column:
                   name: working_time
                   value: "9:00 - 18:00"
-  - changeSet:
-      id: 14
-      author: natalia_kolchenko
-      changes:
-        - insert:
-            tableName: doc
-            columns:
-              - column:
-                  name: doc_type
-                  value: "USER_PASSPORT"
-              - column:
-                  name: link
-                  value: "https://www.cloud.com/"
-              - column:
-                  name: create_date
-                  value: "2024-10-24T06:09:08"
 

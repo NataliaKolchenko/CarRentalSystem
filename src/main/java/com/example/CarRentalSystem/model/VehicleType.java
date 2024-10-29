@@ -22,4 +22,8 @@ public class VehicleType {
     public VehicleType(String vehicleTypeName) {
         this.vehicleTypeName = vehicleTypeName;
     }
+
+    public VehicleType(Long id) {
+        this.id = id;
+    }
 }

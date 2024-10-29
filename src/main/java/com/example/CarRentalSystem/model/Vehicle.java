@@ -45,11 +45,12 @@ public class Vehicle {
     @NotNull(message = "modelId may not be null")
     private Model model;
 
-    @NotBlank(message = "engineType may not be null")
+    @NotNull(message = "engineType may not be null")
     private EngineType engineType;
 
     @Positive(message = "year may not be less then 1950")
     @Min(1950L)
+    @NotNull(message = "year may not be null")
     private int year;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -61,6 +62,7 @@ public class Vehicle {
     private TransmissionType transmissionType;
 
     @PositiveOrZero(message = "mileage may not be negative")
+    @NotNull(message = "mileage may not be null")
     private int mileage;
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -69,6 +71,8 @@ public class Vehicle {
 
     @NotBlank(message = "city may not be blank")
     private String city;
+
+    @NotNull(message = "favorite may not be null")
     boolean favorite;
 
     private LocalDateTime createDate;

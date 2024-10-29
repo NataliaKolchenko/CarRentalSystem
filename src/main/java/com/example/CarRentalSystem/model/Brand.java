@@ -22,4 +22,7 @@ public class Brand {
         this.brandName = brandName;
     }
 
+    public Brand(Long id) {
+        this.id = id;
+    }
 }

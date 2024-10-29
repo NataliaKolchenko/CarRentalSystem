@@ -71,4 +71,8 @@ public class Address {
         this.updateDate = updateDate;
         this.changeUserId = changeUserId;
     }
+
+    public Address(Long id) {
+        this.id = id;
+    }
 }

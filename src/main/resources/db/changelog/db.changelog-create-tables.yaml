@@ -197,7 +197,7 @@ databaseChangeLog:
       author: natalia_kolchenko
       changes:
         - createTable:
-            tableName: doc
+            tableName: vehicle_doc
             ifNotExists: true
             columns:
               - column:
@@ -208,14 +208,11 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: doc_type
+                  name: vehicle_doc_type
                   type: character varying(100)
               - column:
                   name: link
                   type: character varying(500)
-              - column:
-                  name: user_id
-                  type: BIGINT
               - column:
                   name: vehicle_id
                   type: BIGINT
@@ -225,3 +222,58 @@ databaseChangeLog:
               - column:
                   name: update_date
                   type: timestamp
+  - changeSet:
+      id: 14
+      author: natalia_kolchenko
+      changes:
+        - createTable:
+            tableName: vehicle
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: vehicle_type_id
+                  type: BIGINT
+              - column:
+                  name: sub_type_id
+                  type: BIGINT
+              - column:
+                  name: active
+                  type: boolean
+              - column:
+                  name: brand_id
+                  type: BIGINT
+              - column:
+                  name: model_id
+                  type: BIGINT
+              - column:
+                  name: engine_type
+                  type: character varying(100)
+              - column:
+                  name: year
+                  type: smallserial
+              - column:
+                  name: branch_id
+                  type: BIGINT
+              - column:
+                  name: transmission_type
+                  type: character varying(100)
+              - column:
+                  name: mileage
+                  type: smallserial
+              - column:
+                  name: city
+                  type: character varying(100)
+              - column:
+                  name: favorite
+                  type: boolean
+              - column:
+                  name: create_date
+                  type: timestamp
+
