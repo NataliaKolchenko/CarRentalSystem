@@ -18,7 +18,5 @@ public class ErrorMessage {
     public static final String ADDRESS_ID_WAS_NOT_FOUND = "AddressId was not found";
     public static final String BRANCH_NAME_WAS_NOT_FOUND = "BranchName was not found";
     public static final String BRANCH_ID_WAS_NOT_FOUND = "BranchId was not found";
-    public static final String INCORRECT_USER_DOC_TYPE = "User's DocType is incorrect";
-    public static final String INCORRECT_VEHICLE_DOC_TYPE = "Vehicle's DocType is incorrect";
-    public static final String DOC_ID_WAS_NOT_FOUND = "DocId was not found";
+    public static final String VEHICLE_ID_WAS_NOT_FOUND = "VehicleId was not found";
 }

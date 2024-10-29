@@ -19,7 +19,7 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle_type_id")
     @NotNull(message = "VehicleType may not be null")
     private VehicleType type;
@@ -35,7 +35,7 @@ public class Vehicle {
     @NotNull(message = "VehicleCondition may not be null")
     private boolean active;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     @NotNull(message = "brandId may not be null")
     private Brand brand;
@@ -76,6 +76,10 @@ public class Vehicle {
     private  LocalDateTime updateDate;
 
     public Vehicle(LocalDateTime createDate) {
+        this.createDate = LocalDateTime.now();
+    }
+
+    public Vehicle() {
         this.createDate = LocalDateTime.now();
     }
 

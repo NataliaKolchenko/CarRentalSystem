@@ -255,6 +255,6 @@ databaseChangeLog:
             ifNotExists: true
             columns:
               - column:
-                  name: updateDate
+                  name: update_date
                   type: TIMESTAMP
 
