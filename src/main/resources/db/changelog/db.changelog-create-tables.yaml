@@ -197,36 +197,6 @@ databaseChangeLog:
       author: natalia_kolchenko
       changes:
         - createTable:
-            tableName: vehicle_doc
-            ifNotExists: true
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: vehicle_doc_type
-                  type: character varying(100)
-              - column:
-                  name: link
-                  type: character varying(500)
-              - column:
-                  name: vehicle_id
-                  type: BIGINT
-              - column:
-                  name: create_date
-                  type: timestamp
-              - column:
-                  name: update_date
-                  type: timestamp
-  - changeSet:
-      id: 14
-      author: natalia_kolchenko
-      changes:
-        - createTable:
             tableName: vehicle
             ifNotExists: true
             columns:
@@ -257,7 +227,7 @@ databaseChangeLog:
                   type: character varying(100)
               - column:
                   name: year
-                  type: smallserial
+                  type: BIGINT
               - column:
                   name: branch_id
                   type: BIGINT

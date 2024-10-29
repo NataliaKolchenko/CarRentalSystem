@@ -65,10 +65,6 @@ public class Vehicle {
     @NotNull(message = "mileage may not be null")
     private int mileage;
 
-    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
-    @NotNull(message = "vehicleDocs may not be null")
-    private List<VehicleDoc> vehicleDocs;
-
     @NotBlank(message = "city may not be blank")
     private String city;
 
@@ -82,7 +78,7 @@ public class Vehicle {
     }
 
     public Vehicle(VehicleType type, SubType subType, boolean active, Brand brand, Model model, EngineType engineType,
-                   int year, Branch branch, TransmissionType transmissionType, int mileage, List<VehicleDoc> vehicleDocs, String city, boolean favorite) {
+                   int year, Branch branch, TransmissionType transmissionType, int mileage, String city, boolean favorite) {
         this.type = type;
         this.subType = subType;
         this.active = active;
@@ -93,7 +89,6 @@ public class Vehicle {
         this.branch = branch;
         this.transmissionType = transmissionType;
         this.mileage = mileage;
-        this.vehicleDocs = vehicleDocs;
         this.city = city;
         this.favorite = favorite;
         this.createDate = LocalDateTime.now();

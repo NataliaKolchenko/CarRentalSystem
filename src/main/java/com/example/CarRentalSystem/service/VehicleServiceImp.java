@@ -2,31 +2,25 @@ package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
-import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.model.*;
+import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
 import com.example.CarRentalSystem.repository.JpaVehicleRepository;
 import com.example.CarRentalSystem.service.interfaces.*;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @Service
 @Validated
 public class VehicleServiceImp implements VehicleService {
     private final JpaVehicleRepository vehicleRepository;
-    private final VehicleDocServiceImp docService;
     private final VehicleTypeServiceImp typeService;
     private final SubTypeService subTypeService;
     private final BrandService brandService;
     private final ModelService modelService;
     private final BranchService branchService;
 
-    public VehicleServiceImp(JpaVehicleRepository vehicleRepository, VehicleDocServiceImp docService, VehicleTypeServiceImp typeService, SubTypeService subTypeService, BrandService brandService, ModelService modelService, BranchService branchService) {
+    public VehicleServiceImp(JpaVehicleRepository vehicleRepository,VehicleTypeServiceImp typeService, SubTypeService subTypeService, BrandService brandService, ModelService modelService, BranchService branchService) {
         this.vehicleRepository = vehicleRepository;
-        this.docService = docService;
         this.typeService = typeService;
         this.subTypeService = subTypeService;
         this.brandService = brandService;
@@ -35,29 +29,25 @@ public class VehicleServiceImp implements VehicleService {
     }
 
     @Override
-    public Vehicle create(Vehicle vehicle) {
-        Vehicle savedVehicle = vehicleRepository.save(vehicle);
+    public Vehicle create(VehicleRequestDto vehicleRequestDto) {
 
-        Long id = savedVehicle.getId();
-        VehicleType type = typeService.getById(vehicle.getType().getId());
-        SubType subType = subTypeService.getById(vehicle.getSubType().getId());
-        boolean active = savedVehicle.isActive();
-        Brand brand = brandService.getVehicleBrandById(vehicle.getBrand().getId());
-        Model model = modelService.getModelById(vehicle.getModel().getId());
-        EngineType engineType = vehicle.getEngineType();
-        int year = vehicle.getYear();
-        Branch branch = branchService.getById(vehicle.getBranch().getId());
-        TransmissionType transmissionType = vehicle.getTransmissionType();
-        int mileage = vehicle.getMileage();
-        List<VehicleDoc> vehicleDocs = savedVehicle.getVehicleDocs();
-        String city = vehicle.getCity();
-        boolean favorite = vehicle.isFavorite();
+       VehicleType type = typeService.getById(vehicleRequestDto.getTypeId());
+       SubType subType = subTypeService.getById(vehicleRequestDto.getSubTypeId());
+       boolean active = vehicleRequestDto.isActive();
+       Brand brand = brandService.getVehicleBrandById(vehicleRequestDto.getBrandId());
+       Model model = modelService.getModelById(vehicleRequestDto.getModelId());
+       EngineType engineType = vehicleRequestDto.getEngineType();
+       int year = vehicleRequestDto.getYear();
+       Branch branch = branchService.getById(vehicleRequestDto.getBranchId());
+       TransmissionType transmissionType = vehicleRequestDto.getTransmissionType();
+       int mileage = vehicleRequestDto.getMileage();
+       String city = vehicleRequestDto.getCity();
+       boolean favorite = vehicleRequestDto.isFavorite();
 
-        Vehicle newVehicle = new Vehicle(type, subType, active, brand, model, engineType, year, branch,
-                transmissionType, mileage, vehicleDocs, city, favorite);
-        newVehicle.setId(id);
+       Vehicle vehicle = new Vehicle(type, subType, active, brand, model, engineType, year, branch, transmissionType,
+               mileage, city, favorite);
 
-        return newVehicle;
+        return vehicleRepository.save(vehicle);
     }
 
 }
