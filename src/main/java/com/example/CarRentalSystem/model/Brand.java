@@ -21,8 +21,4 @@ public class Brand {
     public Brand(String brandName) {
         this.brandName = brandName;
     }
-
-    public Brand(Long id) {
-        this.id = id;
-    }
 }

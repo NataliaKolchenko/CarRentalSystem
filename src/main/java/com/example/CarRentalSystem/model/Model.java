@@ -29,8 +29,4 @@ public class Model {
         this.modelName = modelName;
         this.brand = brand;
     }
-
-    public Model(Long id) {
-        this.id = id;
-    }
 }

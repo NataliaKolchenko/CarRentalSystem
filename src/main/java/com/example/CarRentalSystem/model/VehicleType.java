@@ -23,7 +23,4 @@ public class VehicleType {
         this.vehicleTypeName = vehicleTypeName;
     }
 
-    public VehicleType(Long id) {
-        this.id = id;
-    }
 }

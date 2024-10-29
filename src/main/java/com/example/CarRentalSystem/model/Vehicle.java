@@ -65,7 +65,7 @@ public class Vehicle {
     @NotNull(message = "mileage may not be null")
     private int mileage;
 
-    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
     @NotNull(message = "vehicleDocs may not be null")
     private List<VehicleDoc> vehicleDocs;
 

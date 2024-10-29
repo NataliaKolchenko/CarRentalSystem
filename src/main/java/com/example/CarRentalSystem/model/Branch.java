@@ -42,8 +42,4 @@ public class Branch {
         this.phone = phone;
         this.workingTime = workingTime;
     }
-
-    public Branch(Long id) {
-        this.id = id;
-    }
 }

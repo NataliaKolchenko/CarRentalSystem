@@ -60,9 +60,4 @@ public class VehicleServiceImp implements VehicleService {
         return newVehicle;
     }
 
-    public Vehicle getById(Long vehicleId) {
-        Optional<Vehicle> vehicleOpt = vehicleRepository.findById(vehicleId);
-        Vehicle vehicle = vehicleOpt.orElseThrow(() -> new SubjectNotFoundException("VehicleId was not wound"));
-        return vehicle;
-    }
 }
