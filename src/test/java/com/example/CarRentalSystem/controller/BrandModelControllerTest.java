@@ -38,8 +38,8 @@ public class BrandModelControllerTest {
         brand = new Brand("NewBrand");
         brand.setId(brandId);
 
-        when(brandService.createVehicleBrand(brand.getBrandName())).thenReturn(brand);
-        when(brandService.getVehicleBrandByName(brand.getBrandName())).thenReturn(brand);
+        when(brandService.create(brand.getBrandName())).thenReturn(brand);
+        when(brandService.getByName(brand.getBrandName())).thenReturn(brand);
 
         mockMvc.perform(post("/brandAndModel/createNewBrand")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -73,7 +73,7 @@ public class BrandModelControllerTest {
         brand.setId(brandId);
         brand.setBrandName("Brand");
 
-        when(brandService.getVehicleBrandById(brandId)).thenReturn(brand);
+        when(brandService.getById(brandId)).thenReturn(brand);
 
         mockMvc.perform(get("/brandAndModel/getBrandById/{id}", brandId))
                 .andExpect(status().isOk())
@@ -89,7 +89,7 @@ public class BrandModelControllerTest {
 
         List<Brand> brandList = List.of(brand, brand2);
 
-        when(brandService.getAllVehicleBrand()).thenReturn(brandList);
+        when(brandService.getAllBrands()).thenReturn(brandList);
 
         mockMvc.perform(get("/brandAndModel/getAllBrands"))
                 .andExpect(status().isOk())
@@ -101,7 +101,7 @@ public class BrandModelControllerTest {
     public void testDeleteBrandById() throws Exception {
         Long brandId = 1L;
 
-        doNothing().when(brandService).deleteVehicleBrandById(brandId);
+        doNothing().when(brandService).deleteById(brandId);
 
         mockMvc.perform(delete("/brandAndModel/deleteBrandById/{id}", brandId))
                 .andExpect(status().isOk());
@@ -121,7 +121,7 @@ public class BrandModelControllerTest {
         updatedBrand.setId(brandId);
         updatedBrand.setBrandName(newBrandName);
 
-        when(brandService.updateVehicleBrand(brandId, newBrandName)).thenReturn(updatedBrand);
+        when(brandService.update(brandId, newBrandName)).thenReturn(updatedBrand);
 
         mockMvc.perform(put("/brandAndModel/updateBrand/{id}", brandId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -154,8 +154,8 @@ public class BrandModelControllerTest {
         model = new Model(modelName, brand);
         model.setId(modelId);
 
-        when(modelService.createModel(model)).thenReturn(model);
-        when(modelService.getModelByName(model.getModelName())).thenReturn(model);
+        when(modelService.create(model)).thenReturn(model);
+        when(modelService.getByName(model.getModelName())).thenReturn(model);
 
         mockMvc.perform(post("/brandAndModel/createNewModel")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -204,7 +204,7 @@ public class BrandModelControllerTest {
         model = new Model(modelName, brand);
         model.setId(modelId);
 
-        when(modelService.getModelById(modelId)).thenReturn(model);
+        when(modelService.getById(modelId)).thenReturn(model);
 
         mockMvc.perform(get("/brandAndModel/getModelById/{id}", modelId))
                 .andExpect(status().isOk())
@@ -239,7 +239,7 @@ public class BrandModelControllerTest {
     public void testDeleteModelById() throws Exception {
         Long modelId = 1L;
 
-        doNothing().when(modelService).deleteModelById(modelId);
+        doNothing().when(modelService).deleteById(modelId);
 
         mockMvc.perform(delete("/brandAndModel/deleteModelById/{id}", modelId))
                 .andExpect(status().isOk());
@@ -264,7 +264,7 @@ public class BrandModelControllerTest {
         updatedModel.setModelName(newModelName);
         updatedModel.setBrand(brand);
 
-        when(modelService.updateModel(modelId, newModelName)).thenReturn(updatedModel);
+        when(modelService.update(modelId, newModelName)).thenReturn(updatedModel);
 
         mockMvc.perform(put("/brandAndModel/updateModel/{id}", modelId)
                         .contentType(MediaType.APPLICATION_JSON)

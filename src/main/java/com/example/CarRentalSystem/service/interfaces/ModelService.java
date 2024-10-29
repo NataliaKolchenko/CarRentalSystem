@@ -5,10 +5,10 @@ import com.example.CarRentalSystem.model.Model;
 import java.util.List;
 
 public interface ModelService {
-    Model createModel (Model newModel);
-    Model updateModel (Long modelId, String newModelName);
-    void deleteModelById(Long modelId);
-    Model getModelById(Long modelId);
-    Model getModelByName(String modelName);
+    Model create(Model newModel);
+    Model update(Long modelId, String newModelName);
+    void deleteById(Long modelId);
+    Model getById(Long modelId);
+    Model getByName(String modelName);
     List<Model> getAllModels();
 }

@@ -25,20 +25,20 @@ public class ModelServiceImp  implements ModelService {
     }
 
     @Override
-    public Model createModel(Model model) {
+    public Model create(Model model) {
         Model checkExistModel = modelRepository.findByModelName(model.getModelName());
         if(checkExistModel != null){
             throw  new SubjectAlreadyExistsException(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST);
         }
-        Brand brand = brandServiceImp.getVehicleBrandById(model.getBrand().getId());
+        Brand brand = brandServiceImp.getById(model.getBrand().getId());
         Model newModel = new Model(model.getModelName(), brand);
 
         return modelRepository.save(newModel);
     }
 
     @Override
-    public Model updateModel(Long modelId, String newModelName) {
-        Model model = getModelById(modelId);
+    public Model update(Long modelId, String newModelName) {
+        Model model = getById(modelId);
         if(modelRepository.findByModelName(newModelName) != null){
             throw new SubjectAlreadyExistsException(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST);
         }
@@ -47,7 +47,7 @@ public class ModelServiceImp  implements ModelService {
     }
 
     @Override
-    public void deleteModelById(Long modelId) {
+    public void deleteById(Long modelId) {
         if(!modelRepository.existsById(modelId)){
             throw new SubjectNotFoundException(ErrorMessage.MODEL_ID_WAS_NOT_FOUND);
         }
@@ -55,14 +55,14 @@ public class ModelServiceImp  implements ModelService {
     }
 
     @Override
-    public Model getModelById(Long modelId) {
+    public Model getById(Long modelId) {
         Optional<Model> modelOpt = modelRepository.findById(modelId);
         Model model = modelOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.MODEL_ID_WAS_NOT_FOUND));
         return model;
     }
 
     @Override
-    public Model getModelByName(String modelName) {
+    public Model getByName(String modelName) {
         Model model = modelRepository.findByModelName(modelName);
         if (model == null){
             throw new SubjectNotFoundException(ErrorMessage.MODEL_NAME_WAS_NOT_FOUND);
