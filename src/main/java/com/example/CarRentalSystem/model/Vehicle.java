@@ -4,9 +4,11 @@ import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -68,4 +70,28 @@ public class Vehicle {
     @NotBlank(message = "city may not be blank")
     private String city;
     boolean favorite;
+
+    private LocalDateTime createDate;
+
+    public Vehicle(LocalDateTime createDate) {
+        this.createDate = LocalDateTime.now();
+    }
+
+    public Vehicle(VehicleType type, SubType subType, boolean active, Brand brand, Model model, EngineType engineType,
+                   int year, Branch branch, TransmissionType transmissionType, int mileage, List<VehicleDoc> vehicleDocs, String city, boolean favorite) {
+        this.type = type;
+        this.subType = subType;
+        this.active = active;
+        this.brand = brand;
+        this.model = model;
+        this.engineType = engineType;
+        this.year = year;
+        this.branch = branch;
+        this.transmissionType = transmissionType;
+        this.mileage = mileage;
+        this.vehicleDocs = vehicleDocs;
+        this.city = city;
+        this.favorite = favorite;
+        this.createDate = LocalDateTime.now();
+    }
 }

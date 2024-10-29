@@ -27,21 +27,21 @@ public class VehicleDoc {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vehicle_id")
-//    @NotBlank(message = "vehicleId may not be blank or null or has spaces")
+    @NotBlank(message = "vehicleId may not be blank or null or has spaces")
     private Vehicle vehicle;
 
     private LocalDateTime createDate;
 
     private LocalDateTime updateDate;
 
-    public VehicleDoc(LocalDateTime createDate) {
-        this.createDate = createDate;
+    public VehicleDoc() {
+        this.createDate = LocalDateTime.now();
     }
 
-    public VehicleDoc(VehicleDocType vehicleDocType, String link, LocalDateTime createDate, LocalDateTime updateDate) {
+    public VehicleDoc(VehicleDocType vehicleDocType, String link, Vehicle vehicle) {
         this.vehicleDocType = vehicleDocType;
         this.link = link;
+        this.vehicle = vehicle;
         this.createDate = LocalDateTime.now();
-        this.updateDate = updateDate;
     }
 }
