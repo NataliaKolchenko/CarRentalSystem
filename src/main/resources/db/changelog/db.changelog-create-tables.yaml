@@ -266,7 +266,7 @@ databaseChangeLog:
                   type: character varying(100)
               - column:
                   name: mileage
-                  type: smallserial
+                  type: BIGINT
               - column:
                   name: city
                   type: character varying(100)
