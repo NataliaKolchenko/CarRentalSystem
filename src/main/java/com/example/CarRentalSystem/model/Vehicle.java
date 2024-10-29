@@ -73,6 +73,8 @@ public class Vehicle {
 
     private LocalDateTime createDate;
 
+    private  LocalDateTime updateDate;
+
     public Vehicle(LocalDateTime createDate) {
         this.createDate = LocalDateTime.now();
     }

@@ -246,4 +246,15 @@ databaseChangeLog:
               - column:
                   name: create_date
                   type: timestamp
+  - changeSet:
+      id: 14
+      author: natalia_kolchenko
+      changes:
+        - addColumn:
+            tableName: vehicle
+            ifNotExists: true
+            columns:
+              - column:
+                  name: updateDate
+                  type: TIMESTAMP
 
