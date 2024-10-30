@@ -4,7 +4,6 @@ import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
 import com.example.CarRentalSystem.service.interfaces.ModelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -17,7 +16,6 @@ public class BrandModelController {
     private final BrandService brandService;
     private final ModelService modelService;
 
-    @Autowired
     public BrandModelController(BrandService brandService, ModelService modelService) {
         this.brandService = brandService;
         this.modelService = modelService;
