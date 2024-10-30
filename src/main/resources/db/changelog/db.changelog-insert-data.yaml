@@ -100,4 +100,50 @@ databaseChangeLog:
               - column:
                   name: working_time
                   value: "9:00 - 18:00"
+  - changeSet:
+      id: 15
+      author: natalia_kolchenko
+      changes:
+        - insert:
+            tableName: vehicle
+            columns:
+              - column:
+                  name: id
+                  value: 3
+              - column:
+                  name: vehicle_type_id
+                  value: 2
+              - column:
+                  name: sub_type_id
+                  value: 5
+              - column:
+                  name: active
+                  value: false
+              - column:
+                  name: brand_id
+                  value: 5
+              - column:
+                  name: model_id
+                  value: 8
+              - column:
+                  name: engine_type
+                  value: 3
+              - column:
+                  name: year
+                  value: 1950
+              - column:
+                  name: branch_id
+                  value: 1
+              - column:
+                  name: transmission_type
+                  value: 1
+              - column:
+                  name: mileage
+                  value: 500000
+              - column:
+                  name: city
+                  value: Berlin
+              - column:
+                  name: favorite
+                  value: false
 

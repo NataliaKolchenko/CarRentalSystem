@@ -5,7 +5,6 @@ import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.service.interfaces.SubTypeService;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,6 @@ public class TypeSubtypeController {
     private final VehicleTypeService typeService;
     private final SubTypeService subTypeService;
 
-    @Autowired
     public TypeSubtypeController(VehicleTypeService typeService, SubTypeService subTypeService) {
         this.typeService = typeService;
         this.subTypeService = subTypeService;

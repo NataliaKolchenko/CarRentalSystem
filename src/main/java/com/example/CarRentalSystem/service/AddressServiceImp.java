@@ -45,9 +45,10 @@ public class AddressServiceImp  implements AddressService {
 
     @Override
     public Address update(Long id, Address newAddress) {
-        Address address = getById(id);
+        getById(id);
 
         Address updatedAddress = Address.builder()
+                .id(id)
                 .zipCode(newAddress.getZipCode())
                 .country(newAddress.getCountry())
                 .region(newAddress.getRegion())
@@ -60,7 +61,7 @@ public class AddressServiceImp  implements AddressService {
                 .updateDate(newAddress.getUpdateDate())
                 .build();
 
-        return updatedAddress;
+        return addressRepository.save(updatedAddress);
     }
 
     @Override

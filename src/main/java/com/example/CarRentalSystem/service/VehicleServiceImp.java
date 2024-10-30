@@ -26,7 +26,9 @@ public class VehicleServiceImp implements VehicleService {
     private final ModelService modelService;
     private final BranchService branchService;
 
-    public VehicleServiceImp(JpaVehicleRepository vehicleRepository,VehicleTypeServiceImp typeService, SubTypeService subTypeService, BrandService brandService, ModelService modelService, BranchService branchService) {
+    public VehicleServiceImp(JpaVehicleRepository vehicleRepository,VehicleTypeServiceImp typeService,
+                             SubTypeService subTypeService, BrandService brandService, ModelService modelService,
+                             BranchService branchService) {
         this.vehicleRepository = vehicleRepository;
         this.typeService = typeService;
         this.subTypeService = subTypeService;
@@ -73,10 +75,10 @@ public class VehicleServiceImp implements VehicleService {
         existingVehicle.setFavorite(vehicle.isFavorite());
         existingVehicle.setUpdateDate(LocalDateTime.now());
 
-        return existingVehicle;
+        return vehicleRepository.save(existingVehicle);
     }
 
-    private Vehicle mapDtoToEntity(VehicleRequestDto vehicleRequestDto){
+    public Vehicle mapDtoToEntity(VehicleRequestDto vehicleRequestDto){
         VehicleType type = typeService.getById(vehicleRequestDto.getTypeId());
         SubType subType = subTypeService.getById(vehicleRequestDto.getSubTypeId());
         boolean active = vehicleRequestDto.isActive();

@@ -3,7 +3,6 @@ package com.example.CarRentalSystem.controller;
 import com.example.CarRentalSystem.model.Branch;
 import com.example.CarRentalSystem.service.interfaces.BranchService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
