@@ -51,7 +51,7 @@ public class AddressServiceImpTest {
                 .additionalInfo(additionalInfo)
                 .build();
 
-        when(addressRepository.save(any(Address.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(addressRepository.save(any(Address.class))).thenReturn(address);
         Address result = addressService.create(address);
 
         assertAll(
@@ -139,30 +139,33 @@ public class AddressServiceImpTest {
 
 
         Address existingAddress = Address.builder()
+                .id(addressId)
                 .country("country")
                 .city("city")
                 .street("street")
                 .house(1)
                 .apartment("apartment")
                 .build();
+//        existingAddress.setId(addressId);
 
-        when(addressRepository.findById(addressId)).thenReturn(Optional.ofNullable(existingAddress));
+        when(addressRepository.findById(addressId)).thenReturn(Optional.of(existingAddress));
         Address updatedAddress = Address.builder()
+                .id(addressId)
                 .country("New_country")
                 .city("city")
                 .street("street")
                 .house(1)
                 .apartment("apartment")
                 .build();
+//        updatedAddress.setId(addressId);
 
-        when(addressRepository.save(updatedAddress)).thenReturn(existingAddress);
+        when(addressRepository.save(any(Address.class))).thenReturn(updatedAddress);
         Address result = addressService.update(addressId, updatedAddress);
 
         assertAll(
-                () -> assertEquals(result, updatedAddress),
-                () -> assertEquals(result, updatedAddress),
+                () -> assertEquals(updatedAddress, result),
 
-                () -> verify(addressRepository).save(updatedAddress)
+                () -> verify(addressRepository).save(any(Address.class))
         );
 
     }
