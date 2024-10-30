@@ -5,10 +5,10 @@ import com.example.CarRentalSystem.model.Brand;
 import java.util.List;
 
 public interface BrandService {
-    Brand createVehicleBrand (String brandName);
-    Brand updateVehicleBrand (Long brandId, String newBrandName);
-    void deleteVehicleBrandById(Long brandId);
-    Brand getVehicleBrandById(Long brandId);
-    Brand getVehicleBrandByName(String brandName);
-    List<Brand> getAllVehicleBrand();
+    Brand create(String brandName);
+    Brand update(Long brandId, String newBrandName);
+    void deleteById(Long brandId);
+    Brand getById(Long brandId);
+    Brand getByName(String brandName);
+    List<Brand> getAllBrands();
 }

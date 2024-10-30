@@ -27,7 +27,6 @@ public class AddressServiceImp  implements AddressService {
             throw new SubjectAlreadyExistsException(ErrorMessage.ADDRESS_IS_ALREADY_EXIST);
         }
 
-//  !!!добавить проброс UserId
         Address newAddress = Address.builder()
                 .zipCode(address.getZipCode())
                 .country(address.getCountry())
@@ -39,7 +38,6 @@ public class AddressServiceImp  implements AddressService {
                 .apartment(address.getApartment())
                 .additionalInfo(address.getAdditionalInfo())
                 .updateDate(address.getUpdateDate())
-                .changeUserId(address.getChangeUserId())
                 .build();
 
         return addressRepository.save(newAddress);
@@ -60,7 +58,6 @@ public class AddressServiceImp  implements AddressService {
                 .apartment(newAddress.getApartment())
                 .additionalInfo(newAddress.getAdditionalInfo())
                 .updateDate(newAddress.getUpdateDate())
-                .changeUserId(newAddress.getChangeUserId())
                 .build();
 
         return updatedAddress;

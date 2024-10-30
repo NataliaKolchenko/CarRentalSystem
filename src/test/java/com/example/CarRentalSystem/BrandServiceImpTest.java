@@ -35,7 +35,7 @@ public class BrandServiceImpTest {
 
         when(brandRepository.save(any(Brand.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Brand result = brandService.createVehicleBrand(brandName);
+        Brand result = brandService.create(brandName);
 
         assertAll(
                 () -> assertNotNull(result),
@@ -54,7 +54,7 @@ public class BrandServiceImpTest {
         when(brandRepository.findByBrandName(brandName)).thenReturn(existingBrand);
 
         SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class, () ->
-                brandService.createVehicleBrand(brandName));
+                brandService.create(brandName));
         assertAll(
                 () -> assertEquals("BrandName has to be unique", exception.getMessage()),
 
@@ -80,7 +80,7 @@ public class BrandServiceImpTest {
         updatedBrand.setBrandName(newBrandName);
 
         when(brandRepository.save(existingBrand)).thenReturn(updatedBrand);
-        Brand result = brandService.updateVehicleBrand(existingId, newBrandName);
+        Brand result = brandService.update(existingId, newBrandName);
 
         assertAll(
                 () -> assertEquals(result, updatedBrand),
@@ -108,7 +108,7 @@ public class BrandServiceImpTest {
         updatedBrand.setBrandName(newBrandName);
 
         SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class, () ->
-                brandService.updateVehicleBrand(existingId, newBrandName));
+                brandService.update(existingId, newBrandName));
         assertAll(
                 () -> assertEquals("BrandName has to be unique", exception.getMessage()),
 
@@ -123,7 +123,7 @@ public class BrandServiceImpTest {
         Brand expectedBrand = new Brand("expectedBrand");
         when(brandRepository.findById(brandId)).thenReturn(Optional.of((expectedBrand)));
 
-        Brand vehicleBrandById = brandService.getVehicleBrandById(brandId);
+        Brand vehicleBrandById = brandService.getById(brandId);
 
         assertAll(
                 () -> assertNotNull(vehicleBrandById),
@@ -141,7 +141,7 @@ public class BrandServiceImpTest {
         when(brandRepository.findById(brandId)).thenReturn(Optional.empty());
 
         SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
-                () -> brandService.getVehicleBrandById(brandId));
+                () -> brandService.getById(brandId));
 
         assertAll(
                 () -> assertEquals("BrandId was not found", exception.getMessage()),
@@ -157,7 +157,7 @@ public class BrandServiceImpTest {
         Brand expectedBrand = new Brand("expectedBrand");
         when(brandRepository.findByBrandName(brandName)).thenReturn(expectedBrand);
 
-        Brand vehicleBrandByName = brandService.getVehicleBrandByName(brandName);
+        Brand vehicleBrandByName = brandService.getByName(brandName);
 
         assertAll(
                 () -> assertNotNull(vehicleBrandByName),
@@ -175,7 +175,7 @@ public class BrandServiceImpTest {
         when(brandRepository.findByBrandName(brandName)).thenReturn(null);
 
         SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
-                () -> brandService.getVehicleBrandByName(brandName));
+                () -> brandService.getByName(brandName));
 
         assertAll(
                 () -> assertEquals("BrandName was not found", exception.getMessage()),
@@ -193,7 +193,7 @@ public class BrandServiceImpTest {
         brandList.add(brand2);
         when(brandRepository.findAll()).thenReturn(brandList);
 
-        List<Brand> actualBrandList = brandService.getAllVehicleBrand();
+        List<Brand> actualBrandList = brandService.getAllBrands();
 
         assertAll(
                 () -> assertFalse(actualBrandList.isEmpty()),
@@ -210,7 +210,7 @@ public class BrandServiceImpTest {
     public void testGetAllVehicleBrand_EmptyList() {
         when(brandRepository.findAll()).thenReturn(Collections.emptyList());
 
-        List<Brand> brandList = brandService.getAllVehicleBrand();
+        List<Brand> brandList = brandService.getAllBrands();
 
         assertAll(
                 () -> assertEquals(Collections.emptyList(), brandList),

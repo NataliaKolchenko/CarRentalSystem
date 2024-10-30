@@ -22,7 +22,7 @@ public class BrandServiceImp implements BrandService {
     }
 
     @Override
-    public Brand createVehicleBrand(String brandName) {
+    public Brand create(String brandName) {
         Brand checkExistBrand = brandRepository.findByBrandName(brandName);
         if(checkExistBrand != null) {
             throw new SubjectAlreadyExistsException(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST);
@@ -33,8 +33,8 @@ public class BrandServiceImp implements BrandService {
     }
 
     @Override
-    public Brand updateVehicleBrand(Long brandId, String newBrandName) {
-        Brand brand = getVehicleBrandById(brandId);
+    public Brand update(Long brandId, String newBrandName) {
+        Brand brand = getById(brandId);
        if (brandRepository.findByBrandName(newBrandName) != null){
            throw new SubjectAlreadyExistsException(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST);
        }
@@ -43,7 +43,7 @@ public class BrandServiceImp implements BrandService {
     }
 
     @Override
-    public void deleteVehicleBrandById(Long brandId) {
+    public void deleteById(Long brandId) {
         if (!brandRepository.existsById(brandId)) {
             throw new SubjectNotFoundException(ErrorMessage.BRAND_ID_WAS_NOT_FOUND);
         }
@@ -51,14 +51,14 @@ public class BrandServiceImp implements BrandService {
     }
 
     @Override
-    public Brand getVehicleBrandById(Long brandId) {
+    public Brand getById(Long brandId) {
         Optional<Brand> brandOpt = brandRepository.findById(brandId);
         Brand brand = brandOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.BRAND_ID_WAS_NOT_FOUND));
         return brand;
     }
 
     @Override
-    public Brand getVehicleBrandByName(String brandName) {
+    public Brand getByName(String brandName) {
         Brand brand = brandRepository.findByBrandName(brandName);
         if (brand == null) {
             throw new SubjectNotFoundException(ErrorMessage.BRAND_NAME_WAS_NOT_FOUND);
@@ -67,7 +67,7 @@ public class BrandServiceImp implements BrandService {
     }
 
     @Override
-    public List<Brand> getAllVehicleBrand() {
+    public List<Brand> getAllBrands() {
         List<Brand> brandList = brandRepository.findAll();
         return brandList.isEmpty() ? Collections.emptyList() : brandList;
     }

@@ -22,4 +22,5 @@ public class VehicleType {
     public VehicleType(String vehicleTypeName) {
         this.vehicleTypeName = vehicleTypeName;
     }
+
 }

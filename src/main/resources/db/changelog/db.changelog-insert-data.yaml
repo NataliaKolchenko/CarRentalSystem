@@ -100,3 +100,4 @@ databaseChangeLog:
               - column:
                   name: working_time
                   value: "9:00 - 18:00"
+

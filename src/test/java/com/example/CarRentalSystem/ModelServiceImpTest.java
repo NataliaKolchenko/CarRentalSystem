@@ -44,17 +44,17 @@ public class ModelServiceImpTest {
         Model model = new Model(modelName, brand);
 
         when(modelRepository.findByModelName(modelName)).thenReturn(null);
-        when(brandService.getVehicleBrandById(existBrandId)).thenReturn(brand);
+        when(brandService.getById(existBrandId)).thenReturn(brand);
         when(modelRepository.save(any(Model.class))).thenReturn(model);
 
-        Model resultModel = modelService.createModel(model);
+        Model resultModel = modelService.create(model);
 
         assertAll(
                 () -> assertNotNull(resultModel),
                 () -> assertEquals(modelName, resultModel.getModelName()),
 
                 () -> verify(modelRepository).findByModelName(modelName),
-                () -> verify(brandService).getVehicleBrandById(existBrandId),
+                () -> verify(brandService).getById(existBrandId),
                 () -> verify(modelRepository).save(any(Model.class))
         );
 
@@ -74,7 +74,7 @@ public class ModelServiceImpTest {
         when(modelRepository.findByModelName(existModelName)).thenReturn(model);
 
         SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class, () ->
-                modelService.createModel(model));
+                modelService.create(model));
 
         assertAll(
                 () -> assertEquals("ModelName has to be unique", exception.getMessage()),
@@ -101,7 +101,7 @@ public class ModelServiceImpTest {
         when(modelRepository.findById(existModelId)).thenReturn(Optional.of(existingModel));
         when(modelRepository.save(any(Model.class))).thenReturn(existingModel);
 
-        Model resultModel = modelService.updateModel(existModelId, newModelName);
+        Model resultModel = modelService.update(existModelId, newModelName);
 
         assertAll(
                 () -> assertEquals(resultModel, existingModel),
@@ -130,7 +130,7 @@ public class ModelServiceImpTest {
         when(modelRepository.findById(existModelId)).thenReturn(Optional.of(existingModel));
 
         SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class, () ->
-                modelService.updateModel(existModelId, newModelName));
+                modelService.update(existModelId, newModelName));
         assertAll(
                 () -> assertEquals("ModelName has to be unique", exception.getMessage()),
 
@@ -149,7 +149,7 @@ public class ModelServiceImpTest {
 
         when(modelRepository.findById(modelId)).thenReturn(Optional.of(expectedModel));
 
-        Model modelById = modelService.getModelById(modelId);
+        Model modelById = modelService.getById(modelId);
 
         assertAll(
                 () -> assertNotNull(modelById),
@@ -166,7 +166,7 @@ public class ModelServiceImpTest {
         when(modelRepository.findById(modelId)).thenReturn(Optional.empty());
 
         SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
-                () -> modelService.getModelById(modelId));
+                () -> modelService.getById(modelId));
 
         assertAll(
                 () -> assertEquals("ModelId was not found", exception.getMessage()),
@@ -183,7 +183,7 @@ public class ModelServiceImpTest {
 
         when(modelRepository.findByModelName(modelName)).thenReturn(expectedModel);
 
-        Model modelByName = modelService.getModelByName(modelName);
+        Model modelByName = modelService.getByName(modelName);
 
         assertAll(
                 () -> assertNotNull(modelByName),
@@ -199,7 +199,7 @@ public class ModelServiceImpTest {
         when(modelRepository.findByModelName(modelName)).thenReturn(null);
 
         SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
-                () -> modelService.getModelByName(modelName));
+                () -> modelService.getByName(modelName));
 
         assertAll(
                 () -> assertEquals("ModelName was not found", exception.getMessage()),
