@@ -27,13 +27,14 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     public Booking create(BookingRequestDto bookingDto) {
-//        BookingStatus status = BookingStatus.FINISHED;
-//        List<Booking> existingBookings = bookingRepository.findBookingsWithinDateRangeAndStatusNot(
-//                bookingDto.getVehicleId(), bookingDto.getBookedFromDate(), bookingDto.getBookedToDate(),
-//                status);
-//        if(!existingBookings.isEmpty()){
-//            throw new SubjectNotFoundException((ErrorMessage.BOOKING_IS_ALREADY_EXIST));
-//        }
+        BookingStatus status = BookingStatus.FINISHED;
+
+        List<Booking> existingBookings = bookingRepository.checkExistingBooking(
+                bookingDto.getVehicleId(), bookingDto.getBookedFromDate(), bookingDto.getBookedToDate(), status);
+
+        if(!existingBookings.isEmpty()){
+            throw new SubjectNotFoundException((ErrorMessage.BOOKING_IS_ALREADY_EXIST));
+        }
 
         Vehicle vehicle =  vehicleService.getById(bookingDto.getVehicleId());
 

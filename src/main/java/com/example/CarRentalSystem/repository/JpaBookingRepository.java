@@ -12,13 +12,14 @@ import java.util.List;
 
 @Repository
 public interface JpaBookingRepository extends JpaRepository<Booking, Long> {
-//    @Query("SELECT b FROM Booking b WHERE b.vehicle_id = :vehicleId " +
-//            "AND b.booked_from_date <= :endDate " +
-//            "AND b.booked_to_date >= :startDate " +
-//            "AND b.booking_status <> :status")
-//    List<Booking> findBookingsWithinDateRangeAndStatusNot(
-//            @Param("vehicleId") Long vehicleId,
-//            @Param("startDate") LocalDate startDate,
-//            @Param("endDate") LocalDate endDate,
-//            @Param("status") BookingStatus status);
+    @Query("SELECT b FROM Booking b WHERE b.vehicle.id = :vehicleId " +
+            "AND b.bookedFromDate <= :startDate " +
+            "AND b.bookedToDate >= :endDate " +
+            "AND b.status <> :status")
+    List<Booking> checkExistingBooking(
+            @Param("vehicleId") Long vehicleId,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate,
+            @Param("status") BookingStatus status);
+
 }
