@@ -1,11 +1,12 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.enums.BookingStatus;
+import com.example.CarRentalSystem.exception.SubjectNotFoundException;
+import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.Vehicle;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.repository.JpaBookingRepository;
-import com.example.CarRentalSystem.repository.JpaVehicleRepository;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
 import jakarta.validation.Valid;
@@ -26,6 +27,14 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     public Booking create(BookingRequestDto bookingDto) {
+//        BookingStatus status = BookingStatus.FINISHED;
+//        List<Booking> existingBookings = bookingRepository.findBookingsWithinDateRangeAndStatusNot(
+//                bookingDto.getVehicleId(), bookingDto.getBookedFromDate(), bookingDto.getBookedToDate(),
+//                status);
+//        if(!existingBookings.isEmpty()){
+//            throw new SubjectNotFoundException((ErrorMessage.BOOKING_IS_ALREADY_EXIST));
+//        }
+
         Vehicle vehicle =  vehicleService.getById(bookingDto.getVehicleId());
 
         Booking booking = new Booking(

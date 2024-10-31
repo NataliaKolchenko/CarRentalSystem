@@ -34,16 +34,22 @@ public class Booking {
 
     @NotNull(message = "BookingStatus may not be null")
     @Column(name = "booking_status")
+    @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
     @NotNull(message = "cityStart may not be null")
+    @Enumerated(EnumType.STRING)
     private City cityStart;
 
     @NotNull(message = "cityEnd may not be null")
+    @Enumerated(EnumType.STRING)
     private City cityEnd;
 
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
+
+    public Booking() {
+    }
 
     public Booking(LocalDateTime createDate) {
         this.createDate = createDate;

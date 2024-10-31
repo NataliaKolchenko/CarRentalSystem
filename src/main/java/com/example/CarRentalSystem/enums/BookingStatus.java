@@ -6,5 +6,8 @@ public enum BookingStatus {
     PAYED,
     ACTIVE,
     CANCELLED,
-    FINISHED,
+    FINISHED;
+
+    BookingStatus() {
+    }
 }
