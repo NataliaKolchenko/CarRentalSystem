@@ -46,6 +46,7 @@ public class Vehicle {
     private Model model;
 
     @NotNull(message = "engineType may not be null")
+    @Enumerated(EnumType.STRING)
     private EngineType engineType;
 
     @Positive(message = "year may not be less then 1950")
@@ -59,6 +60,7 @@ public class Vehicle {
     private Branch branch;
 
     @NotNull(message = "transmissionType may not be null")
+    @Enumerated(EnumType.STRING)
     private TransmissionType transmissionType;
 
     @PositiveOrZero(message = "mileage may not be negative")
