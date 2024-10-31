@@ -32,15 +32,13 @@ public class Booking {
     @NotNull(message = "DateTo may not be null")
     private LocalDate bookedToDate;
 
-    @OneToOne(fetch = FetchType.EAGER)
     @NotNull(message = "BookingStatus may not be null")
+    @Column(name = "booking_status")
     private BookingStatus status;
 
-    @OneToOne(fetch = FetchType.EAGER)
     @NotNull(message = "cityStart may not be null")
     private City cityStart;
 
-    @OneToOne(fetch = FetchType.EAGER)
     @NotNull(message = "cityEnd may not be null")
     private City cityEnd;
 
@@ -51,11 +49,13 @@ public class Booking {
         this.createDate = createDate;
     }
 
-    public Booking(Vehicle vehicle, LocalDate bookedFromDate, LocalDate bookedToDate, City cityStart, City cityEnd) {
+    public Booking(Vehicle vehicle, LocalDate bookedFromDate, LocalDate bookedToDate, BookingStatus status,
+                   City cityStart, City cityEnd) {
         this.userId = 1L;
         this.vehicle = vehicle;
         this.bookedFromDate = bookedFromDate;
         this.bookedToDate = bookedToDate;
+        this.status = status;
         this.cityStart = cityStart;
         this.cityEnd = cityEnd;
         this.createDate = LocalDateTime.now();
