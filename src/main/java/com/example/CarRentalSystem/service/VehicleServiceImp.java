@@ -2,6 +2,7 @@ package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
+import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.*;
@@ -39,7 +40,13 @@ public class VehicleServiceImp implements VehicleService {
 
     @Override
     public Vehicle create(VehicleRequestDto vehicleRequestDto) {
-       Vehicle vehicle =  mapDtoToEntity(vehicleRequestDto);
+        List<Vehicle> existingVehicle = vehicleRepository.findByVinCodeAndVehicleNumber(
+                vehicleRequestDto.getVinCode(), vehicleRequestDto.getVehicleNumber());
+        if(!existingVehicle.isEmpty()){
+            throw new SubjectAlreadyExistsException(ErrorMessage.VEHICLE_IS_ALREADY_EXIST);
+        }
+
+        Vehicle vehicle =  mapDtoToEntity(vehicleRequestDto);
         return vehicleRepository.save(vehicle);
     }
 

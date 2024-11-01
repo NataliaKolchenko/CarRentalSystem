@@ -20,4 +20,5 @@ public class ErrorMessage {
     public static final String BRANCH_ID_WAS_NOT_FOUND = "BranchId was not found";
     public static final String VEHICLE_ID_WAS_NOT_FOUND = "VehicleId was not found";
     public static final String BOOKING_IS_ALREADY_EXIST = "Booking with the same parameters is already exist";
+    public static final String VEHICLE_IS_ALREADY_EXIST = "Vehicle is already exist";
 }

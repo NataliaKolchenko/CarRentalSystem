@@ -53,7 +53,8 @@ public class VehicleServiceImpTest {
     @Test
     public void testCreate_NewVehicle_Successfully() {
         VehicleRequestDto dto = new VehicleRequestDto(1L, 2L, true, 3L, 4L,
-                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, "City", true);
+                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, "City",
+                true, "12345", "12345");
 Vehicle vehicle = new Vehicle();
         when(vehicleRepository.save(any(Vehicle.class))).thenReturn(vehicle);
 
@@ -143,7 +144,8 @@ Vehicle vehicle = new Vehicle();
         existingVehicle.setId(existingId);
 
         VehicleRequestDto requestDto = new VehicleRequestDto(1L, 2L, true, 3L, 4L,
-                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, "City", true);
+                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, "City", true,
+                "12345", "12345");
 
         when(vehicleRepository.findById(existingId)).thenReturn(Optional.of(existingVehicle));
         when(vehicleRepository.save(any(Vehicle.class))).thenReturn(existingVehicle);
