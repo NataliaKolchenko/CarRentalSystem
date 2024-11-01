@@ -85,6 +85,12 @@ public class VehicleServiceImp implements VehicleService {
         return vehicleRepository.save(existingVehicle);
     }
 
+    @Override
+    public List<Vehicle> getFavoriteVehicles() {
+        List<Vehicle> favoriteVehicles = vehicleRepository.findByFavorite();
+        return favoriteVehicles.isEmpty() ? Collections.emptyList() : favoriteVehicles;
+    }
+
     public Vehicle mapDtoToEntity(VehicleRequestDto vehicleRequestDto){
         VehicleType type = typeService.getById(vehicleRequestDto.getTypeId());
         SubType subType = subTypeService.getById(vehicleRequestDto.getSubTypeId());
@@ -106,6 +112,8 @@ public class VehicleServiceImp implements VehicleService {
 
         return vehicle;
     }
+
+
 
 
 }

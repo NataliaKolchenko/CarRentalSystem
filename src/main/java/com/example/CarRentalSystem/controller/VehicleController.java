@@ -38,4 +38,9 @@ public class VehicleController {
                                                  @RequestBody @Valid VehicleRequestDto newVehicleDto){
         return ResponseEntity.ok(vehicleService.update(id, newVehicleDto));
     }
+
+    @GetMapping("/getFavoriteVehicles")
+    public ResponseEntity<List<Vehicle>> getFavoriteVehicles(){
+        return ResponseEntity.ok(vehicleService.getFavoriteVehicles());
+    }
 }

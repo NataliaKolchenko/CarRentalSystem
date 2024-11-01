@@ -10,4 +10,5 @@ public interface VehicleService {
     Vehicle getById(Long id);
     List<Vehicle> getAllVehicles();
     Vehicle update(Long id, VehicleRequestDto vehicleDto);
+    List<Vehicle> getFavoriteVehicles();
 }
