@@ -37,7 +37,6 @@ public class AddressServiceImp  implements AddressService {
                 .house(address.getHouse())
                 .apartment(address.getApartment())
                 .additionalInfo(address.getAdditionalInfo())
-                .updateDate(address.getUpdateDate())
                 .build();
 
         return addressRepository.save(newAddress);
@@ -58,7 +57,6 @@ public class AddressServiceImp  implements AddressService {
                 .house(newAddress.getHouse())
                 .apartment(newAddress.getApartment())
                 .additionalInfo(newAddress.getAdditionalInfo())
-                .updateDate(newAddress.getUpdateDate())
                 .build();
 
         return addressRepository.save(updatedAddress);

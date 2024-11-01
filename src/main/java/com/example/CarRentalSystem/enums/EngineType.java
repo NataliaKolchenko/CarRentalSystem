@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.enums;
 
 public enum EngineType {
-    GASOLINE,
+    PETROL,
     DIESEL,
     GAS,
     ELECTRIC,

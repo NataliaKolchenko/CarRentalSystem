@@ -91,9 +91,11 @@ public class VehicleServiceImp implements VehicleService {
         int mileage = vehicleRequestDto.getMileage();
         String city = vehicleRequestDto.getCity();
         boolean favorite = vehicleRequestDto.isFavorite();
+        String vinCode = vehicleRequestDto.getVinCode();
+        String vehicleNumber = vehicleRequestDto.getVehicleNumber();
 
         Vehicle vehicle = new Vehicle(type, subType, active, brand, model, engineType, year, branch, transmissionType,
-                mileage, city, favorite);
+                mileage, city, favorite, vinCode, vehicleNumber);
 
         return vehicle;
     }

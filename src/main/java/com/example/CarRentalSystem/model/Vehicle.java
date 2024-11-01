@@ -29,7 +29,7 @@ public class Vehicle {
     @NotNull(message = "SubType may not be null")
     private SubType subType;
 
-//    Состояние ТС
+    //    Состояние ТС
 //    активен (true)- доступен для отображения в каталоге,
 //    неактивен (false) - выведен из эксплуатации
     @NotNull(message = "VehicleCondition may not be null")
@@ -73,9 +73,15 @@ public class Vehicle {
     @NotNull(message = "favorite may not be null")
     boolean favorite;
 
+    @NotBlank(message = "vinCode may not be blank")
+    private String vinCode;
+
+    @NotBlank(message = "vehicleNumber may not be blank")
+    private String vehicleNumber;
+
     private LocalDateTime createDate;
 
-    private  LocalDateTime updateDate;
+    private LocalDateTime updateDate;
 
     public Vehicle(LocalDateTime createDate) {
         this.createDate = LocalDateTime.now();
@@ -86,7 +92,8 @@ public class Vehicle {
     }
 
     public Vehicle(VehicleType type, SubType subType, boolean active, Brand brand, Model model, EngineType engineType,
-                   int year, Branch branch, TransmissionType transmissionType, int mileage, String city, boolean favorite) {
+                   int year, Branch branch, TransmissionType transmissionType, int mileage, String city, boolean favorite,
+                   String vinCode, String vehicleNumber) {
         this.type = type;
         this.subType = subType;
         this.active = active;
@@ -99,6 +106,8 @@ public class Vehicle {
         this.mileage = mileage;
         this.city = city;
         this.favorite = favorite;
+        this.vinCode = vinCode;
+        this.vehicleNumber = vehicleNumber;
         this.createDate = LocalDateTime.now();
     }
 }

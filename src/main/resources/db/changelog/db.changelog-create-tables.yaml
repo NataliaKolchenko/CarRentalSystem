@@ -238,6 +238,12 @@ databaseChangeLog:
                   name: favorite
                   type: boolean
               - column:
+                  name: vin_code
+                  type: character varying(10)
+              - column:
+                  name: vehicle_number
+                  type: character varying(10)
+              - column:
                   name: create_date
                   type: timestamp
               - column:
