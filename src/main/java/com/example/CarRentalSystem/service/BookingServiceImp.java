@@ -6,6 +6,7 @@ import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.Vehicle;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
+import com.example.CarRentalSystem.model.dto.BookingResponseDto;
 import com.example.CarRentalSystem.repository.JpaBookingRepository;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
@@ -26,7 +27,7 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public Booking create(BookingRequestDto bookingDto) {
+    public BookingResponseDto create(BookingRequestDto bookingDto) {
         BookingStatus status = BookingStatus.FINISHED;
 
         List<Booking> existingBookings = bookingRepository.checkExistingBooking(
@@ -42,7 +43,20 @@ public class BookingServiceImp implements BookingService {
                 vehicle, bookingDto.getBookedFromDate(), bookingDto.getBookedToDate(),
                 BookingStatus.CREATED, bookingDto.getCityStart(), bookingDto.getCityEnd());
 
-        return bookingRepository.save(booking);
+        Booking savedBooking = bookingRepository.save(booking);
+
+        BookingResponseDto dtoResponse = new BookingResponseDto(
+                savedBooking.getId(),
+                savedBooking.getUserId(),
+                savedBooking.getVehicle().getId(),
+                savedBooking.getBookedFromDate(),
+                savedBooking.getBookedToDate(),
+                savedBooking.getStatus(),
+                savedBooking.getCityStart(),
+                savedBooking.getCityEnd(),
+                savedBooking.getCreateDate(),
+                savedBooking.getUpdateDate());
+        return dtoResponse;
     }
 
     @Override

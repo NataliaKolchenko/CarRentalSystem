@@ -2,6 +2,7 @@ package com.example.CarRentalSystem.controller;
 
 import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
+import com.example.CarRentalSystem.model.dto.BookingResponseDto;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class BookingController {
     }
 
     @PostMapping("/createBooking")
-    public ResponseEntity<Booking> createBooking(@RequestBody @Valid BookingRequestDto bookingDto){
+    public ResponseEntity<BookingResponseDto> createBooking(@RequestBody @Valid BookingRequestDto bookingDto){
         return ResponseEntity.ok(bookingService.create(bookingDto));
     }
 }
