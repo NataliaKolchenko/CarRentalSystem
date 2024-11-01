@@ -13,6 +13,5 @@ public interface BookingService {
     BookingResponseDto getById (Long id);
     List<BookingResponseDto> getBookingsByStatus(BookingStatus bookingStatus, Long userId);
     List<BookingResponseDto> getBookingsByUserId(Long userId);
-    List<BookingResponseDto> getFavoriteBooking();
 
 }

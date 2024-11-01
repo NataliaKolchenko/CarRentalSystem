@@ -92,11 +92,6 @@ public class BookingServiceImp implements BookingService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<BookingResponseDto> getFavoriteBooking() {
-        return null;
-    }
-
     public BookingResponseDto mapEntityToDto(Booking booking) {
         BookingResponseDto bookingResponse = new BookingResponseDto(
                 booking.getId(), booking.getUserId(), booking.getVehicle().getId(), booking.getBookedFromDate(), booking.getBookedToDate(),
