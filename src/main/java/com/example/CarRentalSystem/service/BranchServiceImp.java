@@ -43,7 +43,8 @@ public class BranchServiceImp implements BranchService {
     @Override
     public Branch getById(Long branchId) {
         Optional<Branch> branchOpt = branchRepository.findById(branchId);
-        Branch branch = branchOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.BRANCH_ID_WAS_NOT_FOUND));
+        Branch branch = branchOpt.orElseThrow(
+                () -> new SubjectNotFoundException(ErrorMessage.BRANCH_ID_WAS_NOT_FOUND));
         return branch;
     }
 

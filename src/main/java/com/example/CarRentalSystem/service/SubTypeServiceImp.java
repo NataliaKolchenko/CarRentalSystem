@@ -59,8 +59,7 @@ public class SubTypeServiceImp implements SubTypeService {
     @Override
     public SubType getById(Long subTypeId) {
         Optional<SubType> subTypeOpt = subTypeRepository.findById(subTypeId);
-        SubType subType = subTypeOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.SUB_TYPE_ID_WAS_NOT_FOUND));
-        return subType;
+        return subTypeOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.SUB_TYPE_ID_WAS_NOT_FOUND));
     }
 
     @Override

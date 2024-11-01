@@ -1,7 +1,6 @@
 package com.example.CarRentalSystem.controller;
 
 import com.example.CarRentalSystem.enums.BookingStatus;
-import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
 import com.example.CarRentalSystem.service.interfaces.BookingService;

@@ -41,7 +41,8 @@ public class VehicleServiceImp implements VehicleService {
     @Override
     public Vehicle create(VehicleRequestDto vehicleRequestDto) {
         List<Vehicle> existingVehicle = vehicleRepository.findByVinCodeAndVehicleNumber(
-                vehicleRequestDto.getVinCode(), vehicleRequestDto.getVehicleNumber());
+                vehicleRequestDto.getVinCode(),
+                vehicleRequestDto.getVehicleNumber());
         if(!existingVehicle.isEmpty()){
             throw new SubjectAlreadyExistsException(ErrorMessage.VEHICLE_IS_ALREADY_EXIST);
         }
@@ -53,8 +54,7 @@ public class VehicleServiceImp implements VehicleService {
     @Override
     public Vehicle getById(Long id) {
         Optional<Vehicle> vehicleOpt = vehicleRepository.findById(id);
-        Vehicle vehicle = vehicleOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.VEHICLE_ID_WAS_NOT_FOUND));
-        return vehicle;
+        return vehicleOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.VEHICLE_ID_WAS_NOT_FOUND));
     }
 
     @Override

@@ -57,8 +57,7 @@ public class ModelServiceImp  implements ModelService {
     @Override
     public Model getById(Long modelId) {
         Optional<Model> modelOpt = modelRepository.findById(modelId);
-        Model model = modelOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.MODEL_ID_WAS_NOT_FOUND));
-        return model;
+        return modelOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.MODEL_ID_WAS_NOT_FOUND));
     }
 
     @Override

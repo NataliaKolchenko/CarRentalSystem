@@ -53,7 +53,8 @@ public class BrandServiceImp implements BrandService {
     @Override
     public Brand getById(Long brandId) {
         Optional<Brand> brandOpt = brandRepository.findById(brandId);
-        Brand brand = brandOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.BRAND_ID_WAS_NOT_FOUND));
+        Brand brand = brandOpt.orElseThrow(
+                () -> new SubjectNotFoundException(ErrorMessage.BRAND_ID_WAS_NOT_FOUND));
         return brand;
     }
 

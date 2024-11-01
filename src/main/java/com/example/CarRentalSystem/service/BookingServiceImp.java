@@ -13,8 +13,6 @@ import com.example.CarRentalSystem.service.interfaces.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,10 +30,11 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     public BookingResponseDto create(BookingRequestDto bookingDto) {
-        BookingStatus status = BookingStatus.FINISHED;
-
         List<Booking> existingBookings = bookingRepository.checkExistingBooking(
-                bookingDto.getVehicleId(), bookingDto.getBookedFromDate(), bookingDto.getBookedToDate(), status);
+                bookingDto.getVehicleId(),
+                bookingDto.getBookedFromDate(),
+                bookingDto.getBookedToDate(),
+                BookingStatus.FINISHED);
 
         if (!existingBookings.isEmpty()) {
             throw new SubjectNotFoundException((ErrorMessage.BOOKING_IS_ALREADY_EXIST));
@@ -44,23 +43,16 @@ public class BookingServiceImp implements BookingService {
         Vehicle vehicle = vehicleService.getById(bookingDto.getVehicleId());
 
         Booking booking = new Booking(
-                vehicle, bookingDto.getBookedFromDate(), bookingDto.getBookedToDate(),
-                BookingStatus.CREATED, bookingDto.getCityStart(), bookingDto.getCityEnd());
+                vehicle,
+                bookingDto.getBookedFromDate(),
+                bookingDto.getBookedToDate(),
+                BookingStatus.CREATED,
+                bookingDto.getCityStart(),
+                bookingDto.getCityEnd());
 
         Booking savedBooking = bookingRepository.save(booking);
 
-        BookingResponseDto dtoResponse = new BookingResponseDto(
-                savedBooking.getId(),
-                savedBooking.getUserId(),
-                savedBooking.getVehicle().getId(),
-                savedBooking.getBookedFromDate(),
-                savedBooking.getBookedToDate(),
-                savedBooking.getStatus(),
-                savedBooking.getCityStart(),
-                savedBooking.getCityEnd(),
-                savedBooking.getCreateDate(),
-                savedBooking.getUpdateDate());
-        return dtoResponse;
+        return mapEntityToDto(savedBooking);
     }
 
     @Override
@@ -71,7 +63,8 @@ public class BookingServiceImp implements BookingService {
     @Override
     public BookingResponseDto getById(Long id) {
         Optional<Booking> bookingOpt = bookingRepository.findById(id);
-        Booking booking = bookingOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.BOOKING_ID_WAS_NOT_FOUND));
+        Booking booking = bookingOpt.orElseThrow(
+                () -> new SubjectNotFoundException(ErrorMessage.BOOKING_ID_WAS_NOT_FOUND));
 
         return mapEntityToDto(booking);
     }
@@ -93,10 +86,16 @@ public class BookingServiceImp implements BookingService {
     }
 
     public BookingResponseDto mapEntityToDto(Booking booking) {
-        BookingResponseDto bookingResponse = new BookingResponseDto(
-                booking.getId(), booking.getUserId(), booking.getVehicle().getId(), booking.getBookedFromDate(), booking.getBookedToDate(),
-                booking.getStatus(), booking.getCityStart(), booking.getCityEnd(), booking.getCreateDate(),
+        return new BookingResponseDto(
+                booking.getId(),
+                booking.getUserId(),
+                booking.getVehicle().getId(),
+                booking.getBookedFromDate(),
+                booking.getBookedToDate(),
+                booking.getStatus(),
+                booking.getCityStart(),
+                booking.getCityEnd(),
+                booking.getCreateDate(),
                 booking.getUpdateDate());
-        return bookingResponse;
     }
 }
