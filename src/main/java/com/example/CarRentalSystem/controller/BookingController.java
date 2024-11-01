@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem.controller;
 
+import com.example.CarRentalSystem.enums.BookingStatus;
 import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
@@ -34,5 +35,9 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBookingsByUserId(id));
     }
 
-//
+    @GetMapping("/getBookingListByStatus/{userId}/{status}")
+    public ResponseEntity<List<BookingResponseDto>> getBookingByStatus(@PathVariable Long userId,
+                                                                       @PathVariable BookingStatus status){
+        return ResponseEntity.ok(bookingService.getBookingsByStatus(status, userId));
+    }
 }

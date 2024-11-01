@@ -78,11 +78,10 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     public List<BookingResponseDto> getBookingsByStatus(BookingStatus bookingStatus, Long userId) {
-//        List<Booking> bookingList = bookingRepository.findByUserIdAndStatus(userId, bookingStatus);
-//        return bookingList.stream()
-//                .map(this::mapEntityToDto)
-//                .collect(Collectors.toList());
-        return  null;
+        List<Booking> bookingList = bookingRepository.findByUserIdAndStatus(userId, bookingStatus);
+        return bookingList.stream()
+                .map(this::mapEntityToDto)
+                .collect(Collectors.toList());
     }
     @Override
     public List<BookingResponseDto> getBookingsByUserId(Long userId) {

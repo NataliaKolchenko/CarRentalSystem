@@ -23,10 +23,11 @@ public interface JpaBookingRepository extends JpaRepository<Booking, Long> {
             @Param("status") BookingStatus status);
 
     List<Booking> findByUserId(Long userId);
-//    @Query("SELECT b FROM Booking b WHERE b.userid = :userId " +
-//            "AND b.status <> :status")
-//    List<Booking> findByUserIdAndStatus(
-//            @Param("userid") Long userId,
-//            @Param("status") BookingStatus status);
+
+    @Query("SELECT b FROM Booking b WHERE b.userId = :userId " +
+            "AND b.status = :status")
+    List<Booking> findByUserIdAndStatus(
+            @Param("userId") Long userId,
+            @Param("status") BookingStatus status);
 
 }
