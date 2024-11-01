@@ -6,10 +6,9 @@ import com.example.CarRentalSystem.model.dto.BookingResponseDto;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/booking")
@@ -24,4 +23,16 @@ public class BookingController {
     public ResponseEntity<BookingResponseDto> createBooking(@RequestBody @Valid BookingRequestDto bookingDto){
         return ResponseEntity.ok(bookingService.create(bookingDto));
     }
+
+    @GetMapping("/getBookingById/{id}")
+    public ResponseEntity<BookingResponseDto> getBookingById(@PathVariable Long id){
+        return ResponseEntity.ok(bookingService.getById(id));
+    }
+
+    @GetMapping("/getBookingListByUserId/{id}")
+    public ResponseEntity<List<BookingResponseDto>> getBookingListByUserId(@PathVariable Long id){
+        return ResponseEntity.ok(bookingService.getBookingsByUserId(id));
+    }
+
+//
 }

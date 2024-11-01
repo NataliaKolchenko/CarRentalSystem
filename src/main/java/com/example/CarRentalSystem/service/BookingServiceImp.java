@@ -13,7 +13,11 @@ import com.example.CarRentalSystem.service.interfaces.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Valid
@@ -33,11 +37,11 @@ public class BookingServiceImp implements BookingService {
         List<Booking> existingBookings = bookingRepository.checkExistingBooking(
                 bookingDto.getVehicleId(), bookingDto.getBookedFromDate(), bookingDto.getBookedToDate(), status);
 
-        if(!existingBookings.isEmpty()){
+        if (!existingBookings.isEmpty()) {
             throw new SubjectNotFoundException((ErrorMessage.BOOKING_IS_ALREADY_EXIST));
         }
 
-        Vehicle vehicle =  vehicleService.getById(bookingDto.getVehicleId());
+        Vehicle vehicle = vehicleService.getById(bookingDto.getVehicleId());
 
         Booking booking = new Booking(
                 vehicle, bookingDto.getBookedFromDate(), bookingDto.getBookedToDate(),
@@ -60,22 +64,45 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public Booking update(Long id, BookingRequestDto bookingDto) {
+    public BookingResponseDto update(Long id, BookingRequestDto bookingDto) {
         return null;
     }
 
     @Override
-    public Booking getById(Long id) {
-        return null;
+    public BookingResponseDto getById(Long id) {
+        Optional<Booking> bookingOpt = bookingRepository.findById(id);
+        Booking booking = bookingOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.BOOKING_ID_WAS_NOT_FOUND));
+
+        return mapEntityToDto(booking);
     }
 
     @Override
-    public List<Booking> getBookingsByStatus(BookingStatus bookingStatus) {
-        return null;
+    public List<BookingResponseDto> getBookingsByStatus(BookingStatus bookingStatus, Long userId) {
+//        List<Booking> bookingList = bookingRepository.findByUserIdAndStatus(userId, bookingStatus);
+//        return bookingList.stream()
+//                .map(this::mapEntityToDto)
+//                .collect(Collectors.toList());
+        return  null;
+    }
+    @Override
+    public List<BookingResponseDto> getBookingsByUserId(Long userId) {
+        List<Booking> bookingListByUserId = bookingRepository.findByUserId(userId);
+
+        return bookingListByUserId.stream()
+                .map(this::mapEntityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Booking> getBookingsByUserId(Long userId) {
+    public List<BookingResponseDto> getFavoriteBooking() {
         return null;
+    }
+
+    public BookingResponseDto mapEntityToDto(Booking booking) {
+        BookingResponseDto bookingResponse = new BookingResponseDto(
+                booking.getId(), booking.getUserId(), booking.getVehicle().getId(), booking.getBookedFromDate(), booking.getBookedToDate(),
+                booking.getStatus(), booking.getCityStart(), booking.getCityEnd(), booking.getCreateDate(),
+                booking.getUpdateDate());
+        return bookingResponse;
     }
 }
