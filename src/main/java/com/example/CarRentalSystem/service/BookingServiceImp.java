@@ -12,6 +12,7 @@ import com.example.CarRentalSystem.service.interfaces.BookingService;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,15 +29,7 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     public BookingResponseDto create(BookingRequestDto bookingDto) {
-        List<Booking> existingBookings = bookingRepository.checkExistingBooking(
-                bookingDto.getVehicleId(),
-                bookingDto.getBookedFromDate(),
-                bookingDto.getBookedToDate(),
-                BookingStatus.FINISHED);
-
-        if (!existingBookings.isEmpty()) {
-            throw new SubjectNotFoundException((ErrorMessage.BOOKING_IS_ALREADY_EXIST));
-        }
+        checkBookingParameters(bookingDto);
 
         Vehicle vehicle = vehicleService.getById(bookingDto.getVehicleId());
 
@@ -55,8 +48,26 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     public BookingResponseDto update(Long id, BookingRequestDto bookingDto) {
-        return null;
+        checkBookingParameters(bookingDto);
+
+        BookingResponseDto existingBookingDto = getById(id);
+        Booking existingBooking = mapDtoToEntity(existingBookingDto);
+
+        Vehicle vehicle = vehicleService.getById(bookingDto.getVehicleId());
+
+        existingBooking.setVehicle(vehicle);
+        existingBooking.setBookedFromDate(bookingDto.getBookedFromDate());
+        existingBooking.setBookedToDate(bookingDto.getBookedToDate());
+        existingBooking.setCityStart(bookingDto.getCityStart());
+        existingBooking.setCityEnd(bookingDto.getCityEnd());
+        existingBooking.setUpdateDate(LocalDateTime.now());
+
+        Booking saved = bookingRepository.save(existingBooking);
+
+        return mapEntityToDto(saved);
     }
+
+
 
     @Override
     public BookingResponseDto getById(Long id) {
@@ -74,6 +85,7 @@ public class BookingServiceImp implements BookingService {
                 .map(this::mapEntityToDto)
                 .collect(Collectors.toList());
     }
+
     @Override
     public List<BookingResponseDto> getBookingsByUserId(Long userId) {
         List<Booking> bookingListByUserId = bookingRepository.findByUserId(userId);
@@ -83,6 +95,17 @@ public class BookingServiceImp implements BookingService {
                 .collect(Collectors.toList());
     }
 
+    private void checkBookingParameters(BookingRequestDto bookingDto) {
+        List<Booking> existingBookings = bookingRepository.checkExistingBooking(
+                bookingDto.getVehicleId(),
+                bookingDto.getBookedFromDate(),
+                bookingDto.getBookedToDate(),
+                BookingStatus.FINISHED);
+
+        if (!existingBookings.isEmpty()) {
+            throw new SubjectNotFoundException((ErrorMessage.BOOKING_IS_ALREADY_EXIST));
+        }
+    }
     public BookingResponseDto mapEntityToDto(Booking booking) {
         return new BookingResponseDto(
                 booking.getId(),
@@ -96,4 +119,24 @@ public class BookingServiceImp implements BookingService {
                 booking.getCreateDate(),
                 booking.getUpdateDate());
     }
+
+    public Booking mapDtoToEntity(BookingResponseDto bookingResponseDto) {
+        Vehicle vehicle = vehicleService.getById(bookingResponseDto.getVehicleId());
+
+        Booking booking = new Booking();
+        booking.setId(bookingResponseDto.getId());
+        booking.setUserId(bookingResponseDto.getUserId());
+        booking.setVehicle(vehicle);
+        booking.setBookedFromDate(bookingResponseDto.getBookedFromDate());
+        booking.setBookedToDate(bookingResponseDto.getBookedToDate());
+        booking.setStatus(bookingResponseDto.getStatus());
+        booking.setCityStart(bookingResponseDto.getCityStart());
+        booking.setCityEnd(bookingResponseDto.getCityEnd());
+        booking.setCreateDate(bookingResponseDto.getCreateDate());
+        booking.setUpdateDate(bookingResponseDto.getUpdateDate());
+
+        return booking;
+    }
+
+    
 }
