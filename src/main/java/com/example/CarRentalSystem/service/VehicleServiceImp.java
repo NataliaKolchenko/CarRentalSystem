@@ -10,7 +10,6 @@ import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
 import com.example.CarRentalSystem.repository.JpaVehicleRepository;
 import com.example.CarRentalSystem.service.interfaces.*;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
+
 public class VehicleServiceImp implements VehicleService {
     private final JpaVehicleRepository vehicleRepository;
     private final VehicleTypeServiceImp typeService;

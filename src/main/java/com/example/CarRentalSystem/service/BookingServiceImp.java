@@ -10,7 +10,6 @@ import com.example.CarRentalSystem.model.dto.BookingResponseDto;
 import com.example.CarRentalSystem.repository.JpaBookingRepository;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Valid
 public class BookingServiceImp implements BookingService {
     private final JpaBookingRepository bookingRepository;
     private final VehicleService vehicleService;

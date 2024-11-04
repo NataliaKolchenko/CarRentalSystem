@@ -8,14 +8,12 @@ import com.example.CarRentalSystem.model.Branch;
 import com.example.CarRentalSystem.repository.JpaBranchRepository;
 import com.example.CarRentalSystem.service.interfaces.BranchService;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
 public class BranchServiceImp implements BranchService {
     private final JpaBranchRepository branchRepository;
     private final AddressServiceImp addressService;

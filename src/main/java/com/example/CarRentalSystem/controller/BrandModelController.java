@@ -5,11 +5,13 @@ import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
 import com.example.CarRentalSystem.service.interfaces.ModelService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/brandAndModel")
 public class BrandModelController {
