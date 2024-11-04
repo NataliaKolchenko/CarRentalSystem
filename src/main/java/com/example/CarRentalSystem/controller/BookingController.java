@@ -52,4 +52,14 @@ public class BookingController {
     public ResponseEntity<BookingResponseDto> cancelBooking(@RequestBody @Valid Long id){
         return ResponseEntity.ok(bookingService.cancel(id));
     }
+
+    @PutMapping("/activateBooking")
+    public ResponseEntity<Boolean> activateBooking(@RequestBody @Valid Long id){
+        return ResponseEntity.ok(bookingService.activateBooking(id));
+    }
+
+    @PutMapping("/finishBooking")
+    public ResponseEntity<Boolean> finishBooking(@RequestBody @Valid Long id){
+        return ResponseEntity.ok(bookingService.finishBooking(id));
+    }
 }

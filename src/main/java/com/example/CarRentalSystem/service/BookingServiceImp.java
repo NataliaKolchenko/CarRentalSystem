@@ -1,9 +1,7 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.enums.BookingStatus;
-import com.example.CarRentalSystem.exception.BookingCannotBeCancelledException;
-import com.example.CarRentalSystem.exception.BookingCannotBeUpdatedException;
-import com.example.CarRentalSystem.exception.SubjectNotFoundException;
+import com.example.CarRentalSystem.exception.*;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.Vehicle;
@@ -56,7 +54,8 @@ public class BookingServiceImp implements BookingService {
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
 
         switch (existingBooking.getStatus()){
-            case FINISHED, CANCELLED, ACTIVE -> throw  new BookingCannotBeUpdatedException(ErrorMessage.BOOKING_CANNOT_BE_UPDATED);
+            case FINISHED, CANCELLED, ACTIVE -> throw  new BookingCannotBeUpdatedException(
+                    ErrorMessage.BOOKING_CANNOT_BE_UPDATED);
         }
 
         Vehicle vehicle = vehicleService.getById(bookingDto.getVehicleId());
@@ -106,11 +105,38 @@ public class BookingServiceImp implements BookingService {
         BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch(existingBooking.getStatus()){
-            case ACTIVE, FINISHED, CANCELLED -> throw  new BookingCannotBeCancelledException(ErrorMessage.BOOKING_CANNOT_BE_CANCELLED);
+            case ACTIVE, FINISHED, CANCELLED -> throw  new BookingCannotBeCancelledException(
+                    ErrorMessage.BOOKING_CANNOT_BE_CANCELLED);
         }
         existingBooking.setStatus(BookingStatus.CANCELLED);
         Booking saved = bookingRepository.save(existingBooking);
         return mapEntityToDto(saved);
+    }
+
+    @Override
+    public Boolean activateBooking(Long id) {
+        BookingResponseDto existingBookingDto = getById(id);
+        Booking existingBooking = mapDtoToEntity(existingBookingDto);
+        switch (existingBooking.getStatus()){
+            case ACTIVE, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED ->  throw new BookingCannotBeActivatedException(
+                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED);
+        }
+        existingBooking.setStatus(BookingStatus.ACTIVE);
+        bookingRepository.save(existingBooking);
+        return true;
+    }
+
+    @Override
+    public Boolean finishBooking(Long id) {
+        BookingResponseDto existingBookingDto = getById(id);
+        Booking existingBooking = mapDtoToEntity(existingBookingDto);
+        switch (existingBooking.getStatus()){
+            case CREATED, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED -> throw new BookingCannotBeFinishedException(
+                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED);
+        }
+        existingBooking.setStatus(BookingStatus.FINISHED);
+        bookingRepository.save(existingBooking);
+        return true;
     }
 
     private void checkBookingParameters(BookingRequestDto bookingDto) {

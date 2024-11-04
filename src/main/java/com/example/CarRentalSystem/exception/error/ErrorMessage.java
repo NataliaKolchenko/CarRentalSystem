@@ -24,4 +24,6 @@ public class ErrorMessage {
     public static final String BOOKING_ID_WAS_NOT_FOUND = "BookingId was not found";
     public static final String BOOKING_CANNOT_BE_CANCELLED = "Booking can't be cancelled";
     public static final String BOOKING_CANNOT_BE_UPDATED = "Booking can't be updated";
+    public static final String BOOKING_CANNOT_BE_FINISHED = "Booking can't be finished";
+    public static final String BOOKING_CANNOT_BE_ACTIVATED = "Booking can't be activated";
 }
