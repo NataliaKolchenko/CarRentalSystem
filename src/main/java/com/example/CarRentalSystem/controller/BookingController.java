@@ -47,4 +47,9 @@ public class BookingController {
                                                             @RequestBody @Valid BookingRequestDto bookingRequestDto){
         return ResponseEntity.ok(bookingService.update(id, bookingRequestDto));
     }
+
+    @PutMapping("/cancelBooking")
+    public ResponseEntity<BookingResponseDto> cancelBooking(@RequestBody @Valid Long id){
+        return ResponseEntity.ok(bookingService.cancel(id));
+    }
 }

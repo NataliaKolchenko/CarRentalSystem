@@ -95,6 +95,15 @@ public class BookingServiceImp implements BookingService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public BookingResponseDto cancel(Long id) {
+        BookingResponseDto existingBookingDto = getById(id);
+        Booking existingBooking = mapDtoToEntity(existingBookingDto);
+        existingBooking.setStatus(BookingStatus.CANCELLED);
+        Booking saved = bookingRepository.save(existingBooking);
+        return mapEntityToDto(saved);
+    }
+
     private void checkBookingParameters(BookingRequestDto bookingDto) {
         List<Booking> existingBookings = bookingRepository.checkExistingBooking(
                 bookingDto.getVehicleId(),
