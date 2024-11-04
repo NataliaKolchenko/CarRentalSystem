@@ -1,6 +1,8 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.enums.BookingStatus;
+import com.example.CarRentalSystem.exception.BookingCannotBeCancelledException;
+import com.example.CarRentalSystem.exception.BookingCannotBeUpdatedException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Booking;
@@ -53,6 +55,10 @@ public class BookingServiceImp implements BookingService {
         BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
 
+        switch (existingBooking.getStatus()){
+            case FINISHED, CANCELLED, ACTIVE -> throw  new BookingCannotBeUpdatedException(ErrorMessage.BOOKING_CANNOT_BE_UPDATED);
+        }
+
         Vehicle vehicle = vehicleService.getById(bookingDto.getVehicleId());
 
         existingBooking.setVehicle(vehicle);
@@ -99,6 +105,9 @@ public class BookingServiceImp implements BookingService {
     public BookingResponseDto cancel(Long id) {
         BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
+        switch(existingBooking.getStatus()){
+            case ACTIVE, FINISHED, CANCELLED -> throw  new BookingCannotBeCancelledException(ErrorMessage.BOOKING_CANNOT_BE_CANCELLED);
+        }
         existingBooking.setStatus(BookingStatus.CANCELLED);
         Booking saved = bookingRepository.save(existingBooking);
         return mapEntityToDto(saved);
