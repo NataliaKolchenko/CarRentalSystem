@@ -13,7 +13,7 @@ public interface BookingService {
     List<BookingResponseDto> getBookingsByStatus(BookingStatus bookingStatus, Long userId);
     List<BookingResponseDto> getBookingsByUserId(Long userId);
     BookingResponseDto cancel(Long id);
-    Boolean activateBooking(Long id);
-    Boolean finishBooking(Long id);
+    Boolean activate(Long id);
+    Boolean finish(Long id);
 
 }

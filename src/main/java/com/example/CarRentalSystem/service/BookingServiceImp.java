@@ -114,7 +114,7 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public Boolean activateBooking(Long id) {
+    public Boolean activate(Long id) {
         BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
@@ -127,7 +127,7 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public Boolean finishBooking(Long id) {
+    public Boolean finish(Long id) {
         BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){

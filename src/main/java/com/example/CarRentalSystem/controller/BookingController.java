@@ -55,11 +55,11 @@ public class BookingController {
 
     @PutMapping("/activateBooking")
     public ResponseEntity<Boolean> activateBooking(@RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.activateBooking(id));
+        return ResponseEntity.ok(bookingService.activate(id));
     }
 
     @PutMapping("/finishBooking")
     public ResponseEntity<Boolean> finishBooking(@RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.finishBooking(id));
+        return ResponseEntity.ok(bookingService.finish(id));
     }
 }
