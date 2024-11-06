@@ -21,8 +21,12 @@ public class AddressServiceImp  implements AddressService {
 
     @Override
     public Address create(Address address) {
-        Address checkExistAddress = addressRepository.findByCountryAndCityAndStreetAndHouseAndApartment(address.getCountry(),
-                address.getCity(), address.getStreet(), address.getHouse(), address.getApartment());
+        Address checkExistAddress = addressRepository.findByCountryAndCityAndStreetAndHouseAndApartment(
+                address.getCountry(),
+                address.getCity(),
+                address.getStreet(),
+                address.getHouse(),
+                address.getApartment());
         if(checkExistAddress != null){
             throw new SubjectAlreadyExistsException(ErrorMessage.ADDRESS_IS_ALREADY_EXIST);
         }
@@ -37,7 +41,6 @@ public class AddressServiceImp  implements AddressService {
                 .house(address.getHouse())
                 .apartment(address.getApartment())
                 .additionalInfo(address.getAdditionalInfo())
-                .updateDate(address.getUpdateDate())
                 .build();
 
         return addressRepository.save(newAddress);
@@ -58,7 +61,6 @@ public class AddressServiceImp  implements AddressService {
                 .house(newAddress.getHouse())
                 .apartment(newAddress.getApartment())
                 .additionalInfo(newAddress.getAdditionalInfo())
-                .updateDate(newAddress.getUpdateDate())
                 .build();
 
         return addressRepository.save(updatedAddress);
@@ -67,7 +69,6 @@ public class AddressServiceImp  implements AddressService {
     @Override
     public Address getById(Long id) {
         Optional<Address> addressOpt = addressRepository.findById(id);
-        Address address = addressOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.ADDRESS_ID_WAS_NOT_FOUND));
-        return address;
+        return addressOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.ADDRESS_ID_WAS_NOT_FOUND));
     }
 }

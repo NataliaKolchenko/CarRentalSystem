@@ -146,12 +146,6 @@ databaseChangeLog:
               - column:
                   name: create_date
                   type: timestamp
-              - column:
-                  name: update_date
-                  type: timestamp
-              - column:
-                  name: change_user_id
-                  type: BIGINT
                   constraints:
                     nullable: true
   - changeSet:
@@ -244,17 +238,57 @@ databaseChangeLog:
                   name: favorite
                   type: boolean
               - column:
+                  name: vin_code
+                  type: character varying(10)
+              - column:
+                  name: vehicle_number
+                  type: character varying(10)
+              - column:
                   name: create_date
                   type: timestamp
-  - changeSet:
-      id: 14
-      author: natalia_kolchenko
-      changes:
-        - addColumn:
-            tableName: vehicle
-            ifNotExists: true
-            columns:
               - column:
                   name: update_date
                   type: TIMESTAMP
+  - changeSet:
+      id: 16
+      author: natalia_kolchenko
+      changes:
+        - createTable:
+            tableName: booking
+            ifNotExists: true
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: vehicle_id
+                  type: BIGINT
+              - column:
+                  name: booked_from_date
+                  type: date
+              - column:
+                  name: booked_to_date
+                  type: date
+              - column:
+                  name: booking_status
+                  type: character varying(50)
+              - column:
+                  name: city_start
+                  type: character varying(100)
+              - column:
+                  name: city_end
+                  type: character varying(100)
+              - column:
+                  name: create_date
+                  type: timestamp
+              - column:
+                  name: update_date
+                  type: timestamp
 

@@ -19,4 +19,11 @@ public class ErrorMessage {
     public static final String BRANCH_NAME_WAS_NOT_FOUND = "BranchName was not found";
     public static final String BRANCH_ID_WAS_NOT_FOUND = "BranchId was not found";
     public static final String VEHICLE_ID_WAS_NOT_FOUND = "VehicleId was not found";
+    public static final String VEHICLE_IS_ALREADY_EXIST = "Vehicle is already exist";
+    public static final String BOOKING_IS_ALREADY_EXIST = "Booking with the same parameters is already exist";
+    public static final String BOOKING_ID_WAS_NOT_FOUND = "BookingId was not found";
+    public static final String BOOKING_CANNOT_BE_CANCELLED = "Booking can't be cancelled";
+    public static final String BOOKING_CANNOT_BE_UPDATED = "Booking can't be updated";
+    public static final String BOOKING_CANNOT_BE_FINISHED = "Booking can't be finished";
+    public static final String BOOKING_CANNOT_BE_ACTIVATED = "Booking can't be activated";
 }

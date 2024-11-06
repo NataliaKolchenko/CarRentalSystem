@@ -45,17 +45,12 @@ public class Address {
 
     private LocalDateTime createDate;
 
-    private LocalDateTime updateDate;
-
-    private Long changeUserId;
-
     public Address() {
         this.createDate = LocalDateTime.now();
     }
 
     public Address(Long id, String zipCode, String country, String region, String city, String district,
-                   String street, int house, String apartment, String additionalInfo, LocalDateTime createDate,
-                   LocalDateTime updateDate, Long changeUserId) {
+                   String street, int house, String apartment, String additionalInfo, LocalDateTime createDate) {
         this.id = id;
         this.zipCode = zipCode;
         this.country = country;
@@ -67,8 +62,6 @@ public class Address {
         this.apartment = apartment;
         this.additionalInfo = additionalInfo;
         this.createDate = LocalDateTime.now();
-        this.updateDate = updateDate;
-        this.changeUserId = changeUserId;
     }
 
 }

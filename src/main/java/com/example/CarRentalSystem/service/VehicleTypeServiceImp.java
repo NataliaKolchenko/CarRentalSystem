@@ -7,14 +7,12 @@ import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.repository.JpaVehicleTypeRepository;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
 public class VehicleTypeServiceImp implements VehicleTypeService {
     private final JpaVehicleTypeRepository vtRepository;
     public VehicleTypeServiceImp(JpaVehicleTypeRepository vtRepository) {
@@ -53,7 +51,8 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
     @Override
     public VehicleType getById(Long vehicleTypeId) {
         Optional<VehicleType> typeOpt = vtRepository.findById(vehicleTypeId);
-        VehicleType type = typeOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.TYPE_ID_WAS_NOT_FOUND));
+        VehicleType type = typeOpt.orElseThrow(
+                () -> new SubjectNotFoundException(ErrorMessage.TYPE_ID_WAS_NOT_FOUND));
         return type;
     }
 

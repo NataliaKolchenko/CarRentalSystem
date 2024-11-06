@@ -7,14 +7,13 @@ import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
+
 public class BrandServiceImp implements BrandService {
     private final JpaBrandRepository brandRepository;
     public BrandServiceImp(JpaBrandRepository brandRepository) {
@@ -53,7 +52,8 @@ public class BrandServiceImp implements BrandService {
     @Override
     public Brand getById(Long brandId) {
         Optional<Brand> brandOpt = brandRepository.findById(brandId);
-        Brand brand = brandOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.BRAND_ID_WAS_NOT_FOUND));
+        Brand brand = brandOpt.orElseThrow(
+                () -> new SubjectNotFoundException(ErrorMessage.BRAND_ID_WAS_NOT_FOUND));
         return brand;
     }
 

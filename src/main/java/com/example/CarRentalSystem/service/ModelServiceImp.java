@@ -8,14 +8,12 @@ import com.example.CarRentalSystem.model.Model;
 import com.example.CarRentalSystem.repository.JpaModelRepository;
 import com.example.CarRentalSystem.service.interfaces.ModelService;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
 public class ModelServiceImp  implements ModelService {
     private final JpaModelRepository modelRepository;
     private final BrandServiceImp brandServiceImp;
@@ -57,8 +55,7 @@ public class ModelServiceImp  implements ModelService {
     @Override
     public Model getById(Long modelId) {
         Optional<Model> modelOpt = modelRepository.findById(modelId);
-        Model model = modelOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.MODEL_ID_WAS_NOT_FOUND));
-        return model;
+        return modelOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.MODEL_ID_WAS_NOT_FOUND));
     }
 
     @Override

@@ -8,14 +8,12 @@ import com.example.CarRentalSystem.model.Branch;
 import com.example.CarRentalSystem.repository.JpaBranchRepository;
 import com.example.CarRentalSystem.service.interfaces.BranchService;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
 public class BranchServiceImp implements BranchService {
     private final JpaBranchRepository branchRepository;
     private final AddressServiceImp addressService;
@@ -43,7 +41,8 @@ public class BranchServiceImp implements BranchService {
     @Override
     public Branch getById(Long branchId) {
         Optional<Branch> branchOpt = branchRepository.findById(branchId);
-        Branch branch = branchOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.BRANCH_ID_WAS_NOT_FOUND));
+        Branch branch = branchOpt.orElseThrow(
+                () -> new SubjectNotFoundException(ErrorMessage.BRANCH_ID_WAS_NOT_FOUND));
         return branch;
     }
 

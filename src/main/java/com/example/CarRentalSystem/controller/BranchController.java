@@ -4,10 +4,12 @@ import com.example.CarRentalSystem.model.Branch;
 import com.example.CarRentalSystem.service.interfaces.BranchService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/branch")
 public class BranchController {

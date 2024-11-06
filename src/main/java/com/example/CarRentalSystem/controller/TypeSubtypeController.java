@@ -6,10 +6,12 @@ import com.example.CarRentalSystem.service.interfaces.SubTypeService;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/typeAndSubtype")
 public class TypeSubtypeController {

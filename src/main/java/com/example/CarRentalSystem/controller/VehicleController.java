@@ -5,10 +5,12 @@ import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/vehicle")
 public class VehicleController {
@@ -37,5 +39,10 @@ public class VehicleController {
     public ResponseEntity<Vehicle> updateVehicle(@PathVariable Long id,
                                                  @RequestBody @Valid VehicleRequestDto newVehicleDto){
         return ResponseEntity.ok(vehicleService.update(id, newVehicleDto));
+    }
+
+    @GetMapping("/getFavoriteVehicles")
+    public ResponseEntity<List<Vehicle>> getFavoriteVehicles(){
+        return ResponseEntity.ok(vehicleService.getFavoriteVehicles());
     }
 }

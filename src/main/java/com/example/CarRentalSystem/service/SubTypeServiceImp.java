@@ -9,14 +9,12 @@ import com.example.CarRentalSystem.repository.JpaSubTypeRepository;
 import com.example.CarRentalSystem.service.interfaces.SubTypeService;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
 public class SubTypeServiceImp implements SubTypeService {
     private final JpaSubTypeRepository subTypeRepository;
     private final VehicleTypeService typeService;
@@ -59,8 +57,7 @@ public class SubTypeServiceImp implements SubTypeService {
     @Override
     public SubType getById(Long subTypeId) {
         Optional<SubType> subTypeOpt = subTypeRepository.findById(subTypeId);
-        SubType subType = subTypeOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.SUB_TYPE_ID_WAS_NOT_FOUND));
-        return subType;
+        return subTypeOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.SUB_TYPE_ID_WAS_NOT_FOUND));
     }
 
     @Override

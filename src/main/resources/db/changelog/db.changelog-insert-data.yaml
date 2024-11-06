@@ -146,4 +146,34 @@ databaseChangeLog:
               - column:
                   name: favorite
                   value: false
-
+  - changeSet:
+      id: 17
+      author: natalia_kolchenko
+      changes:
+        - insert:
+            tableName: booking
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: vehicle_id
+                  value: 1
+              - column:
+                  name: booked_from_date
+                  value: "1950-01-01"
+              - column:
+                  name: booked_to_date
+                  value: "1950-01-01"
+              - column:
+                  name: booking_status
+                  value: "CREATED"
+              - column:
+                  name: city_start
+                  value: "BERLIN"
+              - column:
+                  name: city_end
+                  value: "BERLIN"

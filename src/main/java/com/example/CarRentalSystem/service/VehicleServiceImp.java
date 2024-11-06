@@ -2,6 +2,7 @@ package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
+import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.*;
@@ -9,7 +10,6 @@ import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
 import com.example.CarRentalSystem.repository.JpaVehicleRepository;
 import com.example.CarRentalSystem.service.interfaces.*;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
+
 public class VehicleServiceImp implements VehicleService {
     private final JpaVehicleRepository vehicleRepository;
     private final VehicleTypeServiceImp typeService;
@@ -39,15 +39,21 @@ public class VehicleServiceImp implements VehicleService {
 
     @Override
     public Vehicle create(VehicleRequestDto vehicleRequestDto) {
-       Vehicle vehicle =  mapDtoToEntity(vehicleRequestDto);
+        List<Vehicle> existingVehicle = vehicleRepository.findByVinCodeAndVehicleNumber(
+                vehicleRequestDto.getVinCode(),
+                vehicleRequestDto.getVehicleNumber());
+        if(!existingVehicle.isEmpty()){
+            throw new SubjectAlreadyExistsException(ErrorMessage.VEHICLE_IS_ALREADY_EXIST);
+        }
+
+        Vehicle vehicle =  mapDtoToEntity(vehicleRequestDto);
         return vehicleRepository.save(vehicle);
     }
 
     @Override
     public Vehicle getById(Long id) {
         Optional<Vehicle> vehicleOpt = vehicleRepository.findById(id);
-        Vehicle vehicle = vehicleOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.VEHICLE_ID_WAS_NOT_FOUND));
-        return vehicle;
+        return vehicleOpt.orElseThrow(() -> new SubjectNotFoundException(ErrorMessage.VEHICLE_ID_WAS_NOT_FOUND));
     }
 
     @Override
@@ -78,6 +84,12 @@ public class VehicleServiceImp implements VehicleService {
         return vehicleRepository.save(existingVehicle);
     }
 
+    @Override
+    public List<Vehicle> getFavoriteVehicles() {
+        List<Vehicle> favoriteVehicles = vehicleRepository.findByFavorite();
+        return favoriteVehicles.isEmpty() ? Collections.emptyList() : favoriteVehicles;
+    }
+
     public Vehicle mapDtoToEntity(VehicleRequestDto vehicleRequestDto){
         VehicleType type = typeService.getById(vehicleRequestDto.getTypeId());
         SubType subType = subTypeService.getById(vehicleRequestDto.getSubTypeId());
@@ -91,12 +103,16 @@ public class VehicleServiceImp implements VehicleService {
         int mileage = vehicleRequestDto.getMileage();
         String city = vehicleRequestDto.getCity();
         boolean favorite = vehicleRequestDto.isFavorite();
+        String vinCode = vehicleRequestDto.getVinCode();
+        String vehicleNumber = vehicleRequestDto.getVehicleNumber();
 
         Vehicle vehicle = new Vehicle(type, subType, active, brand, model, engineType, year, branch, transmissionType,
-                mileage, city, favorite);
+                mileage, city, favorite, vinCode, vehicleNumber);
 
         return vehicle;
     }
+
+
 
 
 }
