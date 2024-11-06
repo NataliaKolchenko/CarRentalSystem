@@ -2,9 +2,7 @@ package com.example.CarRentalSystem;
 
 import com.example.CarRentalSystem.enums.BookingStatus;
 import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.exception.BookingCannotBeCancelledException;
-import com.example.CarRentalSystem.exception.BookingCannotBeUpdatedException;
-import com.example.CarRentalSystem.exception.SubjectNotFoundException;
+import com.example.CarRentalSystem.exception.*;
 import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.Vehicle;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
@@ -430,6 +428,112 @@ public class BookingServiceImpTest {
 
         assertAll(
                 () -> assertEquals("Booking can't be cancelled", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(bookingRepository)
+        );
+    }
+
+    @Test
+    public void testActivate_Successfully(){
+        Long existingBookingId = 1L;
+        Long vehicleId = 1L;
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setId(vehicleId);
+
+        Booking existingBooking = new Booking();
+        existingBooking.setId(existingBookingId);
+        existingBooking.setVehicle(vehicle);
+        existingBooking.setStatus(BookingStatus.CREATED);
+
+        when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
+
+        when(bookingRepository.save(any(Booking.class))).thenReturn(existingBooking);
+
+        Boolean result = bookingService.activate(existingBookingId);
+
+
+        assertAll(
+                () -> assertTrue(result),
+
+                () -> verify(bookingRepository).findById(existingBookingId),
+                () -> verify(bookingRepository).save(any())
+        );
+    }
+
+    @Test
+    public void testActivate_BookingCannotBeActivated_ThrowsException(){
+        Long existingBookingId = 1L;
+        Long vehicleId = 1L;
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setId(vehicleId);
+
+        Booking existingBooking = new Booking();
+        existingBooking.setId(existingBookingId);
+        existingBooking.setVehicle(vehicle);
+        existingBooking.setStatus(BookingStatus.ACTIVE);
+
+        when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
+
+        BookingCannotBeActivatedException exception = assertThrows(BookingCannotBeActivatedException.class,
+                () -> bookingService.activate(existingBookingId));
+
+        assertAll(
+                () -> assertEquals("Booking can't be activated", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(bookingRepository)
+        );
+    }
+
+    @Test
+    public void testFinish_Successfully(){
+        Long existingBookingId = 1L;
+        Long vehicleId = 1L;
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setId(vehicleId);
+
+        Booking existingBooking = new Booking();
+        existingBooking.setId(existingBookingId);
+        existingBooking.setVehicle(vehicle);
+        existingBooking.setStatus(BookingStatus.ACTIVE);
+
+        when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
+
+        when(bookingRepository.save(any(Booking.class))).thenReturn(existingBooking);
+
+        Boolean result = bookingService.finish(existingBookingId);
+
+
+        assertAll(
+                () -> assertTrue(result),
+
+                () -> verify(bookingRepository).findById(existingBookingId),
+                () -> verify(bookingRepository).save(any())
+        );
+    }
+
+    @Test
+    public void testActivate_BookingCannotBeFinish_ThrowsException(){
+        Long existingBookingId = 1L;
+        Long vehicleId = 1L;
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setId(vehicleId);
+
+        Booking existingBooking = new Booking();
+        existingBooking.setId(existingBookingId);
+        existingBooking.setVehicle(vehicle);
+        existingBooking.setStatus(BookingStatus.CREATED);
+
+        when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
+
+        BookingCannotBeFinishedException exception = assertThrows(BookingCannotBeFinishedException.class,
+                () -> bookingService.finish(existingBookingId));
+
+        assertAll(
+                () -> assertEquals("Booking can't be finished", exception.getMessage()),
 
                 () -> verifyNoMoreInteractions(bookingRepository)
         );
