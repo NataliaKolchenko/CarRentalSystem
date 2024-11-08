@@ -378,35 +378,33 @@ public class BookingServiceImpTest {
         );
     }
 
-//    @Test
-//    public void testCancel_Successfully(){
-//        Long existingBookingId = 1L;
-//        Long vehicleId = 1L;
-//
-//        Vehicle vehicle = new Vehicle();
-//        vehicle.setId(vehicleId);
-//
-//        Booking existingBooking = new Booking();
-//        existingBooking.setId(existingBookingId);
-//        existingBooking.setVehicle(vehicle);
-//        existingBooking.setStatus(BookingStatus.CREATED);
-//
-//        when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
-//
-//        when(bookingRepository.save(any(Booking.class))).thenReturn(existingBooking);
-//
-//
-//        Boo resultDto = bookingService.cancel(existingBookingId);
-//
-//        assertAll(
-//                () -> assertNotNull(resultDto),
-//                () -> assertEquals(existingBooking.getId(), resultDto.getId()),
-//                () -> assertEquals(existingBooking.getStatus(), resultDto.getStatus()),
-//
-//                () -> verify(bookingRepository).findById(existingBookingId),
-//                () -> verify(bookingRepository).save(any())
-//        );
-//    }
+    @Test
+    public void testCancel_Successfully(){
+        Long existingBookingId = 1L;
+        Long vehicleId = 1L;
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setId(vehicleId);
+
+        Booking existingBooking = new Booking();
+        existingBooking.setId(existingBookingId);
+        existingBooking.setVehicle(vehicle);
+        existingBooking.setStatus(BookingStatus.CREATED);
+
+        when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
+
+        when(bookingRepository.save(any(Booking.class))).thenReturn(existingBooking);
+
+
+        Boolean resultDto = bookingService.cancel(existingBookingId);
+
+        assertAll(
+                () -> assertTrue(resultDto),
+
+                () -> verify(bookingRepository).findById(existingBookingId),
+                () -> verify(bookingRepository).save(any())
+        );
+    }
 
     @Test
     public void testCancel_BookingCannotBeCancelled_ThrowsException(){
@@ -498,6 +496,7 @@ public class BookingServiceImpTest {
         existingBooking.setId(existingBookingId);
         existingBooking.setVehicle(vehicle);
         existingBooking.setStatus(BookingStatus.ACTIVE);
+        existingBooking.setBookedToDate(LocalDate.now());
 
         when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
 
@@ -515,7 +514,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testActivate_BookingCannotBeFinish_ThrowsException(){
+    public void testFinish_BookingCannotBeFinish_ThrowsException(){
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
 

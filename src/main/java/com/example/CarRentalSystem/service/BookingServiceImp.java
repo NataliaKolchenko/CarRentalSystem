@@ -13,6 +13,7 @@ import com.example.CarRentalSystem.service.interfaces.BookingService;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +22,9 @@ import java.util.stream.Collectors;
 @Service
 public class BookingServiceImp implements BookingService {
     private final JpaBookingRepository bookingRepository;
-    private final VehicleServiceImp vehicleService;
+    private final VehicleService vehicleService;
 
-    public BookingServiceImp(JpaBookingRepository bookingRepository, VehicleServiceImp vehicleService) {
+    public BookingServiceImp(JpaBookingRepository bookingRepository, VehicleService vehicleService) {
         this.bookingRepository = bookingRepository;
         this.vehicleService = vehicleService;
     }
@@ -131,7 +132,7 @@ public class BookingServiceImp implements BookingService {
                     ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED + " due to an unsuitable booking status");
         }
 
-        if (!LocalDateTime.now().equals(existingBookingDto.getCreateDate())){
+        if (!LocalDate.now().equals(existingBookingDto.getCreateDate())){
             throw new BookingCannotBeActivatedException(
                     ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED + " due to an incorrect activation date");
         }
@@ -157,7 +158,7 @@ public class BookingServiceImp implements BookingService {
                     ErrorMessage.BOOKING_CANNOT_BE_FINISHED + " due to an unsuitable booking status");
         }
 
-        if (!LocalDateTime.now().equals(existingBookingDto.getCreateDate())){
+        if (!LocalDate.now().equals(existingBookingDto.getCreateDate())){
             throw new BookingCannotBeFinishedException(
                     ErrorMessage.BOOKING_CANNOT_BE_FINISHED + " due to the incorrect date of the operation");
         }
