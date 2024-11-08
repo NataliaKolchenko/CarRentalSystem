@@ -102,7 +102,7 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public BookingResponseDto cancel(Long id) {
+    public Boolean cancel(Long id) {
         BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch(existingBooking.getStatus()){
@@ -110,8 +110,16 @@ public class BookingServiceImp implements BookingService {
                     ErrorMessage.BOOKING_CANNOT_BE_CANCELLED);
         }
         existingBooking.setStatus(BookingStatus.CANCELLED);
-        Booking saved = bookingRepository.save(existingBooking);
-        return mapEntityToDto(saved);
+        existingBooking.setUpdateDate(LocalDateTime.now());
+        bookingRepository.save(existingBooking);
+
+        Vehicle existingVehicle = vehicleService.getById(existingBookingDto.getVehicleId());
+
+        VehicleRequestDto vehicleRequestDto = vehicleService.mapEntityToDto(existingVehicle);
+
+        vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
+
+        return true;
     }
 
     @Override
@@ -123,7 +131,15 @@ public class BookingServiceImp implements BookingService {
                     ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED);
         }
         existingBooking.setStatus(BookingStatus.ACTIVE);
+        existingBooking.setUpdateDate(LocalDateTime.now());
         bookingRepository.save(existingBooking);
+
+        Vehicle existingVehicle = vehicleService.getById(existingBookingDto.getVehicleId());
+
+        VehicleRequestDto vehicleRequestDto = vehicleService.mapEntityToDto(existingVehicle);
+
+        vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
+
         return true;
     }
 
@@ -136,25 +152,13 @@ public class BookingServiceImp implements BookingService {
                     ErrorMessage.BOOKING_CANNOT_BE_FINISHED);
         }
         existingBooking.setStatus(BookingStatus.FINISHED);
+        existingBooking.setUpdateDate(LocalDateTime.now());
         bookingRepository.save(existingBooking);
 
         Vehicle existingVehicle = vehicleService.getById(existingBookingDto.getVehicleId());
 
-        VehicleRequestDto vehicleRequestDto = new VehicleRequestDto(
-                existingVehicle.getType().getId(),
-                existingVehicle.getSubType().getId(),
-                existingVehicle.isActive(),
-                existingVehicle.getBrand().getId(),
-                existingVehicle.getModel().getId(),
-                existingVehicle.getEngineType(),
-                existingVehicle.getYear(),
-                existingVehicle.getBranch().getId(),
-                existingVehicle.getTransmissionType(),
-                existingVehicle.getMileage(),
-                existingBookingDto.getCityEnd().name(),
-                existingVehicle.isFavorite(),
-                existingVehicle.getVinCode(),
-                existingVehicle.getVehicleNumber());
+        VehicleRequestDto vehicleRequestDto = vehicleService.mapEntityToDto(existingVehicle);
+        vehicleRequestDto.setCity(String.valueOf(existingBooking.getCityEnd()));
 
         vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
         return true;

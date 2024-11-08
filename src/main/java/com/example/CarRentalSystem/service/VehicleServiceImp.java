@@ -130,7 +130,25 @@ public class VehicleServiceImp implements VehicleService {
         return vehicle;
     }
 
+    public VehicleRequestDto mapEntityToDto(Vehicle vehicle){
+        VehicleRequestDto dto = new VehicleRequestDto(
+                vehicle.getType().getId(),
+                vehicle.getSubType().getId(),
+                vehicle.isActive(),
+                vehicle.getBrand().getId(),
+                vehicle.getModel().getId(),
+                vehicle.getEngineType(),
+                vehicle.getYear(),
+                vehicle.getBranch().getId(),
+                vehicle.getTransmissionType(),
+                vehicle.getMileage(),
+                vehicle.getCity(),
+                vehicle.isFavorite(),
+                vehicle.getVinCode(),
+                vehicle.getVehicleNumber());
 
+        return dto;
+    }
 
 
 }
