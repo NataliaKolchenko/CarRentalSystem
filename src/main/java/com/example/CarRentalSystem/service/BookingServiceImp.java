@@ -128,7 +128,12 @@ public class BookingServiceImp implements BookingService {
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
             case ACTIVE, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED ->  throw new BookingCannotBeActivatedException(
-                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED);
+                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED + " due to an unsuitable booking status");
+        }
+
+        if (!LocalDateTime.now().equals(existingBookingDto.getCreateDate())){
+            throw new BookingCannotBeActivatedException(
+                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED + " due to an incorrect activation date");
         }
         existingBooking.setStatus(BookingStatus.ACTIVE);
         existingBooking.setUpdateDate(LocalDateTime.now());
@@ -149,7 +154,12 @@ public class BookingServiceImp implements BookingService {
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
             case CREATED, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED -> throw new BookingCannotBeFinishedException(
-                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED);
+                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED + " due to an unsuitable booking status");
+        }
+
+        if (!LocalDateTime.now().equals(existingBookingDto.getCreateDate())){
+            throw new BookingCannotBeFinishedException(
+                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED + " due to the incorrect date of the operation");
         }
         existingBooking.setStatus(BookingStatus.FINISHED);
         existingBooking.setUpdateDate(LocalDateTime.now());
