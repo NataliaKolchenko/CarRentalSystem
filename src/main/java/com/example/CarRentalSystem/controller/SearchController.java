@@ -3,12 +3,14 @@ package com.example.CarRentalSystem.controller;
 import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.model.Vehicle;
 import com.example.CarRentalSystem.service.interfaces.SearchService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,6 +32,14 @@ public class SearchController {
             @RequestParam City cityEnd,
             @RequestParam LocalDate dateStart,
             @RequestParam LocalDate dateEnd) {
-      return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok(searchService.getAvailableVehicle(cityStart, cityEnd, dateStart, dateEnd));
+//        try {
+//            City startCity = City.valueOf(cityStart.toUpperCase());
+//            City endCity = City.valueOf(cityEnd.toUpperCase());
+//            return ResponseEntity.ok(searchService.getAvailableVehicle(startCity, endCity, dateStart, dateEnd));
+//        } catch (IllegalArgumentException e) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid city name", e);
+//        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem.service;
 
+import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
@@ -101,7 +102,7 @@ public class VehicleServiceImp implements VehicleService {
         Branch branch = branchService.getById(vehicleRequestDto.getBranchId());
         TransmissionType transmissionType = vehicleRequestDto.getTransmissionType();
         int mileage = vehicleRequestDto.getMileage();
-        String city = vehicleRequestDto.getCity();
+        City city = vehicleRequestDto.getCity();
         boolean favorite = vehicleRequestDto.isFavorite();
         String vinCode = vehicleRequestDto.getVinCode();
         String vehicleNumber = vehicleRequestDto.getVehicleNumber();

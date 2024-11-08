@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem.model;
 
+import com.example.CarRentalSystem.enums.City;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -28,7 +29,8 @@ public class Address {
     private String region;
 
     @NotBlank(message = "City may not be blank")
-    private String city;
+    @Enumerated(EnumType.STRING)
+    private City city;
 
     private String district;
 
@@ -49,7 +51,7 @@ public class Address {
         this.createDate = LocalDateTime.now();
     }
 
-    public Address(Long id, String zipCode, String country, String region, String city, String district,
+    public Address(Long id, String zipCode, String country, String region, City city, String district,
                    String street, int house, String apartment, String additionalInfo, LocalDateTime createDate) {
         this.id = id;
         this.zipCode = zipCode;
