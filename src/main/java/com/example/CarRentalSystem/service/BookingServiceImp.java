@@ -7,6 +7,7 @@ import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.Vehicle;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
+import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
 import com.example.CarRentalSystem.repository.JpaBookingRepository;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
@@ -20,9 +21,9 @@ import java.util.stream.Collectors;
 @Service
 public class BookingServiceImp implements BookingService {
     private final JpaBookingRepository bookingRepository;
-    private final VehicleService vehicleService;
+    private final VehicleServiceImp vehicleService;
 
-    public BookingServiceImp(JpaBookingRepository bookingRepository, VehicleService vehicleService) {
+    public BookingServiceImp(JpaBookingRepository bookingRepository, VehicleServiceImp vehicleService) {
         this.bookingRepository = bookingRepository;
         this.vehicleService = vehicleService;
     }
@@ -136,6 +137,26 @@ public class BookingServiceImp implements BookingService {
         }
         existingBooking.setStatus(BookingStatus.FINISHED);
         bookingRepository.save(existingBooking);
+
+        Vehicle existingVehicle = vehicleService.getById(existingBookingDto.getVehicleId());
+
+        VehicleRequestDto vehicleRequestDto = new VehicleRequestDto(
+                existingVehicle.getType().getId(),
+                existingVehicle.getSubType().getId(),
+                existingVehicle.isActive(),
+                existingVehicle.getBrand().getId(),
+                existingVehicle.getModel().getId(),
+                existingVehicle.getEngineType(),
+                existingVehicle.getYear(),
+                existingVehicle.getBranch().getId(),
+                existingVehicle.getTransmissionType(),
+                existingVehicle.getMileage(),
+                existingBookingDto.getCityEnd().name(),
+                existingVehicle.isFavorite(),
+                existingVehicle.getVinCode(),
+                existingVehicle.getVehicleNumber());
+
+        vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
         return true;
     }
 
