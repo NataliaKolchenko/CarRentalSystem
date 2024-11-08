@@ -2,6 +2,7 @@ package com.example.CarRentalSystem;
 
 import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
+import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.model.*;
 import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
@@ -55,22 +56,51 @@ public class VehicleServiceImpTest {
         VehicleRequestDto dto = new VehicleRequestDto(1L, 2L, true, 3L, 4L,
                 EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, "City",
                 true, "12345", "12345");
-Vehicle vehicle = new Vehicle();
+        when(vehicleRepository.findByVinCodeAndVehicleNumber(dto.getVinCode(), dto.getVehicleNumber()))
+                .thenReturn(Collections.emptyList());
+
+        Vehicle vehicle = new Vehicle();
         when(vehicleRepository.save(any(Vehicle.class))).thenReturn(vehicle);
 
         Vehicle createdVehicle = vehicleService.create(dto);
 
-       assertAll(
-               () -> assertNotNull(createdVehicle),
-               () -> assertEquals(createdVehicle, vehicle),
+        assertAll(
+                () -> assertNotNull(createdVehicle),
+                () -> assertEquals(createdVehicle, vehicle),
 
-               () -> verify(vehicleRepository).save(any(Vehicle.class))
-       );
+                () -> verify(vehicleRepository).findByVinCodeAndVehicleNumber(dto.getVinCode(), dto.getVehicleNumber()),
+                () -> verify(vehicleRepository).save(any(Vehicle.class))
+        );
 
     }
 
     @Test
-    public void testGetById_Successfully(){
+    public void testCreate_ExistingVehicle_ThrowsException() {
+        VehicleRequestDto dto = new VehicleRequestDto(1L, 2L, true, 3L, 4L,
+                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, "City",
+                true, "12345", "12345");
+        Vehicle vehicle = new Vehicle();
+        vehicle.setVinCode(dto.getVinCode());
+        vehicle.setVehicleNumber(dto.getVehicleNumber());
+
+        List<Vehicle> existingVehicles = List.of(vehicle);
+
+        when(vehicleRepository.findByVinCodeAndVehicleNumber(dto.getVinCode(), dto.getVehicleNumber()))
+                .thenReturn(existingVehicles);
+
+        SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class,
+                () -> vehicleService.create(dto));
+
+        assertAll(
+                () -> assertEquals("Vehicle is already exist", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(vehicleRepository)
+        );
+
+    }
+
+    @Test
+    public void testGetById_Successfully() {
         Long id = 1L;
         Vehicle vehicle = new Vehicle();
         vehicle.setId(id);
@@ -88,7 +118,7 @@ Vehicle vehicle = new Vehicle();
     }
 
     @Test
-    public void testGetById_NotExistSubTypeId_ThrowsException(){
+    public void testGetById_NotExistSubTypeId_ThrowsException() {
         Long id = 1L;
 
         when(vehicleRepository.findById(id)).thenReturn(Optional.empty());
@@ -104,7 +134,7 @@ Vehicle vehicle = new Vehicle();
     }
 
     @Test
-    public void testGetAllVehicles_Successfully(){
+    public void testGetAllVehicles_Successfully() {
         List<Vehicle> vehicleList = new ArrayList<>();
         Vehicle vehicle1 = new Vehicle();
         Vehicle vehicle2 = new Vehicle();
@@ -125,7 +155,7 @@ Vehicle vehicle = new Vehicle();
     }
 
     @Test
-    public void testGetAllVehicles_EmptyList(){
+    public void testGetAllVehicles_EmptyList() {
         when(vehicleRepository.findAll()).thenReturn(Collections.emptyList());
         List<Vehicle> vehicleList = vehicleService.getAllVehicles();
 
@@ -138,7 +168,7 @@ Vehicle vehicle = new Vehicle();
     }
 
     @Test
-    public void testUpdateVehicle_ExistingId_Successfully(){
+    public void testUpdateVehicle_ExistingId_Successfully() {
         Long existingId = 1L;
         Vehicle existingVehicle = new Vehicle();
         existingVehicle.setId(existingId);
@@ -159,4 +189,81 @@ Vehicle vehicle = new Vehicle();
         );
     }
 
+    @Test
+    public void testGetFavoriteVehicles_Successfully() {
+        List<Vehicle> vehicleList = new ArrayList<>();
+        Vehicle vehicle1 = new Vehicle();
+        vehicle1.setFavorite(true);
+        Vehicle vehicle2 = new Vehicle();
+        vehicle2.setFavorite(true);
+        vehicleList.add(vehicle1);
+        vehicleList.add(vehicle2);
+
+        when(vehicleRepository.findByFavorite()).thenReturn(vehicleList);
+
+        List<Vehicle> actualVehiclesList = vehicleService.getFavoriteVehicles();
+
+        assertAll(
+                () -> assertFalse(actualVehiclesList.isEmpty()),
+                () -> assertEquals(vehicleList, actualVehiclesList),
+                () -> assertEquals(vehicleList.size(), actualVehiclesList.size()),
+
+                () -> verify(vehicleRepository).findByFavorite()
+        );
+    }
+
+    @Test
+    public void testGetFavoriteVehicles_EmptyList() {
+        when(vehicleRepository.findByFavorite()).thenReturn(Collections.emptyList());
+        List<Vehicle> vehicleList = vehicleService.getFavoriteVehicles();
+
+        assertAll(
+                () -> assertEquals(Collections.emptyList(), vehicleList),
+                () -> assertTrue(vehicleList.isEmpty()),
+
+                () -> verifyNoMoreInteractions(vehicleRepository)
+        );
+    }
+
+    @Test
+    public void testAddToFavorites(){
+        Long existingId = 1L;
+        Vehicle vehicle = new Vehicle();
+        vehicle.setId(existingId);
+
+        when(vehicleRepository.findById(existingId)).thenReturn(Optional.of(vehicle));
+
+        when(vehicleRepository.save(any(Vehicle.class))).thenReturn(vehicle);
+
+        boolean result = vehicleService.addToFavorites(existingId);
+
+        assertAll(
+                () -> assertTrue(result),
+
+                () -> verify(vehicleRepository).findById(existingId),
+                () -> verify(vehicleRepository).save(any())
+        );
+
+    }
+
+    @Test
+    public void testRemoveToFavorites(){
+        Long existingId = 1L;
+        Vehicle vehicle = new Vehicle();
+        vehicle.setId(existingId);
+
+        when(vehicleRepository.findById(existingId)).thenReturn(Optional.of(vehicle));
+
+        when(vehicleRepository.save(any(Vehicle.class))).thenReturn(vehicle);
+
+        boolean result = vehicleService.removeFromFavorites(existingId);
+
+        assertAll(
+                () -> assertTrue(result),
+
+                () -> verify(vehicleRepository).findById(existingId),
+                () -> verify(vehicleRepository).save(any())
+        );
+
+    }
 }

@@ -11,4 +11,7 @@ public interface VehicleService {
     List<Vehicle> getAllVehicles();
     Vehicle update(Long id, VehicleRequestDto vehicleDto);
     List<Vehicle> getFavoriteVehicles();
+
+    Boolean addToFavorites(Long id);
+    Boolean removeFromFavorites(Long id);
 }
