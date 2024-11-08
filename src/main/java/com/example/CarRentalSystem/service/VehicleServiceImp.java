@@ -90,6 +90,24 @@ public class VehicleServiceImp implements VehicleService {
         return favoriteVehicles.isEmpty() ? Collections.emptyList() : favoriteVehicles;
     }
 
+    @Override
+    public Boolean addToFavorites(Long id) {
+        Vehicle existingVehicle = getById(id);
+        existingVehicle.setFavorite(true);
+        existingVehicle.setUpdateDate(LocalDateTime.now());
+        vehicleRepository.save(existingVehicle);
+        return true;
+    }
+
+    @Override
+    public Boolean removeFromFavorites(Long id) {
+        Vehicle existingVehicle = getById(id);
+        existingVehicle.setFavorite(false);
+        existingVehicle.setUpdateDate(LocalDateTime.now());
+        vehicleRepository.save(existingVehicle);
+        return true;
+    }
+
     public Vehicle mapDtoToEntity(VehicleRequestDto vehicleRequestDto){
         VehicleType type = typeService.getById(vehicleRequestDto.getTypeId());
         SubType subType = subTypeService.getById(vehicleRequestDto.getSubTypeId());
