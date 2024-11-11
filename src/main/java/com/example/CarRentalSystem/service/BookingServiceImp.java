@@ -158,7 +158,7 @@ public class BookingServiceImp implements BookingService {
                     ErrorMessage.BOOKING_CANNOT_BE_FINISHED + " due to an unsuitable booking status");
         }
 
-        if (!LocalDate.now().equals(existingBookingDto.getCreateDate())){
+        if (!LocalDate.now().equals(existingBookingDto.getBookedToDate())){
             throw new BookingCannotBeFinishedException(
                     ErrorMessage.BOOKING_CANNOT_BE_FINISHED + " due to the incorrect date of the operation");
         }
@@ -169,7 +169,7 @@ public class BookingServiceImp implements BookingService {
         Vehicle existingVehicle = vehicleService.getById(existingBookingDto.getVehicleId());
 
         VehicleRequestDto vehicleRequestDto = vehicleService.mapEntityToDto(existingVehicle);
-        vehicleRequestDto.setCity(String.valueOf(existingBooking.getCityEnd()));
+        vehicleRequestDto.setCity(existingBooking.getCityEnd());
 
         vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
         return true;
@@ -179,8 +179,7 @@ public class BookingServiceImp implements BookingService {
         List<Booking> existingBookings = bookingRepository.checkExistingBooking(
                 bookingDto.getVehicleId(),
                 bookingDto.getBookedFromDate(),
-                bookingDto.getBookedToDate(),
-                BookingStatus.FINISHED);
+                bookingDto.getBookedToDate());
 
         if (!existingBookings.isEmpty()) {
             throw new SubjectNotFoundException((ErrorMessage.BOOKING_IS_ALREADY_EXIST));

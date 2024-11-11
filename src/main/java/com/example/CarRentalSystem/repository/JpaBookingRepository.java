@@ -15,12 +15,11 @@ public interface JpaBookingRepository extends JpaRepository<Booking, Long> {
     @Query("SELECT b FROM Booking b WHERE b.vehicle.id = :vehicleId " +
             "AND b.bookedFromDate <= :startDate " +
             "AND b.bookedToDate >= :endDate " +
-            "AND b.status <> :status")
+            "AND (b.status <> 'FINISHED' AND b.status <> 'CANCELLED')")
     List<Booking> checkExistingBooking(
             @Param("vehicleId") Long vehicleId,
             @Param("startDate") LocalDate startDate,
-            @Param("endDate") LocalDate endDate,
-            @Param("status") BookingStatus status);
+            @Param("endDate") LocalDate endDate);
 
     List<Booking> findByUserId(Long userId);
 
