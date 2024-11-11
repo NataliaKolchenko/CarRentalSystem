@@ -27,7 +27,7 @@ public class VehicleServiceImp implements VehicleService {
     private final ModelService modelService;
     private final BranchService branchService;
 
-    public VehicleServiceImp(JpaVehicleRepository vehicleRepository,VehicleTypeServiceImp typeService,
+    public VehicleServiceImp(JpaVehicleRepository vehicleRepository, VehicleTypeServiceImp typeService,
                              SubTypeService subTypeService, BrandService brandService, ModelService modelService,
                              BranchService branchService) {
         this.vehicleRepository = vehicleRepository;
@@ -43,11 +43,11 @@ public class VehicleServiceImp implements VehicleService {
         List<Vehicle> existingVehicle = vehicleRepository.findByVinCodeAndVehicleNumber(
                 vehicleRequestDto.getVinCode(),
                 vehicleRequestDto.getVehicleNumber());
-        if(!existingVehicle.isEmpty()){
+        if (!existingVehicle.isEmpty()) {
             throw new SubjectAlreadyExistsException(ErrorMessage.VEHICLE_IS_ALREADY_EXIST);
         }
 
-        Vehicle vehicle =  mapDtoToEntity(vehicleRequestDto);
+        Vehicle vehicle = mapDtoToEntity(vehicleRequestDto);
         return vehicleRepository.save(vehicle);
     }
 
@@ -91,7 +91,7 @@ public class VehicleServiceImp implements VehicleService {
         return favoriteVehicles.isEmpty() ? Collections.emptyList() : favoriteVehicles;
     }
 
-    public Vehicle mapDtoToEntity(VehicleRequestDto vehicleRequestDto){
+    public Vehicle mapDtoToEntity(VehicleRequestDto vehicleRequestDto) {
         VehicleType type = typeService.getById(vehicleRequestDto.getTypeId());
         SubType subType = subTypeService.getById(vehicleRequestDto.getSubTypeId());
         boolean active = vehicleRequestDto.isActive();
@@ -112,8 +112,6 @@ public class VehicleServiceImp implements VehicleService {
 
         return vehicle;
     }
-
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem.controller;
 
+import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.model.Address;
 import com.example.CarRentalSystem.model.Branch;
 import com.example.CarRentalSystem.service.BranchServiceImp;
@@ -32,7 +33,7 @@ public class BranchControllerTest {
         Long addressId = 2L;
         Address address = Address.builder()
                 .country("Country")
-                .city("city")
+                .city(City.BERLIN)
                 .street("street")
                 .house(1)
                 .apartment("apartment")
@@ -153,7 +154,7 @@ public class BranchControllerTest {
         Long addressId = 2L;
         Address address = Address.builder()
                 .country("Country")
-                .city("city")
+                .city(City.BERLIN)
                 .street("street")
                 .house(1)
                 .apartment("apartment")
@@ -195,7 +196,7 @@ public class BranchControllerTest {
         Long addressId = 2L;
         Address address = Address.builder()
                 .country("Country")
-                .city("city")
+                .city(City.BERLIN)
                 .street("street")
                 .house(1)
                 .apartment("apartment")

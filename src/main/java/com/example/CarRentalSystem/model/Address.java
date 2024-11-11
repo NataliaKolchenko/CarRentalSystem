@@ -3,6 +3,7 @@ package com.example.CarRentalSystem.model;
 import com.example.CarRentalSystem.enums.City;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -28,7 +29,7 @@ public class Address {
 
     private String region;
 
-    @NotBlank(message = "City may not be blank")
+    @NotNull(message = "City may not be blank")
     @Enumerated(EnumType.STRING)
     private City city;
 

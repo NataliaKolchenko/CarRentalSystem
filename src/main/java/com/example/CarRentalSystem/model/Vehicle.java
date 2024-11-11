@@ -68,7 +68,7 @@ public class Vehicle {
     @NotNull(message = "mileage may not be null")
     private int mileage;
 
-    @NotBlank(message = "city may not be blank")
+    @NotNull(message = "city may not be blank")
     @Enumerated(EnumType.STRING)
     private City city;
 
