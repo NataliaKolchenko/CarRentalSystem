@@ -14,4 +14,5 @@ public interface VehicleService {
 
     Boolean addToFavorites(Long id);
     Boolean removeFromFavorites(Long id);
+    VehicleRequestDto mapEntityToDto (Vehicle vehicle);
 }

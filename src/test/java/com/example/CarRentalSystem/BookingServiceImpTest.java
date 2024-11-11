@@ -396,12 +396,10 @@ public class BookingServiceImpTest {
         when(bookingRepository.save(any(Booking.class))).thenReturn(existingBooking);
 
 
-        BookingResponseDto resultDto = bookingService.cancel(existingBookingId);
+        Boolean resultDto = bookingService.cancel(existingBookingId);
 
         assertAll(
-                () -> assertNotNull(resultDto),
-                () -> assertEquals(existingBooking.getId(), resultDto.getId()),
-                () -> assertEquals(existingBooking.getStatus(), resultDto.getStatus()),
+                () -> assertTrue(resultDto),
 
                 () -> verify(bookingRepository).findById(existingBookingId),
                 () -> verify(bookingRepository).save(any())
@@ -498,6 +496,7 @@ public class BookingServiceImpTest {
         existingBooking.setId(existingBookingId);
         existingBooking.setVehicle(vehicle);
         existingBooking.setStatus(BookingStatus.ACTIVE);
+        existingBooking.setBookedToDate(LocalDate.now());
 
         when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
 
@@ -515,7 +514,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testActivate_BookingCannotBeFinish_ThrowsException(){
+    public void testFinish_BookingCannotBeFinish_ThrowsException(){
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
 
