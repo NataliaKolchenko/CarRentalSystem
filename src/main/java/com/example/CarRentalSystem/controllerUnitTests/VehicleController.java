@@ -45,4 +45,14 @@ public class VehicleController {
     public ResponseEntity<List<Vehicle>> getFavoriteVehicles(){
         return ResponseEntity.ok(vehicleService.getFavoriteVehicles());
     }
+
+    @PutMapping("/addToFavorites")
+    public ResponseEntity<Boolean> addToFavorites(@RequestBody @Valid Long id){
+        return ResponseEntity.ok(vehicleService.addToFavorites(id));
+    }
+
+    @PutMapping("/removeToFavorites")
+    public ResponseEntity<Boolean> removeToFavorites(@RequestBody @Valid Long id){
+        return ResponseEntity.ok(vehicleService.removeFromFavorites(id));
+    }
 }

@@ -91,7 +91,25 @@ public class VehicleServiceImp implements VehicleService {
         return favoriteVehicles.isEmpty() ? Collections.emptyList() : favoriteVehicles;
     }
 
-    public Vehicle mapDtoToEntity(VehicleRequestDto vehicleRequestDto) {
+    @Override
+    public Boolean addToFavorites(Long id) {
+        Vehicle existingVehicle = getById(id);
+        existingVehicle.setFavorite(true);
+        existingVehicle.setUpdateDate(LocalDateTime.now());
+        vehicleRepository.save(existingVehicle);
+        return true;
+    }
+
+    @Override
+    public Boolean removeFromFavorites(Long id) {
+        Vehicle existingVehicle = getById(id);
+        existingVehicle.setFavorite(false);
+        existingVehicle.setUpdateDate(LocalDateTime.now());
+        vehicleRepository.save(existingVehicle);
+        return true;
+    }
+
+    public Vehicle mapDtoToEntity(VehicleRequestDto vehicleRequestDto){
         VehicleType type = typeService.getById(vehicleRequestDto.getTypeId());
         SubType subType = subTypeService.getById(vehicleRequestDto.getSubTypeId());
         boolean active = vehicleRequestDto.isActive();
@@ -111,6 +129,26 @@ public class VehicleServiceImp implements VehicleService {
                 mileage, city, favorite, vinCode, vehicleNumber);
 
         return vehicle;
+    }
+
+    public VehicleRequestDto mapEntityToDto(Vehicle vehicle){
+        VehicleRequestDto dto = new VehicleRequestDto(
+                vehicle.getType().getId(),
+                vehicle.getSubType().getId(),
+                vehicle.isActive(),
+                vehicle.getBrand().getId(),
+                vehicle.getModel().getId(),
+                vehicle.getEngineType(),
+                vehicle.getYear(),
+                vehicle.getBranch().getId(),
+                vehicle.getTransmissionType(),
+                vehicle.getMileage(),
+                vehicle.getCity(),
+                vehicle.isFavorite(),
+                vehicle.getVinCode(),
+                vehicle.getVehicleNumber());
+
+        return dto;
     }
 
 

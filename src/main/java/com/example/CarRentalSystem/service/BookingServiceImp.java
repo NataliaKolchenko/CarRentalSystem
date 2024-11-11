@@ -7,11 +7,13 @@ import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.Vehicle;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
+import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
 import com.example.CarRentalSystem.repository.JpaBookingRepository;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -101,7 +103,7 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public BookingResponseDto cancel(Long id) {
+    public Boolean cancel(Long id) {
         BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch(existingBooking.getStatus()){
@@ -109,8 +111,16 @@ public class BookingServiceImp implements BookingService {
                     ErrorMessage.BOOKING_CANNOT_BE_CANCELLED);
         }
         existingBooking.setStatus(BookingStatus.CANCELLED);
-        Booking saved = bookingRepository.save(existingBooking);
-        return mapEntityToDto(saved);
+        existingBooking.setUpdateDate(LocalDateTime.now());
+        bookingRepository.save(existingBooking);
+
+        Vehicle existingVehicle = vehicleService.getById(existingBookingDto.getVehicleId());
+
+        VehicleRequestDto vehicleRequestDto = vehicleService.mapEntityToDto(existingVehicle);
+
+        vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
+
+        return true;
     }
 
     @Override
@@ -119,10 +129,23 @@ public class BookingServiceImp implements BookingService {
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
             case ACTIVE, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED ->  throw new BookingCannotBeActivatedException(
-                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED);
+                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED + " due to an unsuitable booking status");
+        }
+
+        if (!LocalDate.now().equals(existingBookingDto.getCreateDate())){
+            throw new BookingCannotBeActivatedException(
+                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED + " due to an incorrect activation date");
         }
         existingBooking.setStatus(BookingStatus.ACTIVE);
+        existingBooking.setUpdateDate(LocalDateTime.now());
         bookingRepository.save(existingBooking);
+
+        Vehicle existingVehicle = vehicleService.getById(existingBookingDto.getVehicleId());
+
+        VehicleRequestDto vehicleRequestDto = vehicleService.mapEntityToDto(existingVehicle);
+
+        vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
+
         return true;
     }
 
@@ -132,10 +155,23 @@ public class BookingServiceImp implements BookingService {
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
             case CREATED, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED -> throw new BookingCannotBeFinishedException(
-                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED);
+                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED + " due to an unsuitable booking status");
+        }
+
+        if (!LocalDate.now().equals(existingBookingDto.getCreateDate())){
+            throw new BookingCannotBeFinishedException(
+                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED + " due to the incorrect date of the operation");
         }
         existingBooking.setStatus(BookingStatus.FINISHED);
+        existingBooking.setUpdateDate(LocalDateTime.now());
         bookingRepository.save(existingBooking);
+
+        Vehicle existingVehicle = vehicleService.getById(existingBookingDto.getVehicleId());
+
+        VehicleRequestDto vehicleRequestDto = vehicleService.mapEntityToDto(existingVehicle);
+        vehicleRequestDto.setCity(String.valueOf(existingBooking.getCityEnd()));
+
+        vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
         return true;
     }
 
