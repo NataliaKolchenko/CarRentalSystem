@@ -132,7 +132,7 @@ public class BookingServiceImp implements BookingService {
                     ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED + " due to an unsuitable booking status");
         }
 
-        if (!LocalDate.now().equals(existingBookingDto.getCreateDate())){
+        if (!LocalDate.now().equals(existingBookingDto.getBookedFromDate())){
             throw new BookingCannotBeActivatedException(
                     ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED + " due to an incorrect activation date");
         }
