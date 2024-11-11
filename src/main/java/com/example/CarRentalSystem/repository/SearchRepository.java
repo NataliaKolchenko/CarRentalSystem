@@ -14,14 +14,11 @@ import java.util.List;
 
 public interface SearchRepository{
   @Query("SELECT v FROM Vehicle v LEFT JOIN Booking b ON v.id = b.vehicle.id " +
-         "AND (b.bookedFromDate >= :dateStart AND b.bookedToDate <= :dateEnd) " +
+         "AND (b.bookedFromDate <= :dateEnd AND b.bookedToDate >= :dateStart) " +
          "WHERE v.active = true AND v.city = :cityStart " +
          "AND (b.id IS NULL OR b.status = 'FINISHED')")
  List<Vehicle> queryByAvailableVehicle(
         @Param("cityStart") City cityStart,
         @Param("dateStart") LocalDate dateStart,
         @Param("dateEnd") LocalDate dateEnd);
-
-
-
 }
