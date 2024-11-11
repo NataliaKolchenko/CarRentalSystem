@@ -1,16 +1,14 @@
-package com.example.CarRentalSystem.controller;
+package com.example.CarRentalSystem.controllerUnitTests;
 
 import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.model.Vehicle;
 import com.example.CarRentalSystem.service.interfaces.SearchService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;

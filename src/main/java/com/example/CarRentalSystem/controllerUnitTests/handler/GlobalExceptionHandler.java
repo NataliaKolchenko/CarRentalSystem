@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.controller.handler;
+package com.example.CarRentalSystem.controllerUnitTests.handler;
 
 import com.example.CarRentalSystem.exception.BusinessException;
 import com.example.CarRentalSystem.exception.error.Error;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

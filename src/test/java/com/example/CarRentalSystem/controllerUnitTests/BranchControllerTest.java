@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.controller;
+package com.example.CarRentalSystem.controllerUnitTests;
 
 import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.model.Address;
