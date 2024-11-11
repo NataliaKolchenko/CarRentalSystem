@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem;
 
+import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.model.Address;
@@ -29,7 +30,7 @@ public class AddressServiceImpTest {
         String zipCode = "14000";
         String country = "country";
         String region = "region";
-        String city = "city";
+        City city = City.BERLIN;
         String district = "district";
         String street = "street";
         int house = 1;
@@ -67,7 +68,7 @@ public class AddressServiceImpTest {
     @Test
     public void testCreate_ExistingAddress_ThrowsException() {
         String country = "country";
-        String city = "city";
+        City city = City.BERLIN;
         String street = "street";
         int house = 1;
         String apartment = "apartment";
@@ -99,7 +100,7 @@ public class AddressServiceImpTest {
         Long addressId = 1L;
         Address expectedAddress = Address.builder()
                 .country("country")
-                .city("city")
+                .city(City.BERLIN)
                 .street("street")
                 .house(1)
                 .apartment("apartment")
@@ -141,7 +142,7 @@ public class AddressServiceImpTest {
         Address existingAddress = Address.builder()
                 .id(addressId)
                 .country("country")
-                .city("city")
+                .city(City.BERLIN)
                 .street("street")
                 .house(1)
                 .apartment("apartment")
@@ -152,7 +153,7 @@ public class AddressServiceImpTest {
         Address updatedAddress = Address.builder()
                 .id(addressId)
                 .country("New_country")
-                .city("city")
+                .city(City.BERLIN)
                 .street("street")
                 .house(1)
                 .apartment("apartment")
