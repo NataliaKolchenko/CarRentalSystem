@@ -12,11 +12,9 @@ import java.util.List;
 
 @Service
 public class SearchServiceImp implements SearchService {
-    private final JpaVehicleRepository vehicleRepository;
     private final SearchRepository searchRepository;
 
-    public SearchServiceImp(JpaVehicleRepository vehicleRepository, SearchRepository searchRepository) {
-        this.vehicleRepository = vehicleRepository;
+    public SearchServiceImp(SearchRepository searchRepository) {
         this.searchRepository = searchRepository;
     }
 

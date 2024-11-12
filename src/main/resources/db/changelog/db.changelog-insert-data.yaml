@@ -2,45 +2,57 @@
 databaseChangeLog:
   - logicalFilePath: db/changelog/db.changelog-master.yaml
   - changeSet:
-      id: 2
+      id: 9
       author: natalia_kolchenko
       changes:
         - insert:
             tableName: brand
             columns:
               - column:
+                  name: id
+                  value: 1
+              - column:
                   name: brand_name
                   value: "Brilliance"
   - changeSet:
-      id: 4
+      id: 10
       author: natalia_kolchenko
       changes:
         - insert:
             tableName: model
             columns:
               - column:
+                  name: id
+                  value: 1
+              - column:
                   name: model_name
                   value: " V5"
               - column:
                   name: brand_id
-                  value: 3
+                  value: 1
   - changeSet:
-      id: 6
+      id: 11
       author: natalia_kolchenko
       changes:
         - insert:
             tableName: vehicle_type
             columns:
               - column:
+                  name: id
+                  value: 1
+              - column:
                   name: vehicle_type_name
                   value: "Микроавтобус"
   - changeSet:
-      id: 8
+      id: 12
       author: natalia_kolchenko
       changes:
         - insert:
             tableName: sub_type
             columns:
+              - column:
+                  name: id
+                  value: 1
               - column:
                   name: sub_type_name
                   value: "Грузовой"
@@ -48,12 +60,15 @@ databaseChangeLog:
                   name: vehicle_type_id
                   value: 1
   - changeSet:
-      id: 10
+      id: 13
       author: natalia_kolchenko
       changes:
         - insert:
             tableName: address
             columns:
+              - column:
+                  name: id
+                  value: 1
               - column:
                   name: zip_code
                   value: "14059"
@@ -62,10 +77,10 @@ databaseChangeLog:
                   value: "Germany"
               - column:
                   name: region
-                  value: "Berlin"
+                  value: "BERLIN"
               - column:
                   name: city
-                  value: "Berlin"
+                  value: "BERLIN"
               - column:
                   name: district
                   value: "Charlottenburg"
@@ -80,14 +95,17 @@ databaseChangeLog:
                   value: "K"
               - column:
                   name: create_date
-                  value: "2024-10-24T06:09:08"
+                  value: "2024-11-12 12:00:00.000000"
   - changeSet:
-      id: 12
+      id: 14
       author: natalia_kolchenko
       changes:
         - insert:
             tableName: branch
             columns:
+              - column:
+                  name: id
+                  value: 1
               - column:
                   name: branch_name
                   value: "Berlin branch"
@@ -109,45 +127,54 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  value: 3
+                  value: 1
               - column:
                   name: vehicle_type_id
-                  value: 2
+                  value: 1
               - column:
                   name: sub_type_id
-                  value: 5
+                  value: 1
               - column:
                   name: active
                   value: false
               - column:
                   name: brand_id
-                  value: 5
+                  value: 1
               - column:
                   name: model_id
-                  value: 8
+                  value: 1
               - column:
                   name: engine_type
-                  value: 3
+                  value: "PETROL"
               - column:
                   name: year
-                  value: 1950
+                  value: 2023
               - column:
                   name: branch_id
                   value: 1
               - column:
                   name: transmission_type
-                  value: 1
+                  value: "AUTOMATIC"
               - column:
                   name: mileage
                   value: 500000
               - column:
                   name: city
-                  value: Berlin
+                  value: BERLIN
               - column:
                   name: favorite
                   value: false
+              - column:
+                  name: vin_code
+                  value: "11111"
+              - column:
+                  name: vehicle_number
+                  value: "11AA111"
+              - column:
+                  name: create_date
+                  value: "2024-11-12 12:00:00.000000"
   - changeSet:
-      id: 17
+      id: 16
       author: natalia_kolchenko
       changes:
         - insert:
@@ -157,23 +184,26 @@ databaseChangeLog:
                   name: id
                   value: 1
               - column:
-                  name: user_id
-                  value: 1
-              - column:
                   name: vehicle_id
                   value: 1
               - column:
+                  name: user_id
+                  value: 1
+              - column:
                   name: booked_from_date
-                  value: "1950-01-01"
+                  value: "2024-11-12"
               - column:
                   name: booked_to_date
-                  value: "1950-01-01"
+                  value: "2024-11-12"
               - column:
                   name: booking_status
-                  value: "CREATED"
+                  value: "FINISHED"
               - column:
                   name: city_start
                   value: "BERLIN"
               - column:
                   name: city_end
                   value: "BERLIN"
+              - column:
+                  name: create_date
+                  value: "2024-11-12 12:00:00.000000"
