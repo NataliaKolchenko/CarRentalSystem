@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.controllerUnitTests;
+package com.example.CarRentalSystem.controllers;
 
 import com.example.CarRentalSystem.model.Vehicle;
 import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
