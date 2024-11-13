@@ -7,6 +7,7 @@ import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.Vehicle;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
+import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
 import com.example.CarRentalSystem.repository.JpaBookingRepository;
 import com.example.CarRentalSystem.service.BookingServiceImp;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
@@ -92,8 +93,7 @@ public class BookingServiceImpTest {
         when(bookingRepository.checkExistingBooking(
                 requestDto.getVehicleId(),
                 requestDto.getBookedFromDate(),
-                requestDto.getBookedToDate(),
-                BookingStatus.FINISHED)).thenReturn(existingBooking);
+                requestDto.getBookedToDate())).thenReturn(existingBooking);
 
         SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
                 () -> bookingService.create(requestDto));
@@ -181,8 +181,7 @@ public class BookingServiceImpTest {
         when(bookingRepository.checkExistingBooking(
                 requestDto.getVehicleId(),
                 requestDto.getBookedFromDate(),
-                requestDto.getBookedToDate(),
-                BookingStatus.FINISHED)).thenReturn(existingBooking);
+                requestDto.getBookedToDate())).thenReturn(existingBooking);
 
         SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
                 () -> bookingService.update(existingBookingId, requestDto));
@@ -443,6 +442,7 @@ public class BookingServiceImpTest {
         existingBooking.setId(existingBookingId);
         existingBooking.setVehicle(vehicle);
         existingBooking.setStatus(BookingStatus.CREATED);
+        existingBooking.setBookedFromDate(LocalDate.now());
 
         when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
 
@@ -460,7 +460,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testActivate_BookingCannotBeActivated_ThrowsException(){
+    public void testActivate_BookingCannotBeActivatedBecauseStatus_ThrowsException(){
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
 
@@ -478,7 +478,33 @@ public class BookingServiceImpTest {
                 () -> bookingService.activate(existingBookingId));
 
         assertAll(
-                () -> assertEquals("Booking can't be activated", exception.getMessage()),
+                () -> assertEquals("Booking can't be activated due to an unsuitable booking status", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(bookingRepository)
+        );
+    }
+
+    @Test
+    public void testActivate_BookingCannotBeActivatedBecauseDate_ThrowsException(){
+        Long existingBookingId = 1L;
+        Long vehicleId = 1L;
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setId(vehicleId);
+
+        Booking existingBooking = new Booking();
+        existingBooking.setId(existingBookingId);
+        existingBooking.setVehicle(vehicle);
+        existingBooking.setStatus(BookingStatus.CREATED);
+        existingBooking.setBookedFromDate(LocalDate.parse("2024-09-09"));
+
+        when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
+
+        BookingCannotBeActivatedException exception = assertThrows(BookingCannotBeActivatedException.class,
+                () -> bookingService.activate(existingBookingId));
+
+        assertAll(
+                () -> assertEquals("Booking can't be activated due to an incorrect activation date", exception.getMessage()),
 
                 () -> verifyNoMoreInteractions(bookingRepository)
         );
@@ -497,11 +523,16 @@ public class BookingServiceImpTest {
         existingBooking.setVehicle(vehicle);
         existingBooking.setStatus(BookingStatus.ACTIVE);
         existingBooking.setBookedToDate(LocalDate.now());
+        existingBooking.setCityEnd(City.BERLIN);
 
         when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
 
         when(bookingRepository.save(any(Booking.class))).thenReturn(existingBooking);
 
+        when(vehicleService.getById(vehicleId)).thenReturn(vehicle);
+        vehicle.setCity(existingBooking.getCityEnd());
+
+        when(vehicleService.update(vehicleId, any(VehicleRequestDto.class))).thenReturn(vehicle);
         Boolean result = bookingService.finish(existingBookingId);
 
 

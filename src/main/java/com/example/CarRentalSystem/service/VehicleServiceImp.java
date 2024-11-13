@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem.service;
 
+import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
@@ -26,7 +27,7 @@ public class VehicleServiceImp implements VehicleService {
     private final ModelService modelService;
     private final BranchService branchService;
 
-    public VehicleServiceImp(JpaVehicleRepository vehicleRepository,VehicleTypeServiceImp typeService,
+    public VehicleServiceImp(JpaVehicleRepository vehicleRepository, VehicleTypeServiceImp typeService,
                              SubTypeService subTypeService, BrandService brandService, ModelService modelService,
                              BranchService branchService) {
         this.vehicleRepository = vehicleRepository;
@@ -42,11 +43,11 @@ public class VehicleServiceImp implements VehicleService {
         List<Vehicle> existingVehicle = vehicleRepository.findByVinCodeAndVehicleNumber(
                 vehicleRequestDto.getVinCode(),
                 vehicleRequestDto.getVehicleNumber());
-        if(!existingVehicle.isEmpty()){
+        if (!existingVehicle.isEmpty()) {
             throw new SubjectAlreadyExistsException(ErrorMessage.VEHICLE_IS_ALREADY_EXIST);
         }
 
-        Vehicle vehicle =  mapDtoToEntity(vehicleRequestDto);
+        Vehicle vehicle = mapDtoToEntity(vehicleRequestDto);
         return vehicleRepository.save(vehicle);
     }
 
@@ -119,7 +120,7 @@ public class VehicleServiceImp implements VehicleService {
         Branch branch = branchService.getById(vehicleRequestDto.getBranchId());
         TransmissionType transmissionType = vehicleRequestDto.getTransmissionType();
         int mileage = vehicleRequestDto.getMileage();
-        String city = vehicleRequestDto.getCity();
+        City city = vehicleRequestDto.getCity();
         boolean favorite = vehicleRequestDto.isFavorite();
         String vinCode = vehicleRequestDto.getVinCode();
         String vehicleNumber = vehicleRequestDto.getVehicleNumber();

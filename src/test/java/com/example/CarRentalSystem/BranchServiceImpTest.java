@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem;
 
+import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.model.Address;
@@ -35,7 +36,7 @@ public class BranchServiceImpTest {
     public void testCreate_NewBranch_Successfully() {
         Address savedAddress = Address.builder()
                 .country("country")
-                .city("city")
+                .city(City.BERLIN)
                 .street("street")
                 .house(1)
                 .apartment("apartment")

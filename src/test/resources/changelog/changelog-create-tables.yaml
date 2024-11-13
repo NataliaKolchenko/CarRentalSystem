@@ -1,6 +1,6 @@
 ---
 databaseChangeLog:
-  - logicalFilePath: db/changelog/db.changelog-master.yaml
+  - logicalFilePath: changelog/changelog-master.yaml
   - changeSet:
       id: 1
       author: natalia_kolchenko
@@ -22,11 +22,6 @@ databaseChangeLog:
   - changeSet:
       id: 2
       author: natalia_kolchenko
-      preConditions:
-        - onFail: MARK_RAN
-        - not:
-            foreignKeyConstraintExists:
-              foreignKeyName: fk_model_brand
       changes:
         - createTable:
             tableName: model
@@ -74,11 +69,6 @@ databaseChangeLog:
   - changeSet:
       id: 4
       author: natalia_kolchenko
-      preConditions:
-        - onFail: MARK_RAN
-        - not:
-            foreignKeyConstraintExists:
-              foreignKeyName: fk_subtype_vehicletype
       changes:
         - createTable:
             tableName: sub_type
@@ -155,11 +145,6 @@ databaseChangeLog:
   - changeSet:
       id: 6
       author: natalia_kolchenko
-      preConditions:
-        - onFail: MARK_RAN
-        - not:
-            foreignKeyConstraintExists:
-              foreignKeyName: fk_branch_address
       changes:
         - createTable:
             tableName: branch

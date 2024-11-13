@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem.model;
 
+import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
 import jakarta.persistence.*;
@@ -67,8 +68,9 @@ public class Vehicle {
     @NotNull(message = "mileage may not be null")
     private int mileage;
 
-    @NotBlank(message = "city may not be blank")
-    private String city;
+    @NotNull(message = "city may not be blank")
+    @Enumerated(EnumType.STRING)
+    private City city;
 
     @NotNull(message = "favorite may not be null")
     boolean favorite;
@@ -92,7 +94,7 @@ public class Vehicle {
     }
 
     public Vehicle(VehicleType type, SubType subType, boolean active, Brand brand, Model model, EngineType engineType,
-                   int year, Branch branch, TransmissionType transmissionType, int mileage, String city, boolean favorite,
+                   int year, Branch branch, TransmissionType transmissionType, int mileage, City city, boolean favorite,
                    String vinCode, String vehicleNumber) {
         this.type = type;
         this.subType = subType;

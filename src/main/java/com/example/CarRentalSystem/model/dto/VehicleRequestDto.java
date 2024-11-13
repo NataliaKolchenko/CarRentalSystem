@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem.model.dto;
 
+import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +22,7 @@ public class VehicleRequestDto {
     private Long branchId;
     private TransmissionType transmissionType;
     private int mileage;
-    private String city;
+    private City city;
     boolean favorite;
     private String vinCode;
     private String vehicleNumber;

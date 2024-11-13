@@ -1,5 +1,6 @@
 package com.example.CarRentalSystem;
 
+import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
@@ -54,7 +55,7 @@ public class VehicleServiceImpTest {
     @Test
     public void testCreate_NewVehicle_Successfully() {
         VehicleRequestDto dto = new VehicleRequestDto(1L, 2L, true, 3L, 4L,
-                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, "City",
+                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, City.BERLIN,
                 true, "12345", "12345");
         when(vehicleRepository.findByVinCodeAndVehicleNumber(dto.getVinCode(), dto.getVehicleNumber()))
                 .thenReturn(Collections.emptyList());
@@ -77,7 +78,7 @@ public class VehicleServiceImpTest {
     @Test
     public void testCreate_ExistingVehicle_ThrowsException() {
         VehicleRequestDto dto = new VehicleRequestDto(1L, 2L, true, 3L, 4L,
-                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, "City",
+                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, City.BERLIN,
                 true, "12345", "12345");
         Vehicle vehicle = new Vehicle();
         vehicle.setVinCode(dto.getVinCode());
@@ -174,7 +175,7 @@ public class VehicleServiceImpTest {
         existingVehicle.setId(existingId);
 
         VehicleRequestDto requestDto = new VehicleRequestDto(1L, 2L, true, 3L, 4L,
-                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, "City", true,
+                EngineType.DIESEL, 2021, 5L, TransmissionType.MANUAL, 15000, City.BERLIN, true,
                 "12345", "12345");
 
         when(vehicleRepository.findById(existingId)).thenReturn(Optional.of(existingVehicle));
