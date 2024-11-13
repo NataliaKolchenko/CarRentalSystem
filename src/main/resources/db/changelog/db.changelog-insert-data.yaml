@@ -9,9 +9,6 @@ databaseChangeLog:
             tableName: brand
             columns:
               - column:
-                  name: id
-                  value: 1
-              - column:
                   name: brand_name
                   value: "Brilliance"
   - changeSet:
@@ -21,9 +18,6 @@ databaseChangeLog:
         - insert:
             tableName: model
             columns:
-              - column:
-                  name: id
-                  value: 1
               - column:
                   name: model_name
                   value: " V5"
@@ -38,9 +32,6 @@ databaseChangeLog:
             tableName: vehicle_type
             columns:
               - column:
-                  name: id
-                  value: 1
-              - column:
                   name: vehicle_type_name
                   value: "Микроавтобус"
   - changeSet:
@@ -50,9 +41,6 @@ databaseChangeLog:
         - insert:
             tableName: sub_type
             columns:
-              - column:
-                  name: id
-                  value: 1
               - column:
                   name: sub_type_name
                   value: "Грузовой"
@@ -66,9 +54,6 @@ databaseChangeLog:
         - insert:
             tableName: address
             columns:
-              - column:
-                  name: id
-                  value: 1
               - column:
                   name: zip_code
                   value: "14059"
@@ -104,9 +89,6 @@ databaseChangeLog:
             tableName: branch
             columns:
               - column:
-                  name: id
-                  value: 1
-              - column:
                   name: branch_name
                   value: "Berlin branch"
               - column:
@@ -125,9 +107,6 @@ databaseChangeLog:
         - insert:
             tableName: vehicle
             columns:
-              - column:
-                  name: id
-                  value: 1
               - column:
                   name: vehicle_type_id
                   value: 1
@@ -180,9 +159,6 @@ databaseChangeLog:
         - insert:
             tableName: booking
             columns:
-              - column:
-                  name: id
-                  value: 1
               - column:
                   name: vehicle_id
                   value: 1
