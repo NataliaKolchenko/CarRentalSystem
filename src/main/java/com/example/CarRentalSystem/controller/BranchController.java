@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.controllers;
+package com.example.CarRentalSystem.controller;
 
 import com.example.CarRentalSystem.model.Branch;
 import com.example.CarRentalSystem.service.interfaces.BranchService;

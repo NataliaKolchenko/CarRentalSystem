@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.controllers.handler;
+package com.example.CarRentalSystem.controller.handler;
 
 import com.example.CarRentalSystem.exception.BusinessException;
 import com.example.CarRentalSystem.exception.error.Error;

@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.controllers;
+package com.example.CarRentalSystem.controller;
 
 import com.example.CarRentalSystem.enums.BookingStatus;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;

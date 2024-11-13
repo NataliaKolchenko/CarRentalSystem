@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.controllers;
+package com.example.CarRentalSystem.controller;
 
 import com.example.CarRentalSystem.model.SubType;
 import com.example.CarRentalSystem.model.VehicleType;
