@@ -114,11 +114,6 @@ public class BookingServiceImp implements BookingService {
         existingBooking.setUpdateDate(LocalDateTime.now());
         bookingRepository.save(existingBooking);
 
-        Vehicle existingVehicle = vehicleService.getById(existingBookingDto.getVehicleId());
-
-        VehicleRequestDto vehicleRequestDto = vehicleService.mapEntityToDto(existingVehicle);
-
-        vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
 
         return true;
     }
@@ -139,12 +134,6 @@ public class BookingServiceImp implements BookingService {
         existingBooking.setStatus(BookingStatus.ACTIVE);
         existingBooking.setUpdateDate(LocalDateTime.now());
         bookingRepository.save(existingBooking);
-
-        Vehicle existingVehicle = vehicleService.getById(existingBookingDto.getVehicleId());
-
-        VehicleRequestDto vehicleRequestDto = vehicleService.mapEntityToDto(existingVehicle);
-
-        vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
 
         return true;
     }

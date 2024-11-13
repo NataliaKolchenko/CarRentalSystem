@@ -42,11 +42,11 @@ public class BookingServiceImpTest {
     private VehicleService vehicleService;
 
     @Test
-    public void testCreate_NewBooking_Successfully(){
+    public void testCreate_NewBooking_Successfully() {
         BookingRequestDto requestDto = new BookingRequestDto(
                 1L,
-                LocalDate.of(2024,1,12),
-                LocalDate.of(2024,1,12),
+                LocalDate.of(2024, 1, 12),
+                LocalDate.of(2024, 1, 12),
                 City.BERLIN,
                 City.BERLIN);
 
@@ -63,7 +63,7 @@ public class BookingServiceImpTest {
         );
 
         when(bookingRepository.save(any(Booking.class))).thenReturn(booking);
-       BookingResponseDto responseDto =  bookingService.create(requestDto);
+        BookingResponseDto responseDto = bookingService.create(requestDto);
 
         assertAll(
                 () -> assertNotNull(responseDto),
@@ -80,13 +80,13 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testCreate_BookingIsAlreadyExist_ThrowsException(){
+    public void testCreate_BookingIsAlreadyExist_ThrowsException() {
         List<Booking> existingBooking = List.of(new Booking());
 
         BookingRequestDto requestDto = new BookingRequestDto(
                 1L,
-                LocalDate.of(2024,1,12),
-                LocalDate.of(2024,1,12),
+                LocalDate.of(2024, 1, 12),
+                LocalDate.of(2024, 1, 12),
                 City.BERLIN,
                 City.BERLIN);
 
@@ -106,14 +106,14 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testUpdate_ExistingBrand_Successfully(){
+    public void testUpdate_ExistingBrand_Successfully() {
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
         Long userId = 1L;
         BookingRequestDto requestDto = new BookingRequestDto(
                 vehicleId,
-                LocalDate.of(2024,1,12),
-                LocalDate.of(2024,1,13),
+                LocalDate.of(2024, 1, 12),
+                LocalDate.of(2024, 1, 13),
                 City.BONN,
                 City.BONN);
 
@@ -167,13 +167,13 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testUpdate_BookingIsAlreadyExist_ThrowsException(){
+    public void testUpdate_BookingIsAlreadyExist_ThrowsException() {
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
         BookingRequestDto requestDto = new BookingRequestDto(
                 vehicleId,
-                LocalDate.of(2024,1,12),
-                LocalDate.of(2024,1,13),
+                LocalDate.of(2024, 1, 12),
+                LocalDate.of(2024, 1, 13),
                 City.BONN,
                 City.BONN);
         List<Booking> existingBooking = List.of(new Booking());
@@ -194,14 +194,14 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testUpdate_BookingCannotBeUpdated_ThrowsException(){
+    public void testUpdate_BookingCannotBeUpdated_ThrowsException() {
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
         Long userId = 1L;
         BookingRequestDto requestDto = new BookingRequestDto(
                 vehicleId,
-                LocalDate.of(2024,1,12),
-                LocalDate.of(2024,1,13),
+                LocalDate.of(2024, 1, 12),
+                LocalDate.of(2024, 1, 13),
                 City.BONN,
                 City.BONN);
 
@@ -234,7 +234,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testGetById_Successfully(){
+    public void testGetById_Successfully() {
         Vehicle vehicle = new Vehicle();
         vehicle.setId(1L);
 
@@ -243,8 +243,8 @@ public class BookingServiceImpTest {
         expectedBooking.setId(id);
         expectedBooking.setUserId(1L);
         expectedBooking.setVehicle(vehicle);
-        expectedBooking.setBookedFromDate(LocalDate.of(2024,1,12));
-        expectedBooking.setBookedToDate(LocalDate.of(2024,1,13));
+        expectedBooking.setBookedFromDate(LocalDate.of(2024, 1, 12));
+        expectedBooking.setBookedToDate(LocalDate.of(2024, 1, 13));
         expectedBooking.setCityStart(City.BONN);
         expectedBooking.setCityEnd(City.BONN);
         expectedBooking.setCreateDate(LocalDateTime.now());
@@ -266,7 +266,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testGetById_NotExistBookingId_ThrowsException(){
+    public void testGetById_NotExistBookingId_ThrowsException() {
         Long bookingId = 1L;
 
         when(bookingRepository.findById(bookingId)).thenReturn(Optional.empty());
@@ -281,8 +281,8 @@ public class BookingServiceImpTest {
         );
     }
 
-     @Test
-    public void testGetBookingsByStatus_FullList(){
+    @Test
+    public void testGetBookingsByStatus_FullList() {
         Long userId = 1L;
         BookingStatus bookingStatus = BookingStatus.CREATED;
         List<Booking> bookingList = new ArrayList<>();
@@ -312,10 +312,10 @@ public class BookingServiceImpTest {
                 () -> verify(bookingRepository).findByUserIdAndStatus(userId, bookingStatus)
         );
 
-     }
+    }
 
     @Test
-    public void testGetBookingsByStatus_EmptyList(){
+    public void testGetBookingsByStatus_EmptyList() {
         Long userId = 1L;
         BookingStatus bookingStatus = BookingStatus.CREATED;
         when(bookingRepository.findByUserIdAndStatus(userId, bookingStatus)).thenReturn(Collections.emptyList());
@@ -331,7 +331,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testGetBookingsByUserId_FullList(){
+    public void testGetBookingsByUserId_FullList() {
         Long userId = 1L;
         List<Booking> bookingList = new ArrayList<>();
 
@@ -363,7 +363,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testGetBookingsByUserId_EmptyList(){
+    public void testGetBookingsByUserId_EmptyList() {
         Long userId = 1L;
         when(bookingRepository.findByUserId(userId)).thenReturn(Collections.emptyList());
 
@@ -378,7 +378,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testCancel_Successfully(){
+    public void testCancel_Successfully() {
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
 
@@ -392,13 +392,20 @@ public class BookingServiceImpTest {
 
         when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
 
-        when(bookingRepository.save(any(Booking.class))).thenReturn(existingBooking);
+        Booking canceledBooking = new Booking();
+        canceledBooking.setId(existingBookingId);
+        canceledBooking.setVehicle(vehicle);
+        canceledBooking.setStatus(BookingStatus.CANCELLED);
+        canceledBooking.setUpdateDate(LocalDateTime.now());
 
+        when(bookingRepository.save(any(Booking.class))).thenReturn(canceledBooking);
 
         Boolean resultDto = bookingService.cancel(existingBookingId);
 
         assertAll(
                 () -> assertTrue(resultDto),
+                () -> assertEquals(BookingStatus.CANCELLED, canceledBooking.getStatus()),
+                () -> assertNotNull(canceledBooking.getUpdateDate()),
 
                 () -> verify(bookingRepository).findById(existingBookingId),
                 () -> verify(bookingRepository).save(any())
@@ -406,7 +413,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testCancel_BookingCannotBeCancelled_ThrowsException(){
+    public void testCancel_BookingCannotBeCancelled_ThrowsException() {
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
 
@@ -431,7 +438,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testActivate_Successfully(){
+    public void testActivate_Successfully() {
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
 
@@ -446,13 +453,20 @@ public class BookingServiceImpTest {
 
         when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
 
-        when(bookingRepository.save(any(Booking.class))).thenReturn(existingBooking);
+        Booking activatedBooking = new Booking();
+        activatedBooking.setId(existingBookingId);
+        activatedBooking.setVehicle(vehicle);
+        activatedBooking.setStatus(BookingStatus.ACTIVE);
+        activatedBooking.setUpdateDate(LocalDateTime.now());
+
+        when(bookingRepository.save(any(Booking.class))).thenReturn(activatedBooking);
 
         Boolean result = bookingService.activate(existingBookingId);
 
-
         assertAll(
                 () -> assertTrue(result),
+                () -> assertEquals(BookingStatus.ACTIVE, activatedBooking.getStatus()),
+                () -> assertNotNull(activatedBooking.getUpdateDate()),
 
                 () -> verify(bookingRepository).findById(existingBookingId),
                 () -> verify(bookingRepository).save(any())
@@ -460,7 +474,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testActivate_BookingCannotBeActivatedBecauseStatus_ThrowsException(){
+    public void testActivate_BookingCannotBeActivatedBecauseStatus_ThrowsException() {
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
 
@@ -485,7 +499,7 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testActivate_BookingCannotBeActivatedBecauseDate_ThrowsException(){
+    public void testActivate_BookingCannotBeActivatedBecauseDate_ThrowsException() {
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
 
@@ -511,41 +525,65 @@ public class BookingServiceImpTest {
     }
 
     @Test
-    public void testFinish_Successfully(){
+    public void testFinish_Successfully() {
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
 
         Vehicle vehicle = new Vehicle();
         vehicle.setId(vehicleId);
+        vehicle.setCity(City.BONN);
 
         Booking existingBooking = new Booking();
         existingBooking.setId(existingBookingId);
         existingBooking.setVehicle(vehicle);
         existingBooking.setStatus(BookingStatus.ACTIVE);
-        existingBooking.setBookedToDate(LocalDate.now());
         existingBooking.setCityEnd(City.BERLIN);
+        existingBooking.setBookedToDate(LocalDate.now());
 
         when(bookingRepository.findById(existingBookingId)).thenReturn(Optional.of(existingBooking));
+
+        Booking finishedBooking = new Booking();
+        finishedBooking.setId(existingBookingId);
+        finishedBooking.setVehicle(vehicle);
+        finishedBooking.setStatus(BookingStatus.FINISHED);
+        finishedBooking.setUpdateDate(LocalDateTime.now());
+        finishedBooking.setCityEnd(existingBooking.getCityEnd());
 
         when(bookingRepository.save(any(Booking.class))).thenReturn(existingBooking);
 
         when(vehicleService.getById(vehicleId)).thenReturn(vehicle);
-        vehicle.setCity(existingBooking.getCityEnd());
 
-        when(vehicleService.update(vehicleId, any(VehicleRequestDto.class))).thenReturn(vehicle);
+        VehicleRequestDto vehicleRequestDto = new VehicleRequestDto();
+        vehicleRequestDto.setCity(existingBooking.getCityEnd());
+
+        when(vehicleService.mapEntityToDto(vehicle)).thenReturn(vehicleRequestDto);
+
+        Vehicle updatedVehicle = new Vehicle();
+        updatedVehicle.setId(vehicleId);
+        updatedVehicle.setCity(existingBooking.getCityEnd());
+        updatedVehicle.setUpdateDate(LocalDateTime.now());
+        updatedVehicle.setCity(existingBooking.getCityEnd());
+
+
+        when(vehicleService.update(eq(vehicleId), any(VehicleRequestDto.class))).thenReturn(updatedVehicle);
         Boolean result = bookingService.finish(existingBookingId);
-
 
         assertAll(
                 () -> assertTrue(result),
+                () -> assertEquals(BookingStatus.FINISHED, finishedBooking.getStatus()),
+                () -> assertNotNull(finishedBooking.getUpdateDate()),
+                () -> assertEquals(finishedBooking.getCityEnd(), updatedVehicle.getCity()),
+                () -> assertNotNull(updatedVehicle.getUpdateDate()),
 
                 () -> verify(bookingRepository).findById(existingBookingId),
-                () -> verify(bookingRepository).save(any())
+                () -> verify(bookingRepository).save(any(Booking.class)),
+                () -> verify(vehicleService).update(eq(vehicleId), any(VehicleRequestDto.class))
+
         );
     }
 
     @Test
-    public void testFinish_BookingCannotBeFinish_ThrowsException(){
+    public void testFinish_BookingCannotBeFinish_ThrowsException() {
         Long existingBookingId = 1L;
         Long vehicleId = 1L;
 
@@ -563,7 +601,7 @@ public class BookingServiceImpTest {
                 () -> bookingService.finish(existingBookingId));
 
         assertAll(
-                () -> assertEquals("Booking can't be finished", exception.getMessage()),
+                () -> assertEquals("Booking can't be finished due to an unsuitable booking status", exception.getMessage()),
 
                 () -> verifyNoMoreInteractions(bookingRepository)
         );
