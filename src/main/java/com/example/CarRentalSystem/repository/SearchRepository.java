@@ -36,10 +36,12 @@ public interface SearchRepository {
             "      AND b.bookedFromDate <= :dateEnd " +
             "      AND b.bookedToDate >= :dateStart " +
             "      AND b.status IN ('ACTIVE', 'CREATED')" +
-            ")")
+            ") ORDER BY 1")
     List<Vehicle> queryByAvailableVehicle(
             @Param("cityStart") City cityStart,
             @Param("dateStart") LocalDate dateStart,
             @Param("dateEnd") LocalDate dateEnd);
+
+
 
 }
