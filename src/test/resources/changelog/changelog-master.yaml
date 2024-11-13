@@ -1,5 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: changelog/changelog-create-tables.yaml
-  - include:
-      file: changelog/changelog-insert-data.yaml
