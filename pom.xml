@@ -50,10 +50,10 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>3.3.3</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-security</artifactId>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -117,23 +117,6 @@
 			<artifactId>liquibase-core</artifactId>
 			<version>4.29.2</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.testcontainers/testcontainers -->
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>testcontainers</artifactId>
-			<version>1.20.3</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.testcontainers/postgresql -->
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>1.20.3</version>
-			<scope>test</scope>
-		</dependency>
-
-
 		<!-- https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter -->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
@@ -141,7 +124,18 @@
 			<version>1.20.3</version>
 			<scope>test</scope>
 		</dependency>
-
+		<!-- Если используете JWT -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version> <!-- Или более новая версия -->
+		</dependency>
+		<!-- Для тестирования безопасности -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 
 

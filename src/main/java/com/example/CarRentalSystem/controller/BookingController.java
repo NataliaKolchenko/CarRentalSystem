@@ -4,6 +4,7 @@ import com.example.CarRentalSystem.enums.BookingStatus;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,8 +23,9 @@ public class BookingController {
     }
 
     @PostMapping("/createBooking")
-    public ResponseEntity<BookingResponseDto> createBooking(@RequestBody @Valid BookingRequestDto bookingDto){
-        return ResponseEntity.ok(bookingService.create(bookingDto));
+    public ResponseEntity<BookingResponseDto> createBooking(HttpServletRequest request,
+                                                            @RequestBody @Valid BookingRequestDto bookingDto){
+        return ResponseEntity.ok(bookingService.create(request,bookingDto));
     }
 
     @GetMapping("/getBookingById/{id}")

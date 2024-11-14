@@ -54,9 +54,9 @@ public class Booking {
         this.createDate = createDate;
     }
 
-    public Booking(Vehicle vehicle, LocalDate bookedFromDate, LocalDate bookedToDate, BookingStatus status,
+    public Booking(Long userId, Vehicle vehicle, LocalDate bookedFromDate, LocalDate bookedToDate, BookingStatus status,
                    City cityStart, City cityEnd) {
-        this.userId = 1L;
+        this.userId = userId;
         this.vehicle = vehicle;
         this.bookedFromDate = bookedFromDate;
         this.bookedToDate = bookedToDate;
