@@ -28,7 +28,8 @@ public class AuthInterceptor {
                 .parseClaimsJws(token)
                 .getBody();
 
-        return (Long) claims.get("userId");
+
+        return Long.valueOf(claims.get("id").toString()) ;
     }
 
     public String extractUserRoleFromToken(String token) {

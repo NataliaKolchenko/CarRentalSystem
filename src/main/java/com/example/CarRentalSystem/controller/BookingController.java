@@ -29,8 +29,9 @@ public class BookingController {
     }
 
     @GetMapping("/getBookingById/{id}")
-    public ResponseEntity<BookingResponseDto> getBookingById(@PathVariable Long id){
-        return ResponseEntity.ok(bookingService.getById(id));
+    public ResponseEntity<BookingResponseDto> getBookingById(HttpServletRequest request,
+                                                             @PathVariable Long id){
+        return ResponseEntity.ok(bookingService.getById(request, id));
     }
 
     @GetMapping("/getBookingListByUserId/{id}")
@@ -45,23 +46,27 @@ public class BookingController {
     }
 
     @PutMapping("/updateBooking/{id}")
-    public ResponseEntity<BookingResponseDto> updateBooking(@PathVariable Long id,
+    public ResponseEntity<BookingResponseDto> updateBooking(HttpServletRequest request,
+                                                            @PathVariable Long id,
                                                             @RequestBody @Valid BookingRequestDto bookingRequestDto){
-        return ResponseEntity.ok(bookingService.update(id, bookingRequestDto));
+        return ResponseEntity.ok(bookingService.update(request, id, bookingRequestDto));
     }
 
     @PutMapping("/cancelBooking")
-    public ResponseEntity<Boolean> cancelBooking(@RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.cancel(id));
+    public ResponseEntity<Boolean> cancelBooking(HttpServletRequest request,
+                                                 @RequestBody @Valid Long id){
+        return ResponseEntity.ok(bookingService.cancel(request, id));
     }
 
     @PutMapping("/activateBooking")
-    public ResponseEntity<Boolean> activateBooking(@RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.activate(id));
+    public ResponseEntity<Boolean> activateBooking(HttpServletRequest request,
+                                                   @RequestBody @Valid Long id){
+        return ResponseEntity.ok(bookingService.activate(request, id));
     }
 
     @PutMapping("/finishBooking")
-    public ResponseEntity<Boolean> finishBooking(@RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.finish(id));
+    public ResponseEntity<Boolean> finishBooking(HttpServletRequest request,
+                                                 @RequestBody @Valid Long id){
+        return ResponseEntity.ok(bookingService.finish(request, id));
     }
 }
