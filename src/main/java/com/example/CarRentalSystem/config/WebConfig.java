@@ -3,6 +3,7 @@ package com.example.CarRentalSystem.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,7 +30,7 @@ public class WebConfig {
                         .requestMatchers(USER_LIST).hasRole(USER)
 
 
-                        .anyRequest().permitAll() // Остальные запросы разрешены для всех
+//                        .anyRequest().permitAll() // Остальные запросы разрешены для всех
                 );
 //                .httpBasic(); // Использование Basic Authentication
 
@@ -63,12 +64,12 @@ public class WebConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.inMemoryAuthentication()
-                .withUser("user").password(passwordEncoder().encode("password")).roles("USER");
-        return authenticationManagerBuilder.build();
-    }
+//    @Bean
+//    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+//        AuthenticationManagerBuilder authenticationManagerBuilder =
+//                http.getSharedObject(AuthenticationManagerBuilder.class);
+//        authenticationManagerBuilder.inMemoryAuthentication()
+//                .withUser("user").password(passwordEncoder().encode("password")).roles("USER1");
+//        return authenticationManagerBuilder.build();
+//    }
 }

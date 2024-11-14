@@ -19,8 +19,8 @@ public class AuthorizationRightsRoles {
      * List of endpoints accessible to users with the USER role.
      */
     public static final String[] USER_LIST = {
-            "/booking",
-            "/searchService",
+            "/booking/*",
+            "/searchService/*",
     };
 
     /**
