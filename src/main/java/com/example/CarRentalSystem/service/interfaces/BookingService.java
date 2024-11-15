@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface BookingService {
-    BookingResponseDto create(HttpServletRequest request, BookingRequestDto bookingDto);
+    BookingResponseDto create(BookingRequestDto bookingDto);
     BookingResponseDto update (HttpServletRequest request, Long id, BookingRequestDto bookingDto);
     BookingResponseDto getById (HttpServletRequest request, Long id);
     List<BookingResponseDto> getBookingsByStatus(BookingStatus bookingStatus, Long userId);

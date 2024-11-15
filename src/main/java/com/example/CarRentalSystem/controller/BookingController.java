@@ -7,6 +7,10 @@ import com.example.CarRentalSystem.service.interfaces.BookingService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +27,20 @@ public class BookingController {
     }
 
     @PostMapping("/createBooking")
-    public ResponseEntity<BookingResponseDto> createBooking(HttpServletRequest request,
-                                                            @RequestBody @Valid BookingRequestDto bookingDto){
-        return ResponseEntity.ok(bookingService.create(request,bookingDto));
+    public ResponseEntity<BookingResponseDto> createBooking(@RequestBody @Valid BookingRequestDto bookingDto){
+//        Long userId = getCurrentUserId();
+//        bookingDto.setUserId(userId);
+        bookingDto.setUserId(1L);
+        return ResponseEntity.ok(bookingService.create(bookingDto));
     }
+
+//    private Long getCurrentUserId() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication != null && authentication.getPrincipal() instanceof Long) {
+//            return (Long) authentication.getPrincipal();
+//        }
+//        throw new RuntimeException("User ID not found in SecurityContext");
+//    }
 
     @GetMapping("/getBookingById/{id}")
     public ResponseEntity<BookingResponseDto> getBookingById(HttpServletRequest request,

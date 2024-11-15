@@ -3,14 +3,14 @@ package com.example.CarRentalSystem.service;
 import com.example.CarRentalSystem.enums.BookingStatus;
 import com.example.CarRentalSystem.exception.*;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
-import com.example.CarRentalSystem.infrastructure.AuthInterceptor;
+import com.example.CarRentalSystem.infrastructure.JwtAuthFilter;
 import com.example.CarRentalSystem.model.Booking;
 import com.example.CarRentalSystem.model.Vehicle;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
 import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
 import com.example.CarRentalSystem.repository.JpaBookingRepository;
-import com.example.CarRentalSystem.service.auth.TokenValidationService;
+import com.example.CarRentalSystem.service.auth.JwtService;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,29 +26,25 @@ import java.util.stream.Collectors;
 public class BookingServiceImp implements BookingService {
     private final JpaBookingRepository bookingRepository;
     private final VehicleService vehicleService;
-    private final AuthInterceptor authInterceptor;
-    private final TokenValidationService tokenValidator;
+    private final JwtAuthFilter jwtAuthFilter;
+    private final JwtService tokenValidator;
 
-    public BookingServiceImp(JpaBookingRepository bookingRepository, VehicleService vehicleService, AuthInterceptor authInterceptor, TokenValidationService tokenValidator) {
+    public BookingServiceImp(JpaBookingRepository bookingRepository, VehicleService vehicleService, JwtAuthFilter jwtAuthFilter, JwtService tokenValidator) {
         this.bookingRepository = bookingRepository;
         this.vehicleService = vehicleService;
-        this.authInterceptor = authInterceptor;
+        this.jwtAuthFilter = jwtAuthFilter;
         this.tokenValidator = tokenValidator;
     }
 
     @Override
-    public BookingResponseDto create(HttpServletRequest request, BookingRequestDto bookingDto) {
-        String token = authInterceptor.getTokenExtraction(request);
-        tokenValidator.validateRequestToken(request);
-
-        Long userId = authInterceptor.extractUserIdFromToken(token);
+    public BookingResponseDto create(BookingRequestDto bookingDto) {
 
         checkBookingParameters(bookingDto);
 
         Vehicle vehicle = vehicleService.getById(bookingDto.getVehicleId());
 
         Booking booking = new Booking(
-                userId,
+                bookingDto.getUserId(),
                 vehicle,
                 bookingDto.getBookedFromDate(),
                 bookingDto.getBookedToDate(),
@@ -91,7 +87,7 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     public BookingResponseDto getById(HttpServletRequest request, Long id) {
-        tokenValidator.validateRequestToken(request);
+//        tokenValidator.validateRequestToken(request);
 
         Optional<Booking> bookingOpt = bookingRepository.findById(id);
         Booking booking = bookingOpt.orElseThrow(
