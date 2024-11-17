@@ -13,7 +13,7 @@ public interface BookingService {
     List<BookingResponseDto> getBookingsByStatus(BookingStatus bookingStatus, String userId);
     List<BookingResponseDto> getBookingsByUserId(String userId);
     Boolean cancel(Long bookingId, String userId);
-    Boolean activate( Long id);
+    Boolean activate( Long bookingId, String userId);
     Boolean finish(Long id);
 
 }

@@ -58,7 +58,7 @@ public class BookingController {
 
     @PutMapping("/activateBooking")
     public ResponseEntity<Boolean> activateBooking(@RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.activate(id));
+        return ResponseEntity.ok(bookingService.activate(id, getUserId()));
     }
 
     @PutMapping("/finishBooking")

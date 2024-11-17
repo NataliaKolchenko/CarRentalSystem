@@ -63,8 +63,6 @@ public class BookingServiceImp implements BookingService {
         BookingResponseDto existingBookingDto = getById(bookingId, bookingDto.getUserId());
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
 
-        checkMatchUserId(existingBooking, bookingDto.getUserId());
-
         switch (existingBooking.getStatus()){
             case FINISHED, CANCELLED, ACTIVE -> throw  new BookingCannotBeUpdatedException(
                     ErrorMessage.BOOKING_CANNOT_BE_UPDATED);
@@ -119,8 +117,6 @@ public class BookingServiceImp implements BookingService {
         BookingResponseDto existingBookingDto = getById(bookingId, userId);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
 
-        checkMatchUserId(existingBooking, userId);
-
         switch(existingBooking.getStatus()){
             case ACTIVE, FINISHED, CANCELLED -> throw  new BookingCannotBeCancelledException(
                     ErrorMessage.BOOKING_CANNOT_BE_CANCELLED);
@@ -134,8 +130,8 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public Boolean activate(Long id) {
-        BookingResponseDto existingBookingDto = getById(id, "user");
+    public Boolean activate(Long bookingId, String userId) {
+        BookingResponseDto existingBookingDto = getById(bookingId, userId);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
             case ACTIVE, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED ->  throw new BookingCannotBeActivatedException(
