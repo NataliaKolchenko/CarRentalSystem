@@ -25,16 +25,13 @@ public class BookingController {
 
     @PostMapping("/createBooking")
     public ResponseEntity<BookingResponseDto> createBooking(@RequestBody @Valid BookingRequestDto bookingDto){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
-        String userId = userDetails.getUsername();
-        bookingDto.setUserId(userId);
+        bookingDto.setUserId(getUserId());
         return ResponseEntity.ok(bookingService.create(bookingDto));
     }
 
     @GetMapping("/getBookingById/{id}")
     public ResponseEntity<BookingResponseDto> getBookingById(@PathVariable Long id){
-        return ResponseEntity.ok(bookingService.getById(id));
+        return ResponseEntity.ok(bookingService.getById(id, getUserId()));
     }
 
     @GetMapping("/getBookingListByUserId/{id}")
@@ -67,5 +64,10 @@ public class BookingController {
     @PutMapping("/finishBooking")
     public ResponseEntity<Boolean> finishBooking(@RequestBody @Valid Long id){
         return ResponseEntity.ok(bookingService.finish(id));
+    }
+
+    private static String getUserId() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUsername();
     }
 }

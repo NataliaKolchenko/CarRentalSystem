@@ -1,6 +1,7 @@
 package com.example.CarRentalSystem.controller.handler;
 
 import com.example.CarRentalSystem.exception.BusinessException;
+import com.example.CarRentalSystem.exception.UserIdMismatchException;
 import com.example.CarRentalSystem.exception.error.Error;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -45,5 +46,11 @@ public class GlobalExceptionHandler {
                 .map(ConstraintViolation::getMessage)
                 .toList()),
                 HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({UserIdMismatchException.class})
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<String> handleUserIdMismatchException(UserIdMismatchException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
     }
 }
