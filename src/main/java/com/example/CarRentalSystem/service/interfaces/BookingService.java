@@ -14,6 +14,6 @@ public interface BookingService {
     List<BookingResponseDto> getBookingsByUserId(String userId);
     Boolean cancel(Long bookingId, String userId);
     Boolean activate( Long bookingId, String userId);
-    Boolean finish(Long id);
+    Boolean finish(Long bookingId, String userId);
 
 }

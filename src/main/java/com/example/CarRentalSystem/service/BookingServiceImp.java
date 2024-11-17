@@ -150,8 +150,8 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public Boolean finish(Long id) {
-        BookingResponseDto existingBookingDto = getById(id, "user");
+    public Boolean finish(Long bookingId, String userId) {
+        BookingResponseDto existingBookingDto = getById(bookingId, userId);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
             case CREATED, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED -> throw new BookingCannotBeFinishedException(

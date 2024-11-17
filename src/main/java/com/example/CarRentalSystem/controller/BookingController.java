@@ -63,7 +63,7 @@ public class BookingController {
 
     @PutMapping("/finishBooking")
     public ResponseEntity<Boolean> finishBooking(@RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.finish(id));
+        return ResponseEntity.ok(bookingService.finish(id, getUserId()));
     }
 
     private static String getUserId() {
