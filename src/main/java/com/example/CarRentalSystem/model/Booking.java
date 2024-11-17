@@ -3,6 +3,7 @@ package com.example.CarRentalSystem.model;
 import com.example.CarRentalSystem.enums.BookingStatus;
 import com.example.CarRentalSystem.enums.City;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "userId may not be blank")
     private String userId;
 
     @ManyToOne(fetch = FetchType.EAGER)

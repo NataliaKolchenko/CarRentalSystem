@@ -1,14 +1,8 @@
 package com.example.CarRentalSystem.service.auth;
 
-import com.example.CarRentalSystem.exception.ValidateTokenException;
-import com.example.CarRentalSystem.infrastructure.JwtAuthFilter;
 import io.jsonwebtoken.*;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 
@@ -20,29 +14,19 @@ public class JwtService  {
 
     public boolean validateToken(String token) {
         try {
-            // Парсим и проверяем токен с использованием секретного ключа
             Jws<Claims> claimsJws = Jwts.parser()
                     .setSigningKey(Base64.getDecoder().decode(secretKey))
                     .parseClaimsJws(token);
 
-            // Проверяем, что токен не просрочен
             Date expiration = claimsJws.getBody().getExpiration();
             return expiration != null && expiration.after(new Date());
 
         } catch (JwtException | IllegalArgumentException e) {
-            // Если токен недействителен или подпись неверна
             e.getMessage();
             return false;
         }
     }
 
-//    public void validateRequestToken(HttpServletRequest request) {
-//        String token = jwtAuthFilter.getTokenExtraction(request);
-//        boolean isValid = validateToken(token);
-//        if (!isValid) {
-//            throw new ValidateTokenException("Unauthorized: Invalid or missing token");
-//        }
-//    }
 
     public String extractUserIdFromToken(String token) {
         Claims claims = Jwts.parser()

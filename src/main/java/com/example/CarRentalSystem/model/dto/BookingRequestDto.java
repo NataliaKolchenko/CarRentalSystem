@@ -1,6 +1,5 @@
 package com.example.CarRentalSystem.model.dto;
 
-import com.example.CarRentalSystem.enums.BookingStatus;
 import com.example.CarRentalSystem.enums.City;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

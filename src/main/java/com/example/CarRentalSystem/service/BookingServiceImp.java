@@ -13,7 +13,6 @@ import com.example.CarRentalSystem.repository.JpaBookingRepository;
 import com.example.CarRentalSystem.service.auth.JwtService;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -87,8 +86,6 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     public BookingResponseDto getById(Long id) {
-//        tokenValidator.validateRequestToken(request);
-
         Optional<Booking> bookingOpt = bookingRepository.findById(id);
         Booking booking = bookingOpt.orElseThrow(
                 () -> new SubjectNotFoundException(ErrorMessage.BOOKING_ID_WAS_NOT_FOUND));

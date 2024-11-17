@@ -3,7 +3,6 @@ package com.example.CarRentalSystem.model.dto;
 import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.enums.EngineType;
 import com.example.CarRentalSystem.enums.TransmissionType;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

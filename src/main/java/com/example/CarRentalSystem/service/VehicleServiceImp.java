@@ -10,7 +10,6 @@ import com.example.CarRentalSystem.model.*;
 import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
 import com.example.CarRentalSystem.repository.JpaVehicleRepository;
 import com.example.CarRentalSystem.service.interfaces.*;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

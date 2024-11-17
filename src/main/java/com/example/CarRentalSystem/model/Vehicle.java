@@ -30,7 +30,7 @@ public class Vehicle {
     @NotNull(message = "SubType may not be null")
     private SubType subType;
 
-    //    Состояние ТС
+//    Состояние ТС
 //    активен (true)- доступен для отображения в каталоге,
 //    неактивен (false) - выведен из эксплуатации
     @NotNull(message = "VehicleCondition may not be null")

@@ -3,7 +3,6 @@ package com.example.CarRentalSystem.service.interfaces;
 import com.example.CarRentalSystem.enums.BookingStatus;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
