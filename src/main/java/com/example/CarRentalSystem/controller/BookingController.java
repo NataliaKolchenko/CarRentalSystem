@@ -53,7 +53,7 @@ public class BookingController {
 
     @PutMapping("/cancelBooking")
     public ResponseEntity<Boolean> cancelBooking(@RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.cancel(id));
+        return ResponseEntity.ok(bookingService.cancel(id, getUserId()));
     }
 
     @PutMapping("/activateBooking")

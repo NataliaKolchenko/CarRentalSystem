@@ -57,15 +57,13 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public BookingResponseDto update(Long id, BookingRequestDto bookingDto) {
+    public BookingResponseDto update(Long bookingId, BookingRequestDto bookingDto) {
         checkBookingParameters(bookingDto);
 
-        BookingResponseDto existingBookingDto = getById(id, bookingDto.getUserId());
+        BookingResponseDto existingBookingDto = getById(bookingId, bookingDto.getUserId());
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
 
-        if(!existingBooking.getUserId().equals(bookingDto.getUserId())){
-            throw new UserIdMismatchException(ErrorMessage.USER_ID_MISMATCH);
-        }
+        checkMatchUserId(existingBooking, bookingDto.getUserId());
 
         switch (existingBooking.getStatus()){
             case FINISHED, CANCELLED, ACTIVE -> throw  new BookingCannotBeUpdatedException(
@@ -88,14 +86,13 @@ public class BookingServiceImp implements BookingService {
 
 
 
+
     @Override
     public BookingResponseDto getById(Long bookingId, String userId) {
         Optional<Booking> bookingOpt = bookingRepository.findById(bookingId);
         Booking booking = bookingOpt.orElseThrow(
                 () -> new SubjectNotFoundException(ErrorMessage.BOOKING_ID_WAS_NOT_FOUND));
-        if(!booking.getUserId().equals(userId)){
-            throw new UserIdMismatchException(ErrorMessage.USER_ID_MISMATCH);
-        }
+        checkMatchUserId(booking, userId);
 
         return mapEntityToDto(booking);
     }
@@ -118,9 +115,12 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public Boolean cancel(Long id) {
-        BookingResponseDto existingBookingDto = getById(id, "user");
+    public Boolean cancel(Long bookingId, String userId) {
+        BookingResponseDto existingBookingDto = getById(bookingId, userId);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
+
+        checkMatchUserId(existingBooking, userId);
+
         switch(existingBooking.getStatus()){
             case ACTIVE, FINISHED, CANCELLED -> throw  new BookingCannotBeCancelledException(
                     ErrorMessage.BOOKING_CANNOT_BE_CANCELLED);
@@ -177,6 +177,12 @@ public class BookingServiceImp implements BookingService {
 
         vehicleService.update(existingBookingDto.getVehicleId(), vehicleRequestDto);
         return true;
+    }
+
+    private static void checkMatchUserId(Booking existingBooking, String userId) {
+        if (!existingBooking.getUserId().equals(userId)) {
+            throw new UserIdMismatchException(ErrorMessage.USER_ID_MISMATCH);
+        }
     }
 
     private void checkBookingParameters(BookingRequestDto bookingDto) {
