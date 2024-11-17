@@ -60,8 +60,12 @@ public class BookingServiceImp implements BookingService {
     public BookingResponseDto update(Long id, BookingRequestDto bookingDto) {
         checkBookingParameters(bookingDto);
 
-        BookingResponseDto existingBookingDto = getById(id, "user");
+        BookingResponseDto existingBookingDto = getById(id, bookingDto.getUserId());
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
+
+        if(!existingBooking.getUserId().equals(bookingDto.getUserId())){
+            throw new UserIdMismatchException(ErrorMessage.USER_ID_MISMATCH);
+        }
 
         switch (existingBooking.getStatus()){
             case FINISHED, CANCELLED, ACTIVE -> throw  new BookingCannotBeUpdatedException(
