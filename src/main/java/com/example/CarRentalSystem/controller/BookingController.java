@@ -39,10 +39,9 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBookingsByUserId(getUserId()));
     }
 
-    @GetMapping("/getBookingListByStatus/{userId}/{status}")
-    public ResponseEntity<List<BookingResponseDto>> getBookingByStatus(@PathVariable String userId,
-                                                                       @PathVariable BookingStatus status){
-        return ResponseEntity.ok(bookingService.getBookingsByStatus(status, userId));
+    @GetMapping("/getBookingListByStatus/{status}")
+    public ResponseEntity<List<BookingResponseDto>> getBookingByStatus(@PathVariable BookingStatus status){
+        return ResponseEntity.ok(bookingService.getBookingsByStatus(status, getUserId()));
     }
 
     @PutMapping("/updateBooking/{id}")
