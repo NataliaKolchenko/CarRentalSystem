@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface BookingService {
     BookingResponseDto create(BookingRequestDto bookingDto);
-    BookingResponseDto update (HttpServletRequest request, Long id, BookingRequestDto bookingDto);
-    BookingResponseDto getById (HttpServletRequest request, Long id);
-    List<BookingResponseDto> getBookingsByStatus(BookingStatus bookingStatus, Long userId);
-    List<BookingResponseDto> getBookingsByUserId(Long userId);
-    Boolean cancel(HttpServletRequest request, Long id);
-    Boolean activate(HttpServletRequest request, Long id);
-    Boolean finish(HttpServletRequest request, Long id);
+    BookingResponseDto update (Long id, BookingRequestDto bookingDto);
+    BookingResponseDto getById (Long id);
+    List<BookingResponseDto> getBookingsByStatus(BookingStatus bookingStatus, String userId);
+    List<BookingResponseDto> getBookingsByUserId(String userId);
+    Boolean cancel(Long id);
+    Boolean activate( Long id);
+    Boolean finish(Long id);
 
 }

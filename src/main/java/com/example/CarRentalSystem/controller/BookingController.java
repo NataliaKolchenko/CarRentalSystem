@@ -4,11 +4,8 @@ import com.example.CarRentalSystem.enums.BookingStatus;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
@@ -28,59 +25,47 @@ public class BookingController {
 
     @PostMapping("/createBooking")
     public ResponseEntity<BookingResponseDto> createBooking(@RequestBody @Valid BookingRequestDto bookingDto){
-//        Long userId = getCurrentUserId();
-//        bookingDto.setUserId(userId);
-        bookingDto.setUserId(1L);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        String userId = userDetails.getUsername();
+        bookingDto.setUserId(userId);
         return ResponseEntity.ok(bookingService.create(bookingDto));
     }
 
-//    private Long getCurrentUserId() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication != null && authentication.getPrincipal() instanceof Long) {
-//            return (Long) authentication.getPrincipal();
-//        }
-//        throw new RuntimeException("User ID not found in SecurityContext");
-//    }
-
     @GetMapping("/getBookingById/{id}")
-    public ResponseEntity<BookingResponseDto> getBookingById(HttpServletRequest request,
-                                                             @PathVariable Long id){
-        return ResponseEntity.ok(bookingService.getById(request, id));
+    public ResponseEntity<BookingResponseDto> getBookingById(@PathVariable Long id){
+        return ResponseEntity.ok(bookingService.getById(id));
     }
 
     @GetMapping("/getBookingListByUserId/{id}")
-    public ResponseEntity<List<BookingResponseDto>> getBookingListByUserId(@PathVariable Long id){
+    public ResponseEntity<List<BookingResponseDto>> getBookingListByUserId(@PathVariable String id){
         return ResponseEntity.ok(bookingService.getBookingsByUserId(id));
     }
 
     @GetMapping("/getBookingListByStatus/{userId}/{status}")
-    public ResponseEntity<List<BookingResponseDto>> getBookingByStatus(@PathVariable Long userId,
+    public ResponseEntity<List<BookingResponseDto>> getBookingByStatus(@PathVariable String userId,
                                                                        @PathVariable BookingStatus status){
         return ResponseEntity.ok(bookingService.getBookingsByStatus(status, userId));
     }
 
     @PutMapping("/updateBooking/{id}")
-    public ResponseEntity<BookingResponseDto> updateBooking(HttpServletRequest request,
-                                                            @PathVariable Long id,
+    public ResponseEntity<BookingResponseDto> updateBooking(@PathVariable Long id,
                                                             @RequestBody @Valid BookingRequestDto bookingRequestDto){
-        return ResponseEntity.ok(bookingService.update(request, id, bookingRequestDto));
+        return ResponseEntity.ok(bookingService.update(id, bookingRequestDto));
     }
 
     @PutMapping("/cancelBooking")
-    public ResponseEntity<Boolean> cancelBooking(HttpServletRequest request,
-                                                 @RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.cancel(request, id));
+    public ResponseEntity<Boolean> cancelBooking(@RequestBody @Valid Long id){
+        return ResponseEntity.ok(bookingService.cancel(id));
     }
 
     @PutMapping("/activateBooking")
-    public ResponseEntity<Boolean> activateBooking(HttpServletRequest request,
-                                                   @RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.activate(request, id));
+    public ResponseEntity<Boolean> activateBooking(@RequestBody @Valid Long id){
+        return ResponseEntity.ok(bookingService.activate(id));
     }
 
     @PutMapping("/finishBooking")
-    public ResponseEntity<Boolean> finishBooking(HttpServletRequest request,
-                                                 @RequestBody @Valid Long id){
-        return ResponseEntity.ok(bookingService.finish(request, id));
+    public ResponseEntity<Boolean> finishBooking(@RequestBody @Valid Long id){
+        return ResponseEntity.ok(bookingService.finish(id));
     }
 }

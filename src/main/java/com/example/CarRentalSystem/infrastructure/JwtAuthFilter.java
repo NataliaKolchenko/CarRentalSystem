@@ -70,12 +70,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             try {
                 // Извлекаем userId и роль из токена
-                Long userId = jwtService.extractUserIdFromToken(jwtToken);
+                String userId = jwtService.extractUserIdFromToken(jwtToken);
                 String role = jwtService.extractUserRoleFromToken(jwtToken);
 
                 if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     // Создаем "пользователя" с извлеченной ролью
-                    UserDetails userDetails = new User(userId.toString(), "", List.of(new SimpleGrantedAuthority(role)));
+                    UserDetails userDetails = new User(userId, "", List.of(new SimpleGrantedAuthority(role)));
 
                     // Проверяем валидность токена
                     if (jwtService.validateToken(jwtToken)) {

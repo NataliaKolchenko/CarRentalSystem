@@ -2,15 +2,13 @@ package com.example.CarRentalSystem.service.auth;
 
 import com.example.CarRentalSystem.exception.ValidateTokenException;
 import com.example.CarRentalSystem.infrastructure.JwtAuthFilter;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 
@@ -46,14 +44,14 @@ public class JwtService  {
 //        }
 //    }
 
-    public Long extractUserIdFromToken(String token) {
+    public String extractUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(secretKeyBytes) // Передаем байтовый массив
                 .parseClaimsJws(token)
                 .getBody();
 
 
-        return Long.valueOf(claims.get("id").toString()) ;
+        return claims.get("sub").toString() ;
     }
 
     public String extractUserRoleFromToken(String token) {
@@ -61,7 +59,7 @@ public class JwtService  {
                 .setSigningKey(secretKeyBytes)
                 .parseClaimsJws(token)
                 .getBody();
-        return (String) claims.get("role");
+        return claims.get("role").toString();
     }
 
 }

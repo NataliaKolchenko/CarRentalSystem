@@ -18,15 +18,15 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-    private final JwtService jwtService;
+//    private final JwtService jwtService;
 
-    public WebSecurityConfig(JwtService jwtService) {
-        this.jwtService = jwtService;
-    }
+//    public WebSecurityConfig() {
+//        this.jwtService = jwtService;
+//    }
 
 
     @Bean
-    public JwtAuthFilter jwtAuthFilter() {
+    public JwtAuthFilter jwtAuthFilter(JwtService jwtService) {
         return new JwtAuthFilter(jwtService);
     }
 
@@ -48,7 +48,7 @@ public class WebSecurityConfig {
 //    }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
         http
                 .csrf((csrf) -> csrf
                         .csrfTokenRepository(new HttpSessionCsrfTokenRepository()).disable()
@@ -59,7 +59,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class); // Добавляем фильтр JWT
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Добавляем фильтр JWT
 
         return http.build();
     }
@@ -86,10 +86,10 @@ public class WebSecurityConfig {
 //
 //        return http.build();
 //    }
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
 //    @Bean
 //    public AuthenticationManager authManager(HttpSecurity http) throws Exception {

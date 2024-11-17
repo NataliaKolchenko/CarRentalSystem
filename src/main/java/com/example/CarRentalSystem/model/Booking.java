@@ -18,7 +18,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    private String userId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle_id")
@@ -54,7 +54,7 @@ public class Booking {
         this.createDate = createDate;
     }
 
-    public Booking(Long userId, Vehicle vehicle, LocalDate bookedFromDate, LocalDate bookedToDate, BookingStatus status,
+    public Booking(String userId, Vehicle vehicle, LocalDate bookedFromDate, LocalDate bookedToDate, BookingStatus status,
                    City cityStart, City cityEnd) {
         this.userId = userId;
         this.vehicle = vehicle;

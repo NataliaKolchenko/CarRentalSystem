@@ -58,10 +58,10 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public BookingResponseDto update(HttpServletRequest request, Long id, BookingRequestDto bookingDto) {
+    public BookingResponseDto update(Long id, BookingRequestDto bookingDto) {
         checkBookingParameters(bookingDto);
 
-        BookingResponseDto existingBookingDto = getById(request, id);
+        BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
 
         switch (existingBooking.getStatus()){
@@ -86,7 +86,7 @@ public class BookingServiceImp implements BookingService {
 
 
     @Override
-    public BookingResponseDto getById(HttpServletRequest request, Long id) {
+    public BookingResponseDto getById(Long id) {
 //        tokenValidator.validateRequestToken(request);
 
         Optional<Booking> bookingOpt = bookingRepository.findById(id);
@@ -97,7 +97,7 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public List<BookingResponseDto> getBookingsByStatus(BookingStatus bookingStatus, Long userId) {
+    public List<BookingResponseDto> getBookingsByStatus(BookingStatus bookingStatus, String userId) {
         List<Booking> bookingList = bookingRepository.findByUserIdAndStatus(userId, bookingStatus);
         return bookingList.stream()
                 .map(this::mapEntityToDto)
@@ -105,7 +105,7 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public List<BookingResponseDto> getBookingsByUserId(Long userId) {
+    public List<BookingResponseDto> getBookingsByUserId(String userId) {
         List<Booking> bookingListByUserId = bookingRepository.findByUserId(userId);
 
         return bookingListByUserId.stream()
@@ -114,8 +114,8 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public Boolean cancel(HttpServletRequest request, Long id) {
-        BookingResponseDto existingBookingDto = getById(request, id);
+    public Boolean cancel(Long id) {
+        BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch(existingBooking.getStatus()){
             case ACTIVE, FINISHED, CANCELLED -> throw  new BookingCannotBeCancelledException(
@@ -130,8 +130,8 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public Boolean activate(HttpServletRequest request, Long id) {
-        BookingResponseDto existingBookingDto = getById(request, id);
+    public Boolean activate(Long id) {
+        BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
             case ACTIVE, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED ->  throw new BookingCannotBeActivatedException(
@@ -150,8 +150,8 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
-    public Boolean finish(HttpServletRequest request, Long id) {
-        BookingResponseDto existingBookingDto = getById(request, id);
+    public Boolean finish(Long id) {
+        BookingResponseDto existingBookingDto = getById(id);
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
             case CREATED, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED -> throw new BookingCannotBeFinishedException(
