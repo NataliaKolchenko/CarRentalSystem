@@ -34,9 +34,9 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getById(id, getUserId()));
     }
 
-    @GetMapping("/getBookingListByUserId/{id}")
-    public ResponseEntity<List<BookingResponseDto>> getBookingListByUserId(@PathVariable String id){
-        return ResponseEntity.ok(bookingService.getBookingsByUserId(id));
+    @GetMapping("/getBookingListByUserId")
+    public ResponseEntity<List<BookingResponseDto>> getBookingListByUserId(){
+        return ResponseEntity.ok(bookingService.getBookingsByUserId(getUserId()));
     }
 
     @GetMapping("/getBookingListByStatus/{userId}/{status}")
