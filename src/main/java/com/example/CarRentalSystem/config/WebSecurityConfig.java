@@ -34,6 +34,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/booking/**").hasRole("USER")
                         .requestMatchers("/brandAndModel/**").hasRole("ADMIN")
                         .requestMatchers("/typeAndSubtype/**").hasRole("ADMIN")
+                        .requestMatchers("/vehicle/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
