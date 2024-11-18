@@ -6,6 +6,7 @@ import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -16,8 +17,10 @@ import java.util.Optional;
 
 public class BrandServiceImp implements BrandService {
     private final JpaBrandRepository brandRepository;
-    public BrandServiceImp(JpaBrandRepository brandRepository) {
+    private final ModelServiceImp modelService;
+    public BrandServiceImp(JpaBrandRepository brandRepository, @Lazy ModelServiceImp modelService) {
         this.brandRepository = brandRepository;
+        this.modelService = modelService;
     }
 
     @Override
@@ -46,7 +49,12 @@ public class BrandServiceImp implements BrandService {
         if (!brandRepository.existsById(brandId)) {
             throw new SubjectNotFoundException(ErrorMessage.BRAND_ID_WAS_NOT_FOUND);
         }
-        brandRepository.deleteById(brandId);
+
+        if (modelService.existsByBrandId(brandId)) {
+            throw new SubjectNotFoundException(ErrorMessage.CANNOT_DELETE_BRAND);
+        } else {
+            brandRepository.deleteById(brandId);
+        }
     }
 
     @Override

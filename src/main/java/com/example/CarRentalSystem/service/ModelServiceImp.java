@@ -72,4 +72,14 @@ public class ModelServiceImp  implements ModelService {
         List<Model> modelList = modelRepository.findAll();
         return modelList.isEmpty() ? Collections.emptyList() : modelList;
     }
+
+    public boolean existsByBrandId(Long brandId){
+        List<Model> modelList= modelRepository.findByBrandId(brandId);
+        if (modelList.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 }
