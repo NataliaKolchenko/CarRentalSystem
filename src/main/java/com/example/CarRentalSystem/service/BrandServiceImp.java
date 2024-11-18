@@ -1,6 +1,7 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.SubjectNotBeDeletedException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Brand;
@@ -51,7 +52,7 @@ public class BrandServiceImp implements BrandService {
         }
 
         if (modelService.existsByBrandId(brandId)) {
-            throw new SubjectNotFoundException(ErrorMessage.CANNOT_DELETE_BRAND);
+            throw new SubjectNotBeDeletedException(ErrorMessage.CANNOT_DELETE_BRAND);
         } else {
             brandRepository.deleteById(brandId);
         }

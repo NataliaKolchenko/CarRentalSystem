@@ -1,11 +1,13 @@
 package com.example.CarRentalSystem.service;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.SubjectNotBeDeletedException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.repository.JpaVehicleTypeRepository;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -15,8 +17,11 @@ import java.util.Optional;
 @Service
 public class VehicleTypeServiceImp implements VehicleTypeService {
     private final JpaVehicleTypeRepository vtRepository;
-    public VehicleTypeServiceImp(JpaVehicleTypeRepository vtRepository) {
+    private final SubTypeServiceImp subTypeService;
+
+    public VehicleTypeServiceImp(JpaVehicleTypeRepository vtRepository, @Lazy SubTypeServiceImp subTypeService) {
         this.vtRepository = vtRepository;
+        this.subTypeService = subTypeService;
     }
 
     @Override
@@ -44,7 +49,12 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
         if (!vtRepository.existsById(vehicleTypeId)) {
             throw new SubjectNotFoundException(ErrorMessage.TYPE_ID_WAS_NOT_FOUND);
         }
-        vtRepository.deleteById(vehicleTypeId);
+
+        if (subTypeService.existsByVehicleTypeId(vehicleTypeId)) {
+            throw new SubjectNotBeDeletedException(ErrorMessage.CANNOT_DELETE_TYPE);
+        } else {
+            vtRepository.deleteById(vehicleTypeId);
+        }
 
     }
 

@@ -27,5 +27,6 @@ public class ErrorMessage {
     public static final String BOOKING_CANNOT_BE_FINISHED = "Booking can't be finished";
     public static final String BOOKING_CANNOT_BE_ACTIVATED = "Booking can't be activated";
     public static final String USER_ID_MISMATCH = "Provided user ID does not match the authenticated user's ID";
-    public static final String CANNOT_DELETE_BRAND = "Cannot delete brand with associated models";
+    public static final String CANNOT_DELETE_BRAND = "Can't delete brand with associated models";
+    public static final String CANNOT_DELETE_TYPE = "Can't delete vehicle type with associated subtypes";
 }

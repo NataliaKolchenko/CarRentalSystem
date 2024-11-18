@@ -30,9 +30,10 @@ public class WebSecurityConfig {
                 )
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("/searchService/**").permitAll()
                         .requestMatchers("/booking/**").hasRole("USER")
                         .requestMatchers("/brandAndModel/**").hasRole("ADMIN")
-                        .requestMatchers("/searchService/**").permitAll()
+                        .requestMatchers("/typeAndSubtype/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
