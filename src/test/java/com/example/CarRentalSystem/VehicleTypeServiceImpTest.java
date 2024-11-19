@@ -1,9 +1,12 @@
 package com.example.CarRentalSystem;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.SubjectNotBeDeletedException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
+import com.example.CarRentalSystem.model.SubType;
 import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.repository.JpaVehicleTypeRepository;
+import com.example.CarRentalSystem.service.SubTypeServiceImp;
 import com.example.CarRentalSystem.service.VehicleTypeServiceImp;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +31,8 @@ public class VehicleTypeServiceImpTest {
     private VehicleTypeServiceImp typeService;
     @Mock
     private JpaVehicleTypeRepository typeRepository;
+    @Mock
+    private SubTypeServiceImp subTypeService;
 
     @Test
     public void testCreate_NewType_Successfully() {
@@ -223,6 +228,50 @@ public class VehicleTypeServiceImpTest {
 
                 () -> verifyNoMoreInteractions(typeRepository)
         );
+    }
+
+    @Test
+    public void testDeleteById_TypeExistAndNoSubtypes_Successfully(){
+        Long typeId = 1L;
+
+        when(typeRepository.existsById(typeId)).thenReturn(true);
+        when(subTypeService.existsByVehicleTypeId(typeId)).thenReturn(false);
+
+        typeService.deleteById(typeId);
+
+        verify(typeRepository).deleteById(typeId);
+    }
+
+    @Test
+    public void testDeleteById_TypeIdNotExist_ThrowsException(){
+        Long typeId = 1L;
+        when(typeRepository.existsById(typeId)).thenReturn(false);
+
+        SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
+                () -> typeService.deleteById(typeId));
+
+        assertAll(
+                () -> assertEquals("VehicleTypeId was not found", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(typeRepository)
+        );
+    }
+
+    @Test
+    public void testDeleteById_TypeHasSubtypes_ThrowsException(){
+        Long typeId = 1L;
+        when(typeRepository.existsById(typeId)).thenReturn(true);
+        when(subTypeService.existsByVehicleTypeId(typeId)).thenReturn(true);
+
+        SubjectNotBeDeletedException exception = assertThrows(SubjectNotBeDeletedException.class,
+                () -> typeService.deleteById(typeId));
+
+        assertAll(
+                () -> assertEquals("Can't delete vehicle type with associated subtypes", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(typeRepository)
+        );
+
     }
 }
 
