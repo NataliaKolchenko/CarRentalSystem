@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem;
+package com.example.CarRentalSystem.serviceUnitTests;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotBeDeletedException;
