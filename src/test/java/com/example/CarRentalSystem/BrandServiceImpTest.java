@@ -1,10 +1,13 @@
 package com.example.CarRentalSystem;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
+import com.example.CarRentalSystem.exception.SubjectNotBeDeletedException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.BrandServiceImp;
+import com.example.CarRentalSystem.service.ModelServiceImp;
+import com.example.CarRentalSystem.service.interfaces.ModelService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,6 +29,8 @@ public class BrandServiceImpTest {
     private BrandServiceImp brandService;
     @Mock
     private JpaBrandRepository brandRepository;
+    @Mock
+    private ModelServiceImp modelService;
 
     @Test
     public void testCreateVehicleBrand_NewBrand_Successfully() {
@@ -218,5 +223,48 @@ public class BrandServiceImpTest {
 
                 () -> verifyNoMoreInteractions(brandRepository)
         );
+    }
+
+    @Test
+    public void deleteById_BrandExistsAndNoModels_DeleteBrand() {
+        Long brandId = 1L;
+        when(brandRepository.existsById(brandId)).thenReturn(true);
+        when(modelService.existsByBrandId(brandId)).thenReturn(false);
+
+        brandService.deleteById(brandId);
+
+        verify(brandRepository).deleteById(brandId);
+    }
+
+    @Test
+    public void deleteById_BrandIdNotExist_ThrowsException(){
+        Long brandId = 1L;
+        when(brandRepository.existsById(brandId)).thenReturn(false);
+
+        SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
+                () -> brandService.deleteById(brandId));
+
+        assertAll(
+                () -> assertEquals("BrandId was not found", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(brandRepository)
+        );
+    }
+
+    @Test
+    public void deleteById_BrandHasModels_ThrowsException(){
+        Long brandId = 1L;
+        when(brandRepository.existsById(brandId)).thenReturn(true);
+        when(modelService.existsByBrandId(brandId)).thenReturn(true);
+
+        SubjectNotBeDeletedException exception = assertThrows(SubjectNotBeDeletedException.class,
+                () -> brandService.deleteById(brandId));
+
+        assertAll(
+                () -> assertEquals("Can't delete brand with associated models", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(brandRepository)
+        );
+
     }
 }
