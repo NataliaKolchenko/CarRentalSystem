@@ -32,12 +32,5 @@ public class SearchController {
             @RequestParam LocalDate dateEnd) {
 
         return ResponseEntity.ok(searchService.getAvailableVehicle(cityStart, cityEnd, dateStart, dateEnd));
-//        try {
-//            City startCity = City.valueOf(cityStart.toUpperCase());
-//            City endCity = City.valueOf(cityEnd.toUpperCase());
-//            return ResponseEntity.ok(searchService.getAvailableVehicle(startCity, endCity, dateStart, dateEnd));
-//        } catch (IllegalArgumentException e) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid city name", e);
-//        }
     }
 }

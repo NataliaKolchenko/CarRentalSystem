@@ -3,6 +3,7 @@ package com.example.CarRentalSystem.model;
 import com.example.CarRentalSystem.enums.BookingStatus;
 import com.example.CarRentalSystem.enums.City;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,8 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @NotBlank(message = "userId may not be blank")
+    private String userId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle_id")
@@ -54,9 +56,9 @@ public class Booking {
         this.createDate = createDate;
     }
 
-    public Booking(Vehicle vehicle, LocalDate bookedFromDate, LocalDate bookedToDate, BookingStatus status,
+    public Booking(String userId, Vehicle vehicle, LocalDate bookedFromDate, LocalDate bookedToDate, BookingStatus status,
                    City cityStart, City cityEnd) {
-        this.userId = 1L;
+        this.userId = userId;
         this.vehicle = vehicle;
         this.bookedFromDate = bookedFromDate;
         this.bookedToDate = bookedToDate;

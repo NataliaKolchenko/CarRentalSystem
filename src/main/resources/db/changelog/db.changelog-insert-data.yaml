@@ -164,7 +164,7 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: user_id
-                  value: 1
+                  value: "1 from liqued base"
               - column:
                   name: booked_from_date
                   value: "2024-11-12"

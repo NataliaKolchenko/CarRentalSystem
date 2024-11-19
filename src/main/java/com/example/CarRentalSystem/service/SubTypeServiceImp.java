@@ -74,4 +74,14 @@ public class SubTypeServiceImp implements SubTypeService {
         List<SubType> subTypeList = subTypeRepository.findAll();
         return subTypeList.isEmpty() ? Collections.emptyList() : subTypeList;
     }
+
+    public boolean existsByVehicleTypeId(Long vehicleTypeId){
+        List<SubType> subTypeList = subTypeRepository.findByTypeId(vehicleTypeId);
+        if (subTypeList.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 }

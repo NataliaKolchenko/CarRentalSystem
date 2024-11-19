@@ -21,12 +21,12 @@ public interface JpaBookingRepository extends JpaRepository<Booking, Long> {
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate);
 
-    List<Booking> findByUserId(Long userId);
+    List<Booking> findByUserId(String userId);
 
     @Query("SELECT b FROM Booking b WHERE b.userId = :userId " +
             "AND b.status = :status")
     List<Booking> findByUserIdAndStatus(
-            @Param("userId") Long userId,
+            @Param("userId") String userId,
             @Param("status") BookingStatus status);
 
 }

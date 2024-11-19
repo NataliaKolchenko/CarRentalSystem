@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BookingResponseDto {
     private Long id;
-    private Long userId;
+    private String userId;
     private Long vehicleId;
     private LocalDate bookedFromDate;
     private LocalDate bookedToDate;

@@ -244,5 +244,66 @@ public class SubTypeServiceImpTest {
                 () -> verifyNoMoreInteractions(subTypeRepository)
         );
     }
+
+    @Test
+    public void testDeleteById_SubTypeIdIsExist_Successfully() {
+        Long subTypeID = 1L;
+        when(subTypeRepository.existsById(subTypeID)).thenReturn(true);
+
+        subTypeService.deleteById(subTypeID);
+
+        verify(subTypeRepository).deleteById(subTypeID);
+    }
+
+    @Test
+    public void testDeleteById_SubTypeIdNotExist_ThrowsException() {
+        Long subTypeID = 1L;
+        when(subTypeRepository.existsById(subTypeID)).thenReturn(false);
+
+        SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
+                () -> subTypeService.deleteById(subTypeID));
+
+        assertAll(
+                () -> assertEquals("SubTypeId was not found", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(subTypeRepository)
+        );
+
+    }
+    @Test
+    public void testExistsByVehicleTypeId_true() {
+        Long typeId = 1L;
+        VehicleType type = new VehicleType("Type");
+        type.setId(typeId);
+
+        SubType subType = new SubType("Subtype", type);
+
+        List<SubType> subTypeList = List.of(subType);
+
+        when(subTypeRepository.findByTypeId(typeId)).thenReturn(subTypeList);
+        boolean result = subTypeService.existsByVehicleTypeId(typeId);
+
+        assertAll(
+                () -> assertTrue(result),
+
+                () -> verify(subTypeRepository).findByTypeId(typeId)
+        );
+    }
+
+    @Test
+    public void testExistsByVehicleTypeId_false() {
+        Long typeId = 1L;
+
+        List<SubType> subTypeList = new ArrayList<>();
+
+        when(subTypeRepository.findByTypeId(typeId)).thenReturn(subTypeList);
+        boolean result = subTypeService.existsByVehicleTypeId(typeId);
+
+        assertAll(
+                () -> assertFalse(result),
+
+                () -> verify(subTypeRepository).findByTypeId(typeId)
+        );
+    }
 }
 

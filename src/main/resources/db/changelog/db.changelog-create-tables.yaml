@@ -272,7 +272,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: user_id
-                  type: BIGINT
+                  type: character varying(100)
               - column:
                   name: vehicle_id
                   type: BIGINT
