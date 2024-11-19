@@ -32,7 +32,7 @@ public class ModelServiceImpTest {
     private JpaModelRepository modelRepository;
 
     @Test
-    public void testCreateModel_NewModel_Successfully(){
+    public void testCreateModel_NewModel_Successfully() {
         Long existBrandId = 1L;
         String existBrandName = "existBrandName";
 
@@ -61,7 +61,7 @@ public class ModelServiceImpTest {
     }
 
     @Test
-    public void testCreateModel_ModelNameNotUnique_ThrowsException(){
+    public void testCreateModel_ModelNameNotUnique_ThrowsException() {
         Long existBrandId = 1L;
         String existModelName = "existModelName";
 
@@ -85,7 +85,7 @@ public class ModelServiceImpTest {
     }
 
     @Test
-    public void testUpdateModel_ExistingModel_Successfully(){
+    public void testUpdateModel_ExistingModel_Successfully() {
         Long existModelId = 1L;
         Brand existBrand = new Brand("existBrandName");
 
@@ -114,7 +114,7 @@ public class ModelServiceImpTest {
     }
 
     @Test
-    public void testUpdateModel_NotUniqueModel_ThrowsException(){
+    public void testUpdateModel_NotUniqueModel_ThrowsException() {
         Long existModelId = 1L;
         Brand existBrand = new Brand("existBrandName");
 
@@ -140,7 +140,7 @@ public class ModelServiceImpTest {
     }
 
     @Test
-    public void testGetModelById_Successfully(){
+    public void testGetModelById_Successfully() {
         Long modelId = 1L;
         Model expectedModel = new Model();
         expectedModel.setId(modelId);
@@ -241,6 +241,67 @@ public class ModelServiceImpTest {
                 () -> assertTrue(modelList.isEmpty()),
 
                 () -> verifyNoMoreInteractions(modelRepository)
+        );
+    }
+
+    @Test
+    public void testDeleteById_ModelIdIsExist_Successfully() {
+        Long modelId = 1L;
+        when(modelRepository.existsById(modelId)).thenReturn(true);
+
+        modelService.deleteById(modelId);
+
+        verify(modelRepository).deleteById(modelId);
+    }
+
+    @Test
+    public void testDeleteById_ModelIdNotExist_ThrowsException() {
+        Long modelId = 1L;
+        when(modelRepository.existsById(modelId)).thenReturn(false);
+
+        SubjectNotFoundException exception = assertThrows(SubjectNotFoundException.class,
+                () -> modelService.deleteById(modelId));
+
+        assertAll(
+                () -> assertEquals("ModelId was not found", exception.getMessage()),
+
+                () -> verifyNoMoreInteractions(modelRepository)
+        );
+
+    }
+
+    @Test
+    public void testExistsByBrandId_true() {
+        Long brandId = 1L;
+        Brand brand = new Brand("Brand");
+        brand.setId(brandId);
+
+        Model model = new Model("Model", brand);
+        List<Model> modelList = List.of(model);
+
+        when(modelRepository.findByBrandId(brandId)).thenReturn(modelList);
+        boolean result = modelService.existsByBrandId(brandId);
+
+        assertAll(
+                () -> assertTrue(result),
+
+                () -> verify(modelRepository).findByBrandId(brandId)
+        );
+    }
+
+    @Test
+    public void testExistsByBrandId_false() {
+        Long brandId = 1L;
+
+        List<Model> modelList = new ArrayList<>();
+
+        when(modelRepository.findByBrandId(brandId)).thenReturn(modelList);
+        boolean result = modelService.existsByBrandId(brandId);
+
+        assertAll(
+                () -> assertFalse(result),
+
+                () -> verify(modelRepository).findByBrandId(brandId)
         );
     }
 }

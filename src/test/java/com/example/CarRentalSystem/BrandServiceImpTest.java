@@ -226,7 +226,7 @@ public class BrandServiceImpTest {
     }
 
     @Test
-    public void testDeleteById_BrandExistsAndNoModels_DeleteBrand() {
+    public void testDeleteById_BrandExistsAndNoModels_Successfully() {
         Long brandId = 1L;
         when(brandRepository.existsById(brandId)).thenReturn(true);
         when(modelService.existsByBrandId(brandId)).thenReturn(false);
