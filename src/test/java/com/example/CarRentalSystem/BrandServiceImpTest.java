@@ -226,7 +226,7 @@ public class BrandServiceImpTest {
     }
 
     @Test
-    public void deleteById_BrandExistsAndNoModels_DeleteBrand() {
+    public void testDeleteById_BrandExistsAndNoModels_DeleteBrand() {
         Long brandId = 1L;
         when(brandRepository.existsById(brandId)).thenReturn(true);
         when(modelService.existsByBrandId(brandId)).thenReturn(false);
@@ -237,7 +237,7 @@ public class BrandServiceImpTest {
     }
 
     @Test
-    public void deleteById_BrandIdNotExist_ThrowsException(){
+    public void testDeleteById_BrandIdNotExist_ThrowsException(){
         Long brandId = 1L;
         when(brandRepository.existsById(brandId)).thenReturn(false);
 
@@ -252,7 +252,7 @@ public class BrandServiceImpTest {
     }
 
     @Test
-    public void deleteById_BrandHasModels_ThrowsException(){
+    public void testDeleteById_BrandHasModels_ThrowsException(){
         Long brandId = 1L;
         when(brandRepository.existsById(brandId)).thenReturn(true);
         when(modelService.existsByBrandId(brandId)).thenReturn(true);
