@@ -25,14 +25,13 @@ public class BrandServiceImp implements BrandService {
     }
 
     @Override
-    public Brand create(String brandName) {
-        Brand checkExistBrand = brandRepository.findByBrandName(brandName);
+    public Brand create(Brand brand) {
+        Brand checkExistBrand = brandRepository.findByBrandName(brand.getBrandName());
         if(checkExistBrand != null) {
             throw new SubjectAlreadyExistsException(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST);
         }
-       Brand newBrand = new Brand(brandName);
 
-        return brandRepository.save(newBrand);
+        return brandRepository.save(brand);
     }
 
     @Override

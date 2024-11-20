@@ -2,7 +2,7 @@ package com.example.CarRentalSystem.controller.handler;
 
 import com.example.CarRentalSystem.exception.BusinessException;
 import com.example.CarRentalSystem.exception.UserIdMismatchException;
-import com.example.CarRentalSystem.exception.error.Error;
+import com.example.CarRentalSystem.exception.error.ErrorCarRentalSystem;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -22,26 +22,26 @@ public class GlobalExceptionHandler {
     // Обработчик ошибок валидации
     @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Error> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorCarRentalSystem> handleValidationExceptions(MethodArgumentNotValidException ex) {
 
         // Проход по всем ошибкам валидации и сбор сообщений
         List<String> stringList = ex.getBindingResult().getAllErrors()
                 .stream().map(ObjectError::getDefaultMessage)
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<>(new Error(stringList), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorCarRentalSystem(stringList), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({BusinessException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Error> handleValidationExceptions(Exception ex) {
-        return new ResponseEntity<>(new Error(List.of(ex.getMessage())), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorCarRentalSystem> handleValidationExceptions(Exception ex) {
+        return new ResponseEntity<>(new ErrorCarRentalSystem(List.of(ex.getMessage())), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Error> handleValidationExceptions(ConstraintViolationException ex) {
-        return new ResponseEntity<>(new Error(ex.getConstraintViolations()
+    public ResponseEntity<ErrorCarRentalSystem> handleValidationExceptions(ConstraintViolationException ex) {
+        return new ResponseEntity<>(new ErrorCarRentalSystem(ex.getConstraintViolations()
                 .stream()
                 .map(ConstraintViolation::getMessage)
                 .toList()),

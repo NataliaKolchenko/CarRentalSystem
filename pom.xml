@@ -118,12 +118,12 @@
 			<version>4.29.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter -->
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>1.20.3</version>
-			<scope>test</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.testcontainers</groupId>-->
+<!--			<artifactId>junit-jupiter</artifactId>-->
+<!--			<version>1.20.3</version>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 		<!-- Если используете JWT -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>

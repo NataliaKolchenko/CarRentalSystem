@@ -39,7 +39,7 @@ public class BrandModelControllerTest {
         brand = new Brand("NewBrand");
         brand.setId(brandId);
 
-        when(brandService.create(brand.getBrandName())).thenReturn(brand);
+        when(brandService.create(brand)).thenReturn(brand);
         when(brandService.getByName(brand.getBrandName())).thenReturn(brand);
 
         mockMvc.perform(post("/brandAndModel/createNewBrand")
