@@ -3,9 +3,8 @@ package com.example.CarRentalSystem.controller.intergationTests;
 import com.example.CarRentalSystem.exception.error.ErrorCarRentalSystem;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.model.Brand;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.example.CarRentalSystem.model.Model;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,19 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.List;
-
-import static org.hamcrest.Matchers.is;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -69,8 +59,21 @@ public class BrandModelControllerTest {
     }
 
     @Test
-    public void testCreateNewBrand_InvalidInput() throws Exception {
+    public void testCreateNewBrand_EmptyBody_InvalidInput() throws Exception {
         Brand brand = new Brand();
+        String jsonRequest = objectMapper.writeValueAsString(brand);
+
+        MvcResult result = mockMvc.perform(post("/brandAndModel/createNewBrand")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+    }
+
+    @Test
+    public void testCreateNewBrand_SpaceBrandName_InvalidInput() throws Exception {
+        Brand brand = new Brand(" ");
         String jsonRequest = objectMapper.writeValueAsString(brand);
 
         MvcResult result = mockMvc.perform(post("/brandAndModel/createNewBrand")
@@ -183,7 +186,7 @@ public class BrandModelControllerTest {
     @Sql("/data/insert_data.sql")
     @Test
     public void testDeleteBrandById_Success() throws Exception {
-        Long brandId = 100L;
+        Long brandId = 101L;
 
         MvcResult result =
                 mockMvc.perform(delete("/brandAndModel/deleteBrandById/{id}", brandId)
@@ -194,6 +197,28 @@ public class BrandModelControllerTest {
         assertAll(
                 () -> assertEquals(200, result.getResponse().getStatus()),
                 () -> assertEquals("true", result.getResponse().getContentAsString())
+        );
+
+    }
+
+    @Sql("/data/insert_data.sql")
+    @Test
+    public void testDeleteBrandById_CanNotDelete() throws Exception {
+        Long brandId = 100L;
+
+        MvcResult result =
+                mockMvc.perform(delete("/brandAndModel/deleteBrandById/{id}", brandId)
+                                .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isBadRequest())
+                        .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.CANNOT_DELETE_BRAND))
         );
 
     }
@@ -244,7 +269,7 @@ public class BrandModelControllerTest {
     }
 
     @Test
-    public void testUpdateNewBrand_InvalidInput() throws Exception {
+    public void testUpdateNewBrand_EmptyBody_InvalidInput() throws Exception {
         Long brandId = 100L;
         Brand brand = new Brand();
         String jsonRequest = objectMapper.writeValueAsString(brand);
@@ -285,150 +310,283 @@ public class BrandModelControllerTest {
 
     // -----------------------------------------------------------------
 
-//    @Test
-//    public void testCreateNewModel_Success() throws Exception {
-//        Long brandId = 2L;
-//        String brandName = "BrandName";
-//        brand = new Brand();
-//        brand.setId(brandId);
-//        brand.setBrandName(brandName);
-//
-//        Long modelId = 1l;
-//        String modelName = "ModelName";
-//        model = new Model(modelName, brand);
-//        model.setId(modelId);
-//
-//        when(modelService.create(model)).thenReturn(model);
-//        when(modelService.getByName(model.getModelName())).thenReturn(model);
-//
-//        mockMvc.perform(post("/brandAndModel/createNewModel")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("""
-//                        {
-//                            "modelName": "ModelName",
-//                            "brand": {
-//                                "id": 2,
-//                                "brandName": "BrandName"
-//                            }
-//                        }
-//                        """))
-//                .andExpect(status().isOk()) // Ожидаемый статус 200
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$.id", is(modelId.intValue()))) // Проверка возвращаемого значения
-//                .andExpect(jsonPath("$.modelName", is(modelName)))
-//                .andExpect(jsonPath("$.brand.id", is(brandId.intValue())))
-//                .andExpect(jsonPath("$.brand.brandName", is(brandName)));
-//    }
-//
-//    @Test
-//    public void testCreateNewModel_InvalidInput() throws Exception {
-//        mockMvc.perform(post("/brandAndModel/createNewModel")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("""
-//                        {
-//                            "modelName": "",
-//                            "brand": {
-//                                "id": 2,
-//                                "brandName": "BrandName"
-//                            }
-//                        }
-//                        """))
-//                .andExpect(status().isBadRequest());
-//    }
-//
-//    @Test
-//    public void testGetModelById_Success() throws Exception {
-//        Long brandId = 1L;
-//        String brandName = "BrandName";
-//        brand = new Brand(brandName);
-//        brand.setId(brandId);
-//
-//        Long modelId = 2L;
-//        String modelName = "ModelName";
-//        model = new Model(modelName, brand);
-//        model.setId(modelId);
-//
-//        when(modelService.getById(modelId)).thenReturn(model);
-//
-//        mockMvc.perform(get("/brandAndModel/getModelById/{id}", modelId))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$.id", is(modelId.intValue())))
-//                .andExpect(jsonPath("$.modelName", is(modelName)))
-//                .andExpect(jsonPath("$.brand.id", is(brandId.intValue())))
-//                .andExpect(jsonPath("$.brand.brandName", is(brandName)));
-//    }
-//
-//    @Test
-//    public void testGetAllModels() throws Exception {
-//        Long brandId = 1L;
-//        String brandName = "BrandName";
-//        brand = new Brand(brandName);
-//        brand.setId(brandId);
-//
-//        model = new Model("Model1", brand);
-//        Model model2 = new Model("Model2", brand);
-//
-//        List<Model> modelList = List.of(model, model2);
-//
-//        when(modelService.getAllModels()).thenReturn(modelList);
-//
-//        mockMvc.perform(get("/brandAndModel/getAllModels"))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$.length()").value(2));
-//    }
-//
-//    @Test
-//    public void testDeleteModelById() throws Exception {
-//        Long modelId = 1L;
-//
-//        doNothing().when(modelService).deleteById(modelId);
-//
-//        mockMvc.perform(delete("/brandAndModel/deleteModelById/{id}", modelId))
-//                .andExpect(status().isOk());
-//
-//    }
-//
-//    @Test
-//    public void testUpdateModel() throws Exception {
-//        Long brandId = 1L;
-//        brand = new Brand();
-//        brand.setId(brandId);
-//        brand.setBrandName("Brand");
-//
-//        Long modelId = 2L;
-//        model = new Model("ExistingModel", brand);
-//        model.setId(modelId);
-//
-//        String newModelName = "NewModelName";
-//
-//        Model updatedModel = new Model();
-//        updatedModel.setId(modelId);
-//        updatedModel.setModelName(newModelName);
-//        updatedModel.setBrand(brand);
-//
-//        when(modelService.update(modelId, newModelName)).thenReturn(updatedModel);
-//
-//        mockMvc.perform(put("/brandAndModel/updateModel/{id}", modelId)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("""
-//                        {
-//                            "modelName": "NewModelName",
-//                            "brand": {
-//                                "id": 1,
-//                                "brandName": "Brand"
-//                            }
-//                        }
-//                        """))
-//                .andExpect(status().isOk()) // Ожидаемый статус 200
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$.id", is(modelId.intValue())))
-//                .andExpect(jsonPath("$.modelName", is(newModelName)))
-//                .andExpect(jsonPath("$.brand.id", is(brandId.intValue())))
-//                .andExpect(jsonPath("$.brand.brandName", is(brand.getBrandName())));
-//
-//    }
+    @Sql("/data/insert_data.sql")
+    @Test
+    public void testCreateNewModel_Success() throws Exception {
+        Brand existingBrand = new Brand();
+        existingBrand.setId(100L);
+        existingBrand.setBrandName("Ford");
+
+        Model model = new Model("Focus", existingBrand);
+
+        String jsonRequest = objectMapper.writeValueAsString(model);
+
+        MvcResult result = mockMvc.perform(post("/brandAndModel/createNewModel")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+
+        Model modelAfterCreation = objectMapper.readValue(jsonResponse, Model.class);
+
+        assertAll(
+                () -> assertEquals(200, result.getResponse().getStatus()),
+                () -> assertNotNull(modelAfterCreation.getId()),
+                () -> assertEquals(model.getModelName(), modelAfterCreation.getModelName()),
+                () -> assertEquals(model.getBrand().getId(), modelAfterCreation.getBrand().getId()),
+                () -> assertEquals(model.getBrand().getBrandName(), modelAfterCreation.getBrand().getBrandName())
+        );
+
+    }
+
+    @Test
+    public void testCreateNewModel_EmptyBody_InvalidInput() throws Exception {
+        Model model = new Model();
+        String jsonRequest = objectMapper.writeValueAsString(model);
+
+        MvcResult result = mockMvc.perform(post("/brandAndModel/createNewModel")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+    }
+
+    @Test
+    public void testCreateNewModel_SpaceModelName_InvalidInput() throws Exception {
+        Brand existingBrand = new Brand();
+        existingBrand.setId(100L);
+        existingBrand.setBrandName("Ford");
+
+        Model model = new Model(" ", existingBrand);
+        String jsonRequest = objectMapper.writeValueAsString(model);
+
+        MvcResult result = mockMvc.perform(post("/brandAndModel/createNewModel")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+    }
+
+    @Test
+    public void testCreateNewModel_NullBrand_InvalidInput() throws Exception {
+        Brand existingBrand = null;
+
+        Model model = new Model("Model", existingBrand);
+        String jsonRequest = objectMapper.writeValueAsString(model);
+
+        MvcResult result = mockMvc.perform(post("/brandAndModel/createNewModel")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Sql("/data/insert_data.sql")
+    @Test
+    public void testGetModelById_Success() throws Exception {
+        Long modelId = 100L;
+
+        MvcResult result =
+                mockMvc.perform(get("/brandAndModel/getModelById/{id}", modelId)
+                                .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+        Model modelAfterCreation = objectMapper.readValue(jsonResponse, Model.class);
+
+        assertAll(
+                () -> assertEquals(200, result.getResponse().getStatus()),
+                () -> assertEquals(modelId, modelAfterCreation.getId()),
+                () -> assertNotNull(modelAfterCreation)
+        );
+
+    }
+
+    @Test
+    public void testGetModelById_ModelIdWasNotFound() throws Exception {
+        Long modelId = 1000L;
+
+        MvcResult result =
+                mockMvc.perform(get("/brandAndModel/getModelById/{id}", modelId)
+                                .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isBadRequest())
+                        .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.MODEL_ID_WAS_NOT_FOUND))
+        );
+    }
+
+
+    @Sql("/data/insert_data.sql")
+    @Test
+    public void testGetAllModels_Success() throws Exception {
+        mockMvc.perform(get("/brandAndModel/getAllModels")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                [{"id":100,
+                                "modelName":"Mustang",
+                                "brand":{
+                                    "id":100,
+                                    "brandName":"Ford"}},
+                                {"id":101,
+                                "modelName":"GT",
+                                "brand":{
+                                     "id":100,
+                                    "brandName":"Ford"}}]
+                                """))
+                .andReturn();
+    }
+
+    @Sql("/data/delete_data.sql")
+    @Test
+    public void testGetAllModels_EmptyList() throws Exception {
+        mockMvc.perform(get("/brandAndModel/getAllModels")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                [
+                                ]
+                                """))
+                .andReturn();
+    }
+
+    @Sql("/data/insert_data.sql")
+    @Test
+    public void testDeleteModelById_Success() throws Exception {
+        Long modelId = 101L;
+
+        MvcResult result =
+                mockMvc.perform(delete("/brandAndModel/deleteModelById/{id}", modelId)
+                                .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+        assertAll(
+                () -> assertEquals(200, result.getResponse().getStatus()),
+                () -> assertEquals("true", result.getResponse().getContentAsString())
+        );
+
+    }
+
+    @Sql("/data/delete_data.sql")
+    @Test
+    public void testDeleteModelById_ModelIdWasNotFound() throws Exception {
+        Long modelId = 1000L;
+
+        MvcResult result =
+                mockMvc.perform(delete("/brandAndModel/deleteModelById/{id}", modelId)
+                                .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isBadRequest())
+                        .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.MODEL_ID_WAS_NOT_FOUND))
+        );
+    }
+
+    @Sql("/data/insert_data.sql")
+    @Test
+    public void testUpdateModel_Success() throws Exception {
+        Long modelId = 100L;
+        Brand existingBrand = new Brand("Brand");
+        existingBrand.setId(101L);
+
+        Model modelRequest = new Model("NewModelName", existingBrand);
+
+        String jsonRequest = objectMapper.writeValueAsString(modelRequest);
+
+        MvcResult result = mockMvc.perform(put("/brandAndModel/updateModel/{id}", modelId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+        Model modelResponse = objectMapper.readValue(jsonResponse, Model.class);
+
+        assertAll(
+                () -> assertEquals(200, result.getResponse().getStatus()),
+                () -> assertEquals(modelResponse.getModelName(), modelRequest.getModelName()),
+                () -> assertEquals(modelId, modelResponse.getId())
+        );
+    }
+
+    @Test
+    public void testUpdateModel_EmptyBody_InvalidInput() throws Exception {
+        Long modelId = 100L;
+        Model model = new Model();
+        String jsonRequest = objectMapper.writeValueAsString(model);
+
+        MvcResult result = mockMvc.perform(put("/brandAndModel/updateModel/{id}", modelId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+    }
+
+    @Test
+    public void testUpdateModel_NullBrand_InvalidInput() throws Exception {
+        Long modelId = 100L;
+        Brand brand = null;
+        Model model = new Model("model", brand);
+        String jsonRequest = objectMapper.writeValueAsString(model);
+
+        MvcResult result = mockMvc.perform(put("/brandAndModel/updateModel/{id}", modelId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+    }
+
+    @Sql("/data/insert_data.sql")
+    @Test
+    public void testUpdateModel_ModelNameIsAlreadyExist() throws Exception {
+        Long modelId = 100L;
+        Brand existingBrand = new Brand("Ford");
+        existingBrand.setId(100L);
+
+        Model modelRequest = new Model("Mustang", existingBrand);
+
+        String jsonRequest = objectMapper.writeValueAsString(modelRequest);
+
+        MvcResult result = mockMvc.perform(put("/brandAndModel/updateModel/{id}", modelId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errorDescriptionList").isArray())
+                .andExpect(jsonPath("$.errorDescriptionList[0]").value(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST))
+                .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST))
+        );
+    }
 
 }
 
