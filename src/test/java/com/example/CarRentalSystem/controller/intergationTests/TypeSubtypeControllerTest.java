@@ -59,7 +59,7 @@ public class TypeSubtypeControllerTest {
     }
 
     @Test
-    public void testCreateNewЕнзу_EmptyBody_InvalidInput() throws Exception {
+    public void testCreateNewType_EmptyBody_InvalidInput() throws Exception {
         VehicleType type = new VehicleType();
         String jsonRequest = objectMapper.writeValueAsString(type);
 
@@ -82,11 +82,21 @@ public class TypeSubtypeControllerTest {
                 .andExpect(status().isBadRequest())
                 .andReturn();
 
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains("vehicleType may not be blank or null or has spaces"))
+        );
+
     }
 
     @Sql("/data/insert_data.sql")
     @Test
-    public void testCreateNewModel_ModelNameIsAlreadyExist() throws Exception {
+    public void testCreateNewType_TypeNameIsAlreadyExist() throws Exception {
         VehicleType type = new VehicleType("Auto");
         String jsonRequest = objectMapper.writeValueAsString(type);
 
@@ -95,7 +105,8 @@ public class TypeSubtypeControllerTest {
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errorDescriptionList").isArray())
-                .andExpect(jsonPath("$.errorDescriptionList[0]").value(ErrorMessage.TYPE_NAME_IS_ALREADY_EXIST))
+                .andExpect(jsonPath("$.errorDescriptionList[0]")
+                        .value(ErrorMessage.TYPE_NAME_IS_ALREADY_EXIST))
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
@@ -104,7 +115,8 @@ public class TypeSubtypeControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.TYPE_NAME_IS_ALREADY_EXIST))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.TYPE_NAME_IS_ALREADY_EXIST))
         );
     }
 
@@ -147,7 +159,8 @@ public class TypeSubtypeControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.TYPE_ID_WAS_NOT_FOUND))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.TYPE_ID_WAS_NOT_FOUND))
         );
     }
 
@@ -240,7 +253,8 @@ public class TypeSubtypeControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.TYPE_ID_WAS_NOT_FOUND))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.TYPE_ID_WAS_NOT_FOUND))
         );
     }
 
@@ -295,7 +309,8 @@ public class TypeSubtypeControllerTest {
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errorDescriptionList").isArray())
-                .andExpect(jsonPath("$.errorDescriptionList[0]").value(ErrorMessage.TYPE_NAME_IS_ALREADY_EXIST))
+                .andExpect(jsonPath("$.errorDescriptionList[0]")
+                        .value(ErrorMessage.TYPE_NAME_IS_ALREADY_EXIST))
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
@@ -304,7 +319,8 @@ public class TypeSubtypeControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.TYPE_NAME_IS_ALREADY_EXIST))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.TYPE_NAME_IS_ALREADY_EXIST))
         );
     }
 
@@ -335,7 +351,8 @@ public class TypeSubtypeControllerTest {
                 () -> assertNotNull(subTypeResponse.getId()),
                 () -> assertEquals(subType.getSubTypeName(), subTypeResponse.getSubTypeName()),
                 () -> assertEquals(subType.getType().getId(), subTypeResponse.getType().getId()),
-                () -> assertEquals(subType.getType().getVehicleTypeName(), subTypeResponse.getType().getVehicleTypeName())
+                () -> assertEquals(subType.getType().getVehicleTypeName(),
+                        subTypeResponse.getType().getVehicleTypeName())
         );
 
     }
@@ -369,6 +386,15 @@ public class TypeSubtypeControllerTest {
                 .andExpect(status().isBadRequest())
                 .andReturn();
 
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains("subTypeName may not be blank or null or has spaces"))
+        );
     }
 
     @Test
@@ -383,6 +409,15 @@ public class TypeSubtypeControllerTest {
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest())
                 .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList().contains("VehicleType may not be null"))
+        );
     }
     @Sql("/data/insert_data.sql")
     @Test
@@ -422,7 +457,8 @@ public class TypeSubtypeControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.SUB_TYPE_ID_WAS_NOT_FOUND))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.SUB_TYPE_ID_WAS_NOT_FOUND))
         );
     }
 
@@ -498,7 +534,8 @@ public class TypeSubtypeControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.SUB_TYPE_ID_WAS_NOT_FOUND))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.SUB_TYPE_ID_WAS_NOT_FOUND))
         );
     }
 
@@ -556,6 +593,14 @@ public class TypeSubtypeControllerTest {
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest())
                 .andReturn();
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList().contains("VehicleType may not be null"))
+        );
 
     }
 
@@ -575,7 +620,8 @@ public class TypeSubtypeControllerTest {
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errorDescriptionList").isArray())
-                .andExpect(jsonPath("$.errorDescriptionList[0]").value(ErrorMessage.SUB_TYPE_NAME_IS_ALREADY_EXIST))
+                .andExpect(jsonPath("$.errorDescriptionList[0]")
+                        .value(ErrorMessage.SUB_TYPE_NAME_IS_ALREADY_EXIST))
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
@@ -584,7 +630,8 @@ public class TypeSubtypeControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.SUB_TYPE_NAME_IS_ALREADY_EXIST))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.SUB_TYPE_NAME_IS_ALREADY_EXIST))
         );
     }
 

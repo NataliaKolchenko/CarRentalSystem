@@ -82,6 +82,16 @@ public class BrandModelControllerTest {
                 .andExpect(status().isBadRequest())
                 .andReturn();
 
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains("brandName may not be blank or null or has spaces"))
+        );
+
     }
 
     @Sql("/data/insert_data.sql")
@@ -95,7 +105,8 @@ public class BrandModelControllerTest {
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errorDescriptionList").isArray())
-                .andExpect(jsonPath("$.errorDescriptionList[0]").value(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST))
+                .andExpect(jsonPath("$.errorDescriptionList[0]")
+                        .value(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST))
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
@@ -104,7 +115,8 @@ public class BrandModelControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST))
         );
     }
 
@@ -147,7 +159,8 @@ public class BrandModelControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.BRAND_ID_WAS_NOT_FOUND))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.BRAND_ID_WAS_NOT_FOUND))
         );
     }
 
@@ -240,7 +253,8 @@ public class BrandModelControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.BRAND_ID_WAS_NOT_FOUND))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.BRAND_ID_WAS_NOT_FOUND))
         );
     }
 
@@ -295,7 +309,8 @@ public class BrandModelControllerTest {
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errorDescriptionList").isArray())
-                .andExpect(jsonPath("$.errorDescriptionList[0]").value(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST))
+                .andExpect(jsonPath("$.errorDescriptionList[0]")
+                        .value(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST))
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
@@ -304,7 +319,8 @@ public class BrandModelControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST))
         );
     }
 
@@ -341,6 +357,38 @@ public class BrandModelControllerTest {
 
     }
 
+    @Sql("/data/insert_data.sql")
+    @Test
+    public void testCreateNewModel_ModelNameIsAlreadyExist() throws Exception {
+        Brand existingBrand = new Brand();
+        existingBrand.setId(100L);
+        existingBrand.setBrandName("Ford");
+
+        Model model = new Model("Mustang", existingBrand);
+
+        String jsonRequest = objectMapper.writeValueAsString(model);
+
+        MvcResult result = mockMvc.perform(post("/brandAndModel/createNewModel")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errorDescriptionList").isArray())
+                .andExpect(jsonPath("$.errorDescriptionList[0]")
+                        .value(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST))
+                .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST))
+        );
+
+    }
+
     @Test
     public void testCreateNewModel_EmptyBody_InvalidInput() throws Exception {
         Model model = new Model();
@@ -369,6 +417,16 @@ public class BrandModelControllerTest {
                 .andExpect(status().isBadRequest())
                 .andReturn();
 
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains("modelName may not be blank or null or has spaces"))
+        );
+
     }
 
     @Test
@@ -383,6 +441,15 @@ public class BrandModelControllerTest {
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest())
                 .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+        ErrorCarRentalSystem errorResponse = objectMapper.readValue(jsonResponse, ErrorCarRentalSystem.class);
+
+        assertAll(
+                () -> assertEquals(400, result.getResponse().getStatus()),
+                () -> assertNotNull(errorResponse.getErrorDescriptionList()),
+                () -> assertTrue(errorResponse.getErrorDescriptionList().contains("Brand may not be null"))
+        );
     }
 
     @Sql("/data/insert_data.sql")
@@ -423,7 +490,8 @@ public class BrandModelControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.MODEL_ID_WAS_NOT_FOUND))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.MODEL_ID_WAS_NOT_FOUND))
         );
     }
 
@@ -499,7 +567,8 @@ public class BrandModelControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.MODEL_ID_WAS_NOT_FOUND))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.MODEL_ID_WAS_NOT_FOUND))
         );
     }
 
@@ -575,7 +644,8 @@ public class BrandModelControllerTest {
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errorDescriptionList").isArray())
-                .andExpect(jsonPath("$.errorDescriptionList[0]").value(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST))
+                .andExpect(jsonPath("$.errorDescriptionList[0]")
+                        .value(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST))
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
@@ -584,7 +654,8 @@ public class BrandModelControllerTest {
         assertAll(
                 () -> assertEquals(400, result.getResponse().getStatus()),
                 () -> assertNotNull(errorResponse.getErrorDescriptionList()),
-                () -> assertTrue(errorResponse.getErrorDescriptionList().contains(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST))
+                () -> assertTrue(errorResponse.getErrorDescriptionList()
+                        .contains(ErrorMessage.MODEL_NAME_IS_ALREADY_EXIST))
         );
     }
 
