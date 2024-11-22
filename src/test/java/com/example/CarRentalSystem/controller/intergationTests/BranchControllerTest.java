@@ -205,22 +205,17 @@ public class BranchControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         """
-                                [{"id":100,
-                                "branchName":"Berlin Brunch",
-                                "address":
-                                    {"id":100,
-                                    "zipCode":"14000",
-                                    "country":"Germany",
-                                    "region":"BERLIN",
-                                    "city":"BERLIN",
-                                    "district":"Main district",
-                                    "street":"Mainstraße",
-                                    "house":2,
-                                    "apartment":"GMbH CarRentalSystem",
-                                    "additionalInfo":"2 OG",
-                                    "createDate":"2024-11-12T12:00:00"},
-                                "phone":"+496872211",
-                                "workingTime":"MO - FR: 9:00 - 18:00"}]
+                               [{"id":100,
+                               "branchName":"Berlin Brunch",
+                               "address":{"id":100,"zipCode":"14000","country":"Germany","region":"BERLIN","city":"BERLIN","district":"Main district","street":"Mainstraße","house":2,"apartment":"GMbH CarRentalSystem","additionalInfo":"2 OG","createDate":"2024-11-12T12:00:00"},
+                               "phone":"+496872211",
+                               "workingTime":"MO - FR: 9:00 - 18:00"},
+                               
+                               {"id":101,
+                               "branchName":"Berlin Brunch",
+                               "address":{"id":101,"zipCode":"14000","country":"Germany","region":"BERLIN","city":"BERLIN","district":"Main district","street":"Mainstraße","house":3,"apartment":"GMbH CarRentalSystem","additionalInfo":"2 OG","createDate":"2024-11-12T12:00:00"},
+                               "phone":"+496872211",
+                               "workingTime":"MO - FR: 9:00 - 18:00"}]
                                 """))
                 .andReturn();
     }
