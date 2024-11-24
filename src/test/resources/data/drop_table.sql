@@ -5,3 +5,4 @@ drop table if exists vehicle_type cascade;
 drop table if exists branch cascade;
 drop table if exists address cascade;
 drop table if exists vehicle cascade;
+drop table if exists booking cascade;

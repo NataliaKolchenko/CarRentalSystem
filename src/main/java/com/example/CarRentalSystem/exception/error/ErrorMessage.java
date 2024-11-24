@@ -24,8 +24,10 @@ public class ErrorMessage {
     public static final String BOOKING_ID_WAS_NOT_FOUND = "BookingId was not found";
     public static final String BOOKING_CANNOT_BE_CANCELLED = "Booking can't be cancelled";
     public static final String BOOKING_CANNOT_BE_UPDATED = "Booking can't be updated";
-    public static final String BOOKING_CANNOT_BE_FINISHED = "Booking can't be finished";
-    public static final String BOOKING_CANNOT_BE_ACTIVATED = "Booking can't be activated";
+    public static final String BOOKING_CANNOT_BE_FINISHED_DUE_STATUS = "Booking can't be finished due to an unsuitable booking status";
+    public static final String BOOKING_CANNOT_BE_FINISHED_DUE_DATE = "Booking can't be finished due to the incorrect date of the operation";
+    public static final String BOOKING_CANNOT_BE_ACTIVATED_DUE_STATUS = "Booking can't be activated due to an unsuitable booking status";
+    public static final String BOOKING_CANNOT_BE_ACTIVATED_DUE_DATE = "Booking can't be activated due to an incorrect activation date";
     public static final String USER_ID_MISMATCH = "Provided user ID does not match the authenticated user's ID";
     public static final String CANNOT_DELETE_BRAND = "Can't delete brand with associated models";
     public static final String CANNOT_DELETE_TYPE = "Can't delete vehicle type with associated subtypes";

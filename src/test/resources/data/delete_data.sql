@@ -5,5 +5,6 @@ DELETE FROM vehicle_type;
 DELETE FROM branch;
 DELETE FROM address;
 DELETE FROM vehicle;
+DELETE FROM booking;
 
 
