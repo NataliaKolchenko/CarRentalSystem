@@ -1,9 +1,8 @@
-package com.example.CarRentalSystem;
+package com.example.CarRentalSystem.service.unitTests;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotBeDeletedException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
-import com.example.CarRentalSystem.model.SubType;
 import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.repository.JpaVehicleTypeRepository;
 import com.example.CarRentalSystem.service.SubTypeServiceImp;

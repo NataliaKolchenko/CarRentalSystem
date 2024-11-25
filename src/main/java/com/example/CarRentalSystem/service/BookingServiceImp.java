@@ -82,9 +82,6 @@ public class BookingServiceImp implements BookingService {
         return mapEntityToDto(saved);
     }
 
-
-
-
     @Override
     public BookingResponseDto getById(Long bookingId, String userId) {
         Optional<Booking> bookingOpt = bookingRepository.findById(bookingId);
@@ -135,12 +132,12 @@ public class BookingServiceImp implements BookingService {
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
             case ACTIVE, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED ->  throw new BookingCannotBeActivatedException(
-                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED + " due to an unsuitable booking status");
+                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED_DUE_STATUS);
         }
 
         if (!LocalDate.now().equals(existingBookingDto.getBookedFromDate())){
             throw new BookingCannotBeActivatedException(
-                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED + " due to an incorrect activation date");
+                    ErrorMessage.BOOKING_CANNOT_BE_ACTIVATED_DUE_DATE);
         }
         existingBooking.setStatus(BookingStatus.ACTIVE);
         existingBooking.setUpdateDate(LocalDateTime.now());
@@ -155,12 +152,12 @@ public class BookingServiceImp implements BookingService {
         Booking existingBooking = mapDtoToEntity(existingBookingDto);
         switch (existingBooking.getStatus()){
             case CREATED, CANCELLED, WAITING_PAYMENT, PAYED, FINISHED -> throw new BookingCannotBeFinishedException(
-                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED + " due to an unsuitable booking status");
+                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED_DUE_STATUS);
         }
 
         if (!LocalDate.now().equals(existingBookingDto.getBookedToDate())){
             throw new BookingCannotBeFinishedException(
-                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED + " due to the incorrect date of the operation");
+                    ErrorMessage.BOOKING_CANNOT_BE_FINISHED_DUE_DATE);
         }
         existingBooking.setStatus(BookingStatus.FINISHED);
         existingBooking.setUpdateDate(LocalDateTime.now());

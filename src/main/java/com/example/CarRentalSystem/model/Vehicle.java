@@ -20,12 +20,12 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle_type_id")
     @NotNull(message = "VehicleType may not be null")
     private VehicleType type;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sub_type_id")
     @NotNull(message = "SubType may not be null")
     private SubType subType;
@@ -33,15 +33,14 @@ public class Vehicle {
 //    Состояние ТС
 //    активен (true)- доступен для отображения в каталоге,
 //    неактивен (false) - выведен из эксплуатации
-    @NotNull(message = "VehicleCondition may not be null")
     private boolean active;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     @NotNull(message = "brandId may not be null")
     private Brand brand;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "model_id")
     @NotNull(message = "modelId may not be null")
     private Model model;
@@ -52,11 +51,11 @@ public class Vehicle {
 
     @Positive(message = "year may not be less then 1950")
     @Min(1950L)
-    @NotNull(message = "year may not be null")
+//    @NotNull(message = "year may not be null")
     private int year;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "branch_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "branch_id")
     @NotNull(message = "branchId may not be null")
     private Branch branch;
 
@@ -65,14 +64,13 @@ public class Vehicle {
     private TransmissionType transmissionType;
 
     @PositiveOrZero(message = "mileage may not be negative")
-    @NotNull(message = "mileage may not be null")
+//    @NotNull(message = "mileage may not be null")
     private int mileage;
 
     @NotNull(message = "city may not be blank")
     @Enumerated(EnumType.STRING)
     private City city;
 
-    @NotNull(message = "favorite may not be null")
     boolean favorite;
 
     @NotBlank(message = "vinCode may not be blank")

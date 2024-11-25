@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem;
+package com.example.CarRentalSystem.service.unitTests;
 
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotBeDeletedException;
@@ -7,7 +7,6 @@ import com.example.CarRentalSystem.model.Brand;
 import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.BrandServiceImp;
 import com.example.CarRentalSystem.service.ModelServiceImp;
-import com.example.CarRentalSystem.service.interfaces.ModelService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,36 +33,35 @@ public class BrandServiceImpTest {
 
     @Test
     public void testCreateVehicleBrand_NewBrand_Successfully() {
-        String brandName = "Test";
+        Brand brand = new Brand("Test");
 
-        when(brandRepository.findByBrandName(brandName)).thenReturn(null);
+        when(brandRepository.findByBrandName(brand.getBrandName())).thenReturn(null);
 
         when(brandRepository.save(any(Brand.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Brand result = brandService.create(brandName);
+        Brand result = brandService.create(brand);
 
         assertAll(
                 () -> assertNotNull(result),
-                () -> assertEquals(brandName, result.getBrandName()),
+                () -> assertEquals(brand.getBrandName(), result.getBrandName()),
 
-                () -> verify(brandRepository).findByBrandName(brandName),
+                () -> verify(brandRepository).findByBrandName(brand.getBrandName()),
                 () -> verify(brandRepository).save(any(Brand.class))
         );
     }
 
     @Test
     public void testCreateVehicleBrand_ExistingBrand_ThrowsException() {
-        String brandName = "ExistingBrand";
-        Brand existingBrand = new Brand(brandName);
+        Brand existingBrand = new Brand("ExistingBrand");
 
-        when(brandRepository.findByBrandName(brandName)).thenReturn(existingBrand);
+        when(brandRepository.findByBrandName(existingBrand.getBrandName())).thenReturn(existingBrand);
 
         SubjectAlreadyExistsException exception = assertThrows(SubjectAlreadyExistsException.class, () ->
-                brandService.create(brandName));
+                brandService.create(existingBrand));
         assertAll(
                 () -> assertEquals("BrandName has to be unique", exception.getMessage()),
 
-                () -> verify(brandRepository).findByBrandName(brandName),
+                () -> verify(brandRepository).findByBrandName(existingBrand.getBrandName()),
                 () -> verifyNoMoreInteractions(brandRepository)
         );
     }
@@ -71,27 +69,27 @@ public class BrandServiceImpTest {
     @Test
     public void testUpdateVehicleBrand_ExistingBrand_Successfully() {
         Long existingId = 1L;
-        String newBrandName = "NewBrandName";
+        Brand newBrandName = new Brand("NewBrandName");
 
         Brand existingBrand = new Brand();
         existingBrand.setId(existingId);
         existingBrand.setBrandName("Brand");
 
         when(brandRepository.findById(existingId)).thenReturn(Optional.of(existingBrand));
-        when(brandRepository.findByBrandName(newBrandName)).thenReturn(null);
+        when(brandRepository.findByBrandName(newBrandName.getBrandName())).thenReturn(null);
 
         Brand updatedBrand = new Brand();
         updatedBrand.setId(existingId);
-        updatedBrand.setBrandName(newBrandName);
+        updatedBrand.setBrandName(newBrandName.getBrandName());
 
         when(brandRepository.save(existingBrand)).thenReturn(updatedBrand);
-        Brand result = brandService.update(existingId, newBrandName);
+        Brand result = brandService.update(existingId, newBrandName.getBrandName());
 
         assertAll(
                 () -> assertEquals(result, updatedBrand),
                 () -> assertEquals(result.getBrandName(), newBrandName),
 
-                () -> verify(brandRepository).findByBrandName(newBrandName),
+                () -> verify(brandRepository).findByBrandName(newBrandName.getBrandName()),
                 () -> verify(brandRepository).save(existingBrand)
         );
     }

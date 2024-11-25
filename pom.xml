@@ -118,12 +118,12 @@
 			<version>4.29.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter -->
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>1.20.3</version>
-			<scope>test</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.testcontainers</groupId>-->
+<!--			<artifactId>junit-jupiter</artifactId>-->
+<!--			<version>1.20.3</version>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 		<!-- Если используете JWT -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -136,6 +136,14 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.3.232</version>
+			<scope>test</scope>
+		</dependency>
+
 
 
 

@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem;
+package com.example.CarRentalSystem.service.unitTests;
 
 import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.enums.EngineType;

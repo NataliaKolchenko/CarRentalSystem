@@ -1,8 +1,7 @@
-package com.example.CarRentalSystem;
+package com.example.CarRentalSystem.service.unitTests;
 
 import com.example.CarRentalSystem.enums.City;
 import com.example.CarRentalSystem.model.Vehicle;
-import com.example.CarRentalSystem.model.VehicleType;
 import com.example.CarRentalSystem.repository.SearchRepository;
 import com.example.CarRentalSystem.service.SearchServiceImp;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
