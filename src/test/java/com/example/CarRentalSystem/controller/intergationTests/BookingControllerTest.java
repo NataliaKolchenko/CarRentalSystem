@@ -203,8 +203,8 @@ public class BookingControllerTest {
                         """
                                 [{"id":100,"userId":"user@user.user","vehicleId":100,"bookedFromDate":"2024-12-05","bookedToDate":"2024-12-05","status":"CREATED","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
                                 {"id":101,"userId":"user@user.user","vehicleId":100,"bookedFromDate":"2024-12-06","bookedToDate":"2024-12-06","status":"CREATED","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
-                                {"id":102,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-20","bookedToDate":"2024-11-24","status":"ACTIVE","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
-                                {"id":103,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-24","bookedToDate":"2024-11-24","status":"CREATED","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
+                                {"id":102,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-20","bookedToDate":"2024-11-25","status":"ACTIVE","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
+                                {"id":103,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-25","bookedToDate":"2024-11-25","status":"CREATED","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
                                 {"id":105,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-11","bookedToDate":"2024-11-20","status":"FINISHED","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
                                 {"id":106,"userId":"user@user.user","vehicleId":100,"bookedFromDate":"2024-11-11","bookedToDate":"2024-11-20","status":"CANCELLED","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
                                 {"id":107,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-20","bookedToDate":"2024-11-30","status":"ACTIVE","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null}]
@@ -237,7 +237,7 @@ public class BookingControllerTest {
                         """
                                 [{"id":100,"userId":"user@user.user","vehicleId":100,"bookedFromDate":"2024-12-05","bookedToDate":"2024-12-05","status":"CREATED","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
                                 {"id":101,"userId":"user@user.user","vehicleId":100,"bookedFromDate":"2024-12-06","bookedToDate":"2024-12-06","status":"CREATED","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
-                                {"id":103,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-24","bookedToDate":"2024-11-24","status":"CREATED","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null}]
+                                {"id":103,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-25","bookedToDate":"2024-11-25","status":"CREATED","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null}]
                                 """))
                 .andReturn();
     }
@@ -252,7 +252,7 @@ public class BookingControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         """
-                                [{"id":102,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-20","bookedToDate":"2024-11-24","status":"ACTIVE","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
+                                [{"id":102,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-20","bookedToDate":"2024-11-25","status":"ACTIVE","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null},
                                 {"id":107,"userId":"user@user.user","vehicleId":101,"bookedFromDate":"2024-11-20","bookedToDate":"2024-11-30","status":"ACTIVE","cityStart":"BERLIN","cityEnd":"BERLIN","createDate":"2024-11-12T12:00:00","updateDate":null}]
                                 """))
                 .andReturn();
