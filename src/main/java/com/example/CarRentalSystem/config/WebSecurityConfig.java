@@ -31,6 +31,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/searchService/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/booking/**").hasRole("USER")
                         .requestMatchers("/brandAndModel/**").hasRole("ADMIN")
                         .requestMatchers("/typeAndSubtype/**").hasRole("ADMIN")
