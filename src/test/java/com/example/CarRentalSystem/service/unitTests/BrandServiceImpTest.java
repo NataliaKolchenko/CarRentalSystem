@@ -87,7 +87,7 @@ public class BrandServiceImpTest {
 
         assertAll(
                 () -> assertEquals(result, updatedBrand),
-                () -> assertEquals(result.getBrandName(), newBrandName),
+                () -> assertEquals(result.getBrandName(), newBrandName.getBrandName()),
 
                 () -> verify(brandRepository).findByBrandName(newBrandName.getBrandName()),
                 () -> verify(brandRepository).save(existingBrand)
