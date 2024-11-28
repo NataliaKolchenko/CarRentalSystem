@@ -130,6 +130,12 @@
 			<version>6.0.0</version> <!-- Используйте версию, совместимую с Spring Boot 3.x -->
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>7.4</version> <!-- Используйте актуальную версию -->
+		</dependency>
+
 
 
 
