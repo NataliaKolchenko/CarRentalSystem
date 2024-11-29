@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.model;
+package com.example.CarRentalSystem.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

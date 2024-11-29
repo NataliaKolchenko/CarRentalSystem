@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.repository;
 
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.model.Vehicle;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.entity.Vehicle;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 

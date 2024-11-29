@@ -1,6 +1,6 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.model.Branch;
+import com.example.CarRentalSystem.model.entity.Branch;
 import com.example.CarRentalSystem.service.interfaces.BranchService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

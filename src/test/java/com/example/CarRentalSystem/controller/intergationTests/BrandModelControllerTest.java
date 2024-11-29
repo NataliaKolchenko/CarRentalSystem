@@ -2,8 +2,8 @@ package com.example.CarRentalSystem.controller.intergationTests;
 
 import com.example.CarRentalSystem.exception.error.ErrorCarRentalSystem;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
-import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.model.Model;
+import com.example.CarRentalSystem.model.entity.Brand;
+import com.example.CarRentalSystem.model.entity.Model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

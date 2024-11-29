@@ -1,10 +1,10 @@
 package com.example.CarRentalSystem.service.unitTests;
 
-import com.example.CarRentalSystem.enums.City;
+import com.example.CarRentalSystem.model.enums.City;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
-import com.example.CarRentalSystem.model.Address;
-import com.example.CarRentalSystem.model.Branch;
+import com.example.CarRentalSystem.model.entity.Address;
+import com.example.CarRentalSystem.model.entity.Branch;
 import com.example.CarRentalSystem.repository.JpaBranchRepository;
 import com.example.CarRentalSystem.service.AddressServiceImp;
 import com.example.CarRentalSystem.service.BranchServiceImp;

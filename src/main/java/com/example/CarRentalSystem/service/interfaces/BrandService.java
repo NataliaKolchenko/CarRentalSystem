@@ -1,6 +1,6 @@
 package com.example.CarRentalSystem.service.interfaces;
 
-import com.example.CarRentalSystem.model.Brand;
+import com.example.CarRentalSystem.model.entity.Brand;
 
 import java.util.List;
 

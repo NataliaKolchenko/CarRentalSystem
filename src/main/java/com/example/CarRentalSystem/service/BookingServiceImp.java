@@ -1,11 +1,11 @@
 package com.example.CarRentalSystem.service;
 
-import com.example.CarRentalSystem.enums.BookingStatus;
+import com.example.CarRentalSystem.model.enums.BookingStatus;
 import com.example.CarRentalSystem.exception.*;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
 import com.example.CarRentalSystem.infrastructure.JwtAuthFilter;
-import com.example.CarRentalSystem.model.Booking;
-import com.example.CarRentalSystem.model.Vehicle;
+import com.example.CarRentalSystem.model.entity.Booking;
+import com.example.CarRentalSystem.model.entity.Vehicle;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
 import com.example.CarRentalSystem.model.dto.VehicleRequestDto;

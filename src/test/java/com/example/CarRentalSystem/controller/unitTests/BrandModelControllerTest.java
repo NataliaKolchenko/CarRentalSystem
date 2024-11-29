@@ -1,8 +1,8 @@
 package com.example.CarRentalSystem.controller.unitTests;
 
 import com.example.CarRentalSystem.controller.BrandModelController;
-import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.model.Model;
+import com.example.CarRentalSystem.model.entity.Brand;
+import com.example.CarRentalSystem.model.entity.Model;
 import com.example.CarRentalSystem.service.BrandServiceImp;
 import com.example.CarRentalSystem.service.interfaces.ModelService;
 import org.junit.jupiter.api.Test;

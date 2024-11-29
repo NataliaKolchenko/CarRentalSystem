@@ -1,6 +1,6 @@
 package com.example.CarRentalSystem.model.dto;
 
-import com.example.CarRentalSystem.enums.City;
+import com.example.CarRentalSystem.model.enums.City;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

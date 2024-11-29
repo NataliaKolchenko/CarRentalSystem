@@ -4,7 +4,7 @@ import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotBeDeletedException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
-import com.example.CarRentalSystem.model.Brand;
+import com.example.CarRentalSystem.model.entity.Brand;
 import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
 import org.springframework.context.annotation.Lazy;

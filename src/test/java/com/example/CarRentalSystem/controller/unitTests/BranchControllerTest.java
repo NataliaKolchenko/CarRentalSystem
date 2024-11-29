@@ -1,9 +1,9 @@
 package com.example.CarRentalSystem.controller.unitTests;
 
 import com.example.CarRentalSystem.controller.BranchController;
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.model.Address;
-import com.example.CarRentalSystem.model.Branch;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.entity.Address;
+import com.example.CarRentalSystem.model.entity.Branch;
 import com.example.CarRentalSystem.service.BranchServiceImp;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

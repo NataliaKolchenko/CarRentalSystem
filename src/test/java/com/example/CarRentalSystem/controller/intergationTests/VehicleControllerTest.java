@@ -1,12 +1,12 @@
 package com.example.CarRentalSystem.controller.intergationTests;
 
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.enums.EngineType;
-import com.example.CarRentalSystem.enums.TransmissionType;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.enums.EngineType;
+import com.example.CarRentalSystem.model.enums.TransmissionType;
 import com.example.CarRentalSystem.exception.error.ErrorCarRentalSystem;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
-import com.example.CarRentalSystem.model.*;
 import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
+import com.example.CarRentalSystem.model.entity.Vehicle;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

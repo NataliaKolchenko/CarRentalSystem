@@ -3,7 +3,7 @@ package com.example.CarRentalSystem.service;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
-import com.example.CarRentalSystem.model.Address;
+import com.example.CarRentalSystem.model.entity.Address;
 import com.example.CarRentalSystem.repository.JpaAddressRepository;
 import com.example.CarRentalSystem.service.interfaces.AddressService;
 import org.springframework.stereotype.Service;

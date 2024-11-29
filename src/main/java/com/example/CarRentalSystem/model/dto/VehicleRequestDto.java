@@ -1,8 +1,8 @@
 package com.example.CarRentalSystem.model.dto;
 
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.enums.EngineType;
-import com.example.CarRentalSystem.enums.TransmissionType;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.enums.EngineType;
+import com.example.CarRentalSystem.model.enums.TransmissionType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

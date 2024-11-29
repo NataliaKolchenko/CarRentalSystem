@@ -1,6 +1,6 @@
-package com.example.CarRentalSystem.model;
+package com.example.CarRentalSystem.model.entity;
 
-import com.example.CarRentalSystem.enums.City;
+import com.example.CarRentalSystem.model.enums.City;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.model.Vehicle;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.entity.Vehicle;
 import com.example.CarRentalSystem.service.interfaces.SearchService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

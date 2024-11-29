@@ -1,6 +1,6 @@
 package com.example.CarRentalSystem.repository;
 
-import com.example.CarRentalSystem.model.Model;
+import com.example.CarRentalSystem.model.entity.Model;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

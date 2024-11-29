@@ -1,6 +1,6 @@
 package com.example.CarRentalSystem.service.interfaces;
 
-import com.example.CarRentalSystem.model.SubType;
+import com.example.CarRentalSystem.model.entity.SubType;
 
 import java.util.List;
 

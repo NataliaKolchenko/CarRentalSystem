@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.service.interfaces;
 
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.model.Vehicle;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.entity.Vehicle;
 
 import java.time.LocalDate;
 import java.util.List;

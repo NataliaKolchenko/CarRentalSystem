@@ -1,13 +1,12 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.enums.BookingStatus;
+import com.example.CarRentalSystem.model.enums.BookingStatus;
 import com.example.CarRentalSystem.model.dto.BookingRequestDto;
 import com.example.CarRentalSystem.model.dto.BookingResponseDto;
 import com.example.CarRentalSystem.service.interfaces.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

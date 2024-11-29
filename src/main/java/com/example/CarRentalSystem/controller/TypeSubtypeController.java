@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.model.SubType;
-import com.example.CarRentalSystem.model.VehicleType;
+import com.example.CarRentalSystem.model.entity.SubType;
+import com.example.CarRentalSystem.model.entity.VehicleType;
 import com.example.CarRentalSystem.service.interfaces.SubTypeService;
 import com.example.CarRentalSystem.service.interfaces.VehicleTypeService;
 import io.swagger.v3.oas.annotations.Operation;

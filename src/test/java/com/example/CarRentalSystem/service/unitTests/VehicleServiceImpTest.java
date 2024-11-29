@@ -1,12 +1,12 @@
 package com.example.CarRentalSystem.service.unitTests;
 
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.enums.EngineType;
-import com.example.CarRentalSystem.enums.TransmissionType;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.enums.EngineType;
+import com.example.CarRentalSystem.model.enums.TransmissionType;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
-import com.example.CarRentalSystem.model.*;
 import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
+import com.example.CarRentalSystem.model.entity.Vehicle;
 import com.example.CarRentalSystem.repository.JpaVehicleRepository;
 import com.example.CarRentalSystem.service.VehicleServiceImp;
 import com.example.CarRentalSystem.service.VehicleTypeServiceImp;

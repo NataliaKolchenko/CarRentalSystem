@@ -1,8 +1,8 @@
-package com.example.CarRentalSystem.model;
+package com.example.CarRentalSystem.model.entity;
 
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.enums.EngineType;
-import com.example.CarRentalSystem.enums.TransmissionType;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.enums.EngineType;
+import com.example.CarRentalSystem.model.enums.TransmissionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.EqualsAndHashCode;

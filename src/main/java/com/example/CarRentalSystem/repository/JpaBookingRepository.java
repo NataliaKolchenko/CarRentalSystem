@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.repository;
 
-import com.example.CarRentalSystem.enums.BookingStatus;
-import com.example.CarRentalSystem.model.Booking;
+import com.example.CarRentalSystem.model.enums.BookingStatus;
+import com.example.CarRentalSystem.model.entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

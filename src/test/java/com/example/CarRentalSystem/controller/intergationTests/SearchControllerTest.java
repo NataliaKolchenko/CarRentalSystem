@@ -1,7 +1,6 @@
 package com.example.CarRentalSystem.controller.intergationTests;
 
-import com.example.CarRentalSystem.enums.BookingStatus;
-import com.example.CarRentalSystem.enums.City;
+import com.example.CarRentalSystem.model.enums.City;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

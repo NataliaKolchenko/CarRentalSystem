@@ -1,4 +1,4 @@
-package com.example.CarRentalSystem.enums;
+package com.example.CarRentalSystem.model.enums;
 
 public enum City {
     BERLIN,

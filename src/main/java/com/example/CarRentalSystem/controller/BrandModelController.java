@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.model.Brand;
-import com.example.CarRentalSystem.model.Model;
+import com.example.CarRentalSystem.model.entity.Brand;
+import com.example.CarRentalSystem.model.entity.Model;
 import com.example.CarRentalSystem.service.interfaces.BrandService;
 import com.example.CarRentalSystem.service.interfaces.ModelService;
 import io.swagger.v3.oas.annotations.Operation;

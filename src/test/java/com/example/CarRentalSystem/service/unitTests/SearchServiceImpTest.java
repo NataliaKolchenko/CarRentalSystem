@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.service.unitTests;
 
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.model.Vehicle;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.entity.Vehicle;
 import com.example.CarRentalSystem.repository.SearchRepository;
 import com.example.CarRentalSystem.service.SearchServiceImp;
 import org.junit.jupiter.api.Test;

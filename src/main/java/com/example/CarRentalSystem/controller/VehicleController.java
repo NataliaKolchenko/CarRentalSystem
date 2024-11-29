@@ -1,6 +1,6 @@
 package com.example.CarRentalSystem.controller;
 
-import com.example.CarRentalSystem.model.Vehicle;
+import com.example.CarRentalSystem.model.entity.Vehicle;
 import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
 import com.example.CarRentalSystem.service.interfaces.VehicleService;
 import io.swagger.v3.oas.annotations.Operation;

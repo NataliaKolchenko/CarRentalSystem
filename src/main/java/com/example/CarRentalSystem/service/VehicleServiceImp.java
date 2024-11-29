@@ -1,13 +1,13 @@
 package com.example.CarRentalSystem.service;
 
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.enums.EngineType;
-import com.example.CarRentalSystem.enums.TransmissionType;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.enums.EngineType;
+import com.example.CarRentalSystem.model.enums.TransmissionType;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
-import com.example.CarRentalSystem.model.*;
 import com.example.CarRentalSystem.model.dto.VehicleRequestDto;
+import com.example.CarRentalSystem.model.entity.*;
 import com.example.CarRentalSystem.repository.JpaVehicleRepository;
 import com.example.CarRentalSystem.service.interfaces.*;
 import org.springframework.stereotype.Service;

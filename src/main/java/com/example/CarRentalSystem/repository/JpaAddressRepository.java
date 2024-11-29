@@ -1,7 +1,7 @@
 package com.example.CarRentalSystem.repository;
 
-import com.example.CarRentalSystem.enums.City;
-import com.example.CarRentalSystem.model.Address;
+import com.example.CarRentalSystem.model.enums.City;
+import com.example.CarRentalSystem.model.entity.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaAddressRepository extends JpaRepository<Address, Long> {

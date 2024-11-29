@@ -1,8 +1,8 @@
 package com.example.CarRentalSystem.controller.unitTests;
 
 import com.example.CarRentalSystem.controller.TypeSubtypeController;
-import com.example.CarRentalSystem.model.SubType;
-import com.example.CarRentalSystem.model.VehicleType;
+import com.example.CarRentalSystem.model.entity.SubType;
+import com.example.CarRentalSystem.model.entity.VehicleType;
 import com.example.CarRentalSystem.service.VehicleTypeServiceImp;
 import com.example.CarRentalSystem.service.interfaces.SubTypeService;
 import org.junit.jupiter.api.Test;

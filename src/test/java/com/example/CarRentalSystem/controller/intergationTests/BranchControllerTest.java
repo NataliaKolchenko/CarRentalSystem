@@ -1,10 +1,10 @@
 package com.example.CarRentalSystem.controller.intergationTests;
 
-import com.example.CarRentalSystem.enums.City;
+import com.example.CarRentalSystem.model.enums.City;
 import com.example.CarRentalSystem.exception.error.ErrorCarRentalSystem;
 import com.example.CarRentalSystem.exception.error.ErrorMessage;
-import com.example.CarRentalSystem.model.Address;
-import com.example.CarRentalSystem.model.Branch;
+import com.example.CarRentalSystem.model.entity.Address;
+import com.example.CarRentalSystem.model.entity.Branch;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

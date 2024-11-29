@@ -3,7 +3,7 @@ package com.example.CarRentalSystem.service.unitTests;
 import com.example.CarRentalSystem.exception.SubjectAlreadyExistsException;
 import com.example.CarRentalSystem.exception.SubjectNotBeDeletedException;
 import com.example.CarRentalSystem.exception.SubjectNotFoundException;
-import com.example.CarRentalSystem.model.Brand;
+import com.example.CarRentalSystem.model.entity.Brand;
 import com.example.CarRentalSystem.repository.JpaBrandRepository;
 import com.example.CarRentalSystem.service.BrandServiceImp;
 import com.example.CarRentalSystem.service.ModelServiceImp;
