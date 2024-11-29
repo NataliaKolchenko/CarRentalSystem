@@ -30,9 +30,9 @@ public class Vehicle {
     @NotNull(message = "SubType may not be null")
     private SubType subType;
 
-//    Состояние ТС
-//    активен (true)- доступен для отображения в каталоге,
-//    неактивен (false) - выведен из эксплуатации
+// Vehicle status
+// active (true) - available for display in the catalog,
+// inactive (false) - decommissioned
     private boolean active;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -51,11 +51,9 @@ public class Vehicle {
 
     @Positive(message = "year may not be less then 1950")
     @Min(1950L)
-//    @NotNull(message = "year may not be null")
     private int year;
 
     @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "branch_id")
     @NotNull(message = "branchId may not be null")
     private Branch branch;
 
@@ -64,7 +62,6 @@ public class Vehicle {
     private TransmissionType transmissionType;
 
     @PositiveOrZero(message = "mileage may not be negative")
-//    @NotNull(message = "mileage may not be null")
     private int mileage;
 
     @NotNull(message = "city may not be blank")

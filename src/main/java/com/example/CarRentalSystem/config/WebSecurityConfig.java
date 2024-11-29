@@ -41,7 +41,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Добавляем фильтр JWT
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // add filter JWT
 
         return http.build();
     }

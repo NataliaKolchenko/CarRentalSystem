@@ -30,7 +30,7 @@ public class JwtService  {
 
     public String extractUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(secretKeyBytes) // Передаем байтовый массив
+                .setSigningKey(secretKeyBytes) // Passing a byte array
                 .parseClaimsJws(token)
                 .getBody();
 

@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Обработчик ошибок валидации
+    // Validation Error Handler
     @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorCarRentalSystem> handleValidationExceptions(MethodArgumentNotValidException ex) {
 
-        // Проход по всем ошибкам валидации и сбор сообщений
+        // Going through all validation errors and collecting messages
         List<String> stringList = ex.getBindingResult().getAllErrors()
                 .stream().map(ObjectError::getDefaultMessage)
                 .collect(Collectors.toList());

@@ -42,7 +42,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 String role = jwtService.extractUserRoleFromToken(jwtToken);
 
                 if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    // Создаем "пользователя" с извлеченной ролью
+                    // Creating a "user" with the extracted role
                     UserDetails userDetails = new User(userId, "", List.of(new SimpleGrantedAuthority(role)));
 
                     if (jwtService.validateToken(jwtToken)) {
@@ -54,7 +54,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Ошибка при обработке JWT: " + e.getMessage());
+                System.out.println("Error processing JWT: " + e.getMessage());
             }
         }
         filterChain.doFilter(request, response);

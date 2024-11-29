@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class BrandServiceImp implements BrandService {
     private final JpaBrandRepository brandRepository;
     private final ModelServiceImp modelService;
