@@ -12,8 +12,8 @@ The prototype data of the server part of the main services of the vehicle rental
 ![img_2.png](img_2.png)
 
 **Swagger**
-if the project was launched locally - http://localhost:11000/swagger-ui/index.html#
-if project was launched in docker - http://localhost:8081/swagger-ui/index.html#
+- if the project was launched locally - http://localhost:11000/swagger-ui/index.html#
+- if project was launched in docker - http://localhost:8081/swagger-ui/index.html#
 
 **Used technology stack in my web application:**
 - Java 17
