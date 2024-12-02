@@ -2,9 +2,6 @@
 
 The prototype data of the server part of the main services of the vehicle rental system includes the following elements: vehicles, reservations, vehicle locations, vehicle types, brands and models.
 
-**technical specification**
-https://docs.google.com/document/d/1lqXPBUMpVnRqpWLStOnqN8MEUc9hm5XtY_bb7ArcRLA/edit?usp=sharing
-
 **Database Diagram**
 ![img.png](img.png)
 
