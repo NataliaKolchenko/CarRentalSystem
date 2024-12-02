@@ -11,6 +11,9 @@ The prototype data of the server part of the main services of the vehicle rental
 **Schema of project**
 ![img_2.png](img_2.png)
 
+**Swagger**
+http://localhost:11000/swagger-ui/index.html#
+
 **Used technology stack in my web application:**
 - Java 17
 - Spring Framework
