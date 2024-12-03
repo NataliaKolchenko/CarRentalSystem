@@ -45,8 +45,8 @@ public class BookingControllerTest {
         BookingRequestDto requestDto = new BookingRequestDto(
                 "user@user.user",
                 100L,
-                LocalDate.of(2024, 12, 01),
-                LocalDate.of(2024, 12, 03),
+                LocalDate.of(2024, 12, 1),
+                LocalDate.of(2024, 12, 3),
                 City.BERLIN,
                 City.BERLIN
         );
@@ -123,8 +123,8 @@ public class BookingControllerTest {
         BookingRequestDto requestDto = new BookingRequestDto(
                 "user@user.user",
                 100L,
-                LocalDate.of(2024, 12, 05),
-                LocalDate.of(2024, 12, 05),
+                LocalDate.of(2024, 12, 6),
+                LocalDate.of(2024, 12, 6),
                 City.BERLIN,
                 City.BERLIN
         );
@@ -520,9 +520,9 @@ public class BookingControllerTest {
         Long bookingExistId = 100L;
         BookingRequestDto requestDto = new BookingRequestDto(
                 " ",
-                101L,
-                LocalDate.of(2024, 12, 01),
-                LocalDate.of(2024, 12, 03),
+                103L,
+                LocalDate.of(2024, 12, 1),
+                LocalDate.of(2024, 12, 3),
                 City.BERLIN,
                 City.BONN
         );
@@ -553,9 +553,9 @@ public class BookingControllerTest {
         Long bookingId = 105L;
         BookingRequestDto requestDto = new BookingRequestDto(
                 " ",
-                101L,
-                LocalDate.of(2024, 12, 01),
-                LocalDate.of(2024, 12, 03),
+                105L,
+                LocalDate.of(2024, 12, 1),
+                LocalDate.of(2024, 12, 3),
                 City.BERLIN,
                 City.BONN
         );
