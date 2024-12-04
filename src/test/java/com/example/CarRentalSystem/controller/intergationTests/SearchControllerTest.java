@@ -2,6 +2,7 @@ package com.example.CarRentalSystem.controller.intergationTests;
 
 import com.example.CarRentalSystem.model.enums.City;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
