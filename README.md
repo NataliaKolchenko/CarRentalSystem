@@ -28,6 +28,7 @@ The prototype data of the server part of the main services of the vehicle rental
 - Maven
 - SLF4J
 - Logback
+- JaCoCo
 
 ### Database Structure
 
