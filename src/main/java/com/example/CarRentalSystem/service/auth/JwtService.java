@@ -8,7 +8,6 @@ import java.util.Date;
 
 @Service
 public class JwtService  {
-
     private final String secretKey = "5Hdo5+PxMJkLQ9Wo7WnYMR/gBzTfC5XrB3iNPvMlscY=";
     private final byte[] secretKeyBytes = Base64.getDecoder().decode(secretKey);
 
@@ -27,13 +26,11 @@ public class JwtService  {
         }
     }
 
-
     public String extractUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(secretKeyBytes) // Passing a byte array
                 .parseClaimsJws(token)
                 .getBody();
-
 
         return claims.get("sub").toString() ;
     }
@@ -45,5 +42,4 @@ public class JwtService  {
                 .getBody();
         return claims.get("role").toString();
     }
-
 }

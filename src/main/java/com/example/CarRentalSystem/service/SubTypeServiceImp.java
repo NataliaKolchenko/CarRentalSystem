@@ -23,7 +23,6 @@ public class SubTypeServiceImp implements SubTypeService {
         this.typeService = typeService;
     }
 
-
     @Override
     public SubType create(SubType subTypeName) {
         SubType checkExistSubType = subTypeRepository.findBySubTypeName(subTypeName.getSubTypeName());
@@ -82,6 +81,5 @@ public class SubTypeServiceImp implements SubTypeService {
         } else {
             return true;
         }
-
     }
 }

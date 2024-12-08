@@ -29,7 +29,6 @@ public class BrandServiceImp implements BrandService {
         if(checkExistBrand != null) {
             throw new SubjectAlreadyExistsException(ErrorMessage.BRAND_NAME_IS_ALREADY_EXIST);
         }
-
         return brandRepository.save(brand);
     }
 

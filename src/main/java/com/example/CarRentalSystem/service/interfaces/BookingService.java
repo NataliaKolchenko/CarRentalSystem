@@ -15,5 +15,4 @@ public interface BookingService {
     Boolean cancel(Long bookingId, String userId);
     Boolean activate( Long bookingId, String userId);
     Boolean finish(Long bookingId, String userId);
-
 }

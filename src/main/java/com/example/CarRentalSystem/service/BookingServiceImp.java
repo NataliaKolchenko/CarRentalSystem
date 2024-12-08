@@ -122,7 +122,6 @@ public class BookingServiceImp implements BookingService {
         existingBooking.setUpdateDate(LocalDateTime.now());
         bookingRepository.save(existingBooking);
 
-
         return true;
     }
 
