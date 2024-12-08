@@ -17,7 +17,6 @@ public class SearchServiceImp implements SearchService {
         this.searchRepository = searchRepository;
     }
 
-
     @Override
     public List<Vehicle> getAvailableVehicle(City cityStart, City cityEnd, LocalDate dateStart, LocalDate dateEnd) {
         return searchRepository.queryByAvailableVehicle(cityStart, dateStart, dateEnd);

@@ -13,6 +13,4 @@ import java.util.List;
 @NoArgsConstructor
 public class ErrorCarRentalSystem {
     private List<String> errorDescriptionList;
-
-
 }

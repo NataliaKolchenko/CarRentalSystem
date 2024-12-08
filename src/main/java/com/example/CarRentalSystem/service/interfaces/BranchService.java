@@ -9,6 +9,4 @@ public interface BranchService {
     Branch getById(Long branchId);
     Branch getByName(String branchName);
     List<Branch> getAllBranches();
-
-
 }

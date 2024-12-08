@@ -19,6 +19,4 @@ public class SwaggerConfig {
                         .description("API documentation for Car Rental System")
                         .version("1.0"));
     }
-
-
 }

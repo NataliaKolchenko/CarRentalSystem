@@ -55,7 +55,6 @@ public class VehicleTypeServiceImp implements VehicleTypeService {
         } else {
             vtRepository.deleteById(vehicleTypeId);
         }
-
     }
 
     @Override

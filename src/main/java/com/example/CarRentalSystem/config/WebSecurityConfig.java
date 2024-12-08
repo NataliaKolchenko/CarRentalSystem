@@ -16,7 +16,6 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-
     @Bean
     public JwtAuthFilter jwtAuthFilter(JwtService jwtService) {
         return new JwtAuthFilter(jwtService);
@@ -45,5 +44,4 @@ public class WebSecurityConfig {
 
         return http.build();
     }
-
 }
